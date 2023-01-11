@@ -2,21 +2,17 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
-/*
+/**
  * Register User
  */
 export const register = async(req, res) => {
     try {
-        // Gets Request Parameters
+        // Destructures Request Parameters
         const {
-            firstName,
-            lastName,
-            email,
-            password,
-            picturePath,
-            friends,
-            location,
-            occupation,
+            firstName, lastName,
+            email, password,
+            picturePath, friends,
+            location, occupation,
         } = req.body;
 
         // Password Hash with Salt
@@ -25,14 +21,10 @@ export const register = async(req, res) => {
 
         // Create New  User
         const newUser = new User({
-            firstName,
-            lastName,
-            email,
-            password: passwordHash,
-            picturePath,
-            friends,
-            location,
-            occupation,
+            firstName, lastName,
+            email, password: passwordHash,
+            picturePath, friends,
+            location, occupation,
             viewedProfile: Math.floor(Math.random() * 1000),
             impressions: Math.floor(Math.random() * 1000)
         })
@@ -45,3 +37,32 @@ export const register = async(req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+/**
+ * Logging In User
+ */
+export const login = async (req, res) => {
+    try {
+        // Destructures Request Parameters
+        const { email, password } = req.body;
+
+        // Finds user (email unique) and checks password
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(400).json({ msg: "User does not exist."});
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ msg: "Invalid credentials." });
+        }
+
+        // Creates a token and sends the token and user (minus password) back
+        const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET);
+        delete user.password;
+        res.status(200).json({ token, user });
+        
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
