@@ -29,7 +29,7 @@ export const colorTokens = {
     },
   };
   
-  // mui theme settings
+  // Material UI (mui) Theme Settings (Light/Dark Mode)
   export const themeSettings = (mode) => {
     return {
       palette: {
