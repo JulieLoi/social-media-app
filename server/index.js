@@ -9,6 +9,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import { truncate } from "fs";
+import { register } from "./controllers/auth.js";
 
 /*
  * Configurations
@@ -38,8 +39,12 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-
 const upload = multer({ storage });
+
+/*
+ * Routes with File 
+ */
+app.post("/auth/register", upload.single("picture"), register);
 
 /*
  * Mongoose Setup
