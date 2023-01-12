@@ -2,8 +2,11 @@ import {
     ManageAccountsOutlined, 
     EditOutlined, 
     LocationOnOutlined, 
-    WorkOutlineOutlined 
+    WorkOutlineOutlined,
 } from "@mui/icons-material";
+import TwitterIcon from '@mui/icons-material/Twitter';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
 import {
     Box, Typography, Divider, useTheme
 } from "@mui/material";
@@ -44,11 +47,11 @@ const UserWidget = ({ userId, picturePath }) => {
         setUser(data);          // Set User Data in 'user'
     }
 
-    // Gets the user
+    // Gets the user (updates when Frontend User State Changes)
     useEffect(() => {
         getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [useSelector((state) => state.user)])
 
     // No User, return null
     if (!user) {
@@ -77,9 +80,6 @@ const UserWidget = ({ userId, picturePath }) => {
                         <UserImage 
                             userId={userId}
                             image={picturePath} 
-                            sx={{
-                                "&:hover": { transform: "scale(1.1)"}
-                            }}
                         />
                     </div>
                     <Box>
@@ -87,7 +87,7 @@ const UserWidget = ({ userId, picturePath }) => {
                             variant="h4" color={dark} fontWeight="500"
                             sx={{
                                 "&:hover": {
-                                    color: palette.primary.light,
+                                    color: primary,
                                     cursor: "pointer"
                                 }
                             }}
@@ -148,7 +148,19 @@ const UserWidget = ({ userId, picturePath }) => {
                 {/* Twitter */}
                 <FlexBetween gap="1rem" mb="0.5rem">
                     <FlexBetween gap="1rem">
-                        <img src="../assets/twitter.png" alt="twitter" />
+                        <TwitterIcon 
+                            sx={{ 
+                                color: main, 
+                                fontSize: "2rem",
+                                transition: "1s",
+                                "&:hover": { 
+                                    cursor: "pointer", color: primary,
+                                    transform: "scale(1.25)",
+                                    transition: "1s",
+                                } 
+                            }} 
+                            onClick={() => window.open("https://twitter.com/")}
+                        />
                         <Box>
                             <Typography color={main} fontWeight="500">
                                 Twitter
@@ -159,7 +171,6 @@ const UserWidget = ({ userId, picturePath }) => {
                         </Box>
                     </FlexBetween>
                     <EditOutlined 
-                        onClick={() => window.open("https://twitter.com/")}
                         sx={{ 
                             color: main, 
                             "&:hover": { cursor: "pointer", color: primary } 
@@ -170,7 +181,19 @@ const UserWidget = ({ userId, picturePath }) => {
                 {/* LinkedIn */}
                 <FlexBetween gap="1rem">
                     <FlexBetween gap="1rem">
-                        <img src="../assets/linkedin.png" alt="linkedin" />
+                        <LinkedInIcon 
+                            sx={{ 
+                                color: main, 
+                                fontSize: "2rem",
+                                transition: "1s",
+                                "&:hover": { 
+                                    cursor: "pointer", color: primary,
+                                    transform: "scale(1.25)",
+                                    transition: "1s",
+                                } 
+                            }} 
+                            onClick={() => window.open("https://www.linkedin.com/")}
+                        />
                         <Box>
                             <Typography color={main} fontWeight="500">
                                 LinkedIn
@@ -181,7 +204,6 @@ const UserWidget = ({ userId, picturePath }) => {
                         </Box>
                     </FlexBetween>
                     <EditOutlined 
-                        onClick={() => window.open("https://www.linkedin.com/")}
                         sx={{ 
                             color: main, 
                             "&:hover": { cursor: "pointer", color: primary } 

@@ -76,7 +76,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 userPicturePath={userPicturePath}
             />
             <Typography color={main}
-                sx={{ mt: "1rem" }}
+                sx={{ mt: "1rem", mb: "0.75rem" }}
             >   
                 {description}
             </Typography>
@@ -85,10 +85,12 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             {picturePath && (
                 <img 
                     width="100%" height="auto" alt="post"
-                    style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+                    style={{ borderRadius: "0.75rem", marginBottom: "0.75rem" }}
                     src={`http://localhost:3001/assets/${picturePath}`}
                 />
             )}
+
+            <Divider />
 
             {/* Like and Comment */}
             <FlexBetween mt="0.25rem">
