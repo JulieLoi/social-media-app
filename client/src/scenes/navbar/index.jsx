@@ -40,7 +40,7 @@ const Navbar = () => {
     const dark = theme.palette.neutral.dark;
     const background = theme.palette.background.default;
     const primaryLight = theme.palette.primary.light;
-    const alt = theme.palette.background.alt; 
+    const alt = theme.palette.background.alt;
 
     //
     const fullName = `${user.firstName} ${user.lastName}`;
@@ -50,7 +50,7 @@ const Navbar = () => {
      * Mobile View: Shows logo only, everything else is in a dropdown icon
      */
     return (
-        <FlexBetween padding="1rem 6%" background={alt}>
+        <FlexBetween padding="1rem 6%" backgroundColor={alt}>
             <FlexBetween gap="1.75rem">
                 <Typography
                     fontWeight="bold"
