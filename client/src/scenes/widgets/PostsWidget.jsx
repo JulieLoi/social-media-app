@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
@@ -7,11 +7,9 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
     const dispatch = useDispatch();
 
-    // Posts State
-    const [allPosts, setAllPosts] = useState([])
-
-    // Token (Frontend State)
+    // Token, Posts (Frontend State)
     const token = useSelector((state) => state.token);  
+    const posts = useSelector((state) => state.posts);
 
     // GET API Call (Get All Posts)
     const getPosts = async () => {
@@ -27,7 +25,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         // Get Backend Response
         const data = await response.json();
         dispatch(setPosts({ posts: data }));        // Updates Frontend State
-        setAllPosts(data);                          // Updates Posts Widget State (Post Data)
+
     }
 
     // GET API Call (Get All User Posts)
@@ -42,7 +40,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         );
         const data = await response.json();
         dispatch(setPosts({ posts: data }));
-        setAllPosts(data);
+        //setAllPosts(data);
     }
 
     // Loads "all posts" or "user posts" based on isProfile
@@ -59,7 +57,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     // Posts Widget
     return (
         <>
-            {allPosts.map(
+            {posts.map(
                 ({
                     _id,
                     userId,
