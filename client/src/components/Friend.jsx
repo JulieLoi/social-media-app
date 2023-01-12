@@ -49,22 +49,23 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
             {/* User Profile Picture, Name, Location */}
             <FlexBetween gap="1rem">
-                <UserImage image={userPicturePath} size="55px" /> 
-                <Box
-                    onClick={() => {
-                        navigate(`/profile/${friendId}`);
-                        navigate(0);        // Refresh
-                    }}
-                >
+                <UserImage 
+                    userId={friendId}
+                    image={userPicturePath} 
+                    size="55px" 
+                /> 
+                <Box>
                     <Typography
-                        color={main}
-                        variant="h5"
-                        fontWeight="500"
+                        color={main} variant="h5" fontWeight="500"
                         sx={{
                             "&:hover": {
                                 color: palette.primary.light,
                                 cursoer: "pointer",
                             }
+                        }}
+                        onClick={() => {
+                            navigate(`/profile/${friendId}`);
+                            navigate(0);        // Refresh
                         }}
                     >
                         {name}
