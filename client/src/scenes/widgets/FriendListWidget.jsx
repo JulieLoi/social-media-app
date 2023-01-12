@@ -43,11 +43,8 @@ const FriendListWidget = ({ userId }) => {
     // Friend List Widget
     return (
         <WidgetWrapper 
-            m="1rem 0" 
-            sx={{ 
-                position: "sticky", top:"35rem",
-            }}
-
+            mt="1.5rem"
+            sx={{ position: "sticky", top:"35rem", }}
         >
 
             {/* FRIENDS LIST TITLE */}
@@ -65,8 +62,8 @@ const FriendListWidget = ({ userId }) => {
             {/* FRIENDS LIST */}
             <Box 
                 display="flex" flexDirection="column" 
-                gap="1.5rem"
-                sx={{ mt: "0.5rem", maxHeight: "30vh", overflowY: "scroll" }}
+                gap="1.5rem" p="0.75rem 0"
+                sx={{ maxHeight: "30vh", overflowY: "auto" }}
             >
                 {friends.map((friend) => (
                     <Friend 
