@@ -65,10 +65,10 @@ const MyPostWidget = ({ picturePath }) => {
         const response = await fetch(`http://localhost:3001/posts`, 
             {
                 method: "POST",
-                headers: { Authorization: `Bearer ${token}`},
-                body: formData
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData,
             }
-        )
+        );
         const posts = await response.json();
         dispatch(setPosts({ posts }));          //  Updates Frontend State
 
@@ -87,6 +87,7 @@ const MyPostWidget = ({ picturePath }) => {
                 <InputBase 
                     placeholder="What's on your mind..."
                     onChange={(e) => setPost(e.target.value)}
+                    value={post}
                     sx={{
                         width: "100%",
                         backgroundColor: palette.neutral.light,
