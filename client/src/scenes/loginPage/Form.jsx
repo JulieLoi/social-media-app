@@ -186,32 +186,28 @@ const Form = () => {
                                     <Dropzone
                                         acceptedFiles=".jpg,.jpeg,.png"
                                         multiple={false}
-                                        onDrog={(acceptedFiles) => {
-                                            setFieldValue("picture", acceptedFiles[0])
-                                        }}
+                                        onDrop={(acceptedFiles) =>
+                                        setFieldValue("picture", acceptedFiles[0])
+                                        }
                                     >
-                                        {({ getRootProps, getInputProps}) => {
-                                            <Box
-                                                {...getRootProps()}
-                                                border={`2px dashed ${palette.primary.main}`}
-                                                p="1rem"
-                                                sx={{
-                                                    "&:hover": { cursor: "pointer" }
-                                                }}
-                                            >
-                                                <input {...getInputProps()} />
-                                                {!values.picture ? 
-                                                    (
-                                                        <p>Add Picture Here</p>
-                                                    ) : (
-                                                        <FlexBetween>
-                                                            <Typography>{values.picture.name}</Typography>
-                                                            <EditOutlinedIcon />
-                                                        </FlexBetween>
-                                                    )
-                                                }
-                                            </Box>
-                                        }}
+                                        {({ getRootProps, getInputProps }) => (
+                                        <Box
+                                            {...getRootProps()}
+                                            border={`2px dashed ${palette.primary.main}`}
+                                            p="1rem"
+                                            sx={{ "&:hover": { cursor: "pointer" } }}
+                                        >
+                                            <input {...getInputProps()} />
+                                            {!values.picture ? (
+                                            <p>Add Picture Here</p>
+                                            ) : (
+                                            <FlexBetween>
+                                                <Typography>{values.picture.name}</Typography>
+                                                <EditOutlinedIcon />
+                                            </FlexBetween>
+                                            )}
+                                        </Box>
+                                        )}
                                     </Dropzone>
                                 </Box>
                             </>
