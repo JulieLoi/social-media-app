@@ -2,6 +2,9 @@
 Some code in widgets (postwidget) has an extra state because things aren't being updated.
 Even though the state is being udpated, it doesn't update the code's const variables in the widgets.
 
+Fixed this in the Friend.jsx as well.
+-add/remove friend was not updating properly.
+
 
 
 
