@@ -38,7 +38,6 @@ const MyPostWidget = ({ picturePath }) => {
     const [isImage, setIsImage] = useState(false);  // Will show image dropbox
     const [image, setImage] = useState(null);       // Optional image to include in post
     const [post, setPost] = useState("");           // Post Content
-
     
     // Theme Colors
     const { palette } = useTheme();
@@ -77,7 +76,7 @@ const MyPostWidget = ({ picturePath }) => {
         setPost("");
     }
     
-    // MyPostWidget Component
+    // My Post Widget 
     return (
         <WidgetWrapper>
 

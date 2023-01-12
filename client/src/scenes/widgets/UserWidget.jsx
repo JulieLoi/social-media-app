@@ -44,7 +44,6 @@ const UserWidget = ({ userId, picturePath }) => {
     // Gets the user
     useEffect(() => {
         getUser();
-        console.log("USE EFFECT")
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
