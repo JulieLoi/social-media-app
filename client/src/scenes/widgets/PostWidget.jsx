@@ -24,6 +24,8 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     
     // Post Widget State
     const [isComments, setIsComments] = useState(false);
+    const [share, setShare] = useState(false);
+    const [postLikes, setPostLikes] = useState(likes);
 
     // Theme Colors
     const { palette } = useTheme();
@@ -34,9 +36,9 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
 
-    // Likes 
-    const isLiked = Boolean(likes[loggedInUserId]);     // Logged In User Likes
-    const likeCount = Object.keys(likes).length;        // Total Like Count
+    // Likes (Does not update)
+    //const isLiked = Boolean(likes[loggedInUserId]);     // Logged In User Likes
+    //const likeCount = Object.keys(likes).length;        // Total Like Count
 
 
     // PATCH API Call (Like/Dislike Post)
@@ -56,11 +58,15 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
 
         const updatedPost = await response.json();
         dispatch(setPost({ post: updatedPost }));       // Update Frontend State
+        setPostLikes(updatedPost.likes);
     }
 
     // Post Widget
     return (
         <WidgetWrapper m="2rem 0">
+            <Box>
+                
+            </Box>
             <Friend
                 friendId={postUserId}
                 name={name}
@@ -72,6 +78,8 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             >   
                 {description}
             </Typography>
+
+            {/* Post Picture (if exists) */}
             {picturePath && (
                 <img 
                     width="100%" height="auto" alt="post"
@@ -87,19 +95,23 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                     {/* Like Button and Like Counter */}
                     <FlexBetween gap="0.3rem">
                         <IconButton onClick={patchLike}>
-                            {isLiked ? 
+                            {Boolean(postLikes[loggedInUserId]) ? (
                                 <FavoriteOutlined sx={{ color: primary }} />
-                                :
-                                <FavoriteBorderOutlined sx={{ color: primary }} />
-                            }
+                            ) : (
+                                <FavoriteBorderOutlined />
+                            )}
                         </IconButton>
-                        <Typography>{likeCount}</Typography>
+                        <Typography>{Object.keys(postLikes).length}</Typography>
                     </FlexBetween>
 
                     {/* Comment Button and Comment Count */}
                     <FlexBetween gap="0.3rem">
                         <IconButton onClick={() => setIsComments(!isComments)}>
-                            <ChatBubbleOutlineOutlined />
+                            {isComments ?
+                                <ChatBubbleOutlineOutlined sx={{ color: primary }} />
+                                :
+                                <ChatBubbleOutlineOutlined />
+                            }
                         </IconButton>
                         <Typography>{comments.length}</Typography>
                     </FlexBetween>
@@ -107,9 +119,14 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 </FlexBetween>
 
                 {/* Share Button */}
-                <IconButton>
-                    <ShareOutlined />
+                <IconButton onClick={() => setShare(!share)}>
+                    {share ?
+                        <ShareOutlined sx={{ color: primary }} />
+                        :
+                        <ShareOutlined />
+                    }
                 </IconButton>
+                
 
             </FlexBetween>
 

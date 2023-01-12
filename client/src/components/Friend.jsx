@@ -43,31 +43,37 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
     // Friend Component
     return (
-        <FlexBetween gap="1rem">
-            <UserImage image={userPicturePath} size="55px" /> 
-            <Box
-                onClick={() => {
-                    navigate(`/profile/${friendId}`);
-                    navigate(0);        // Refresh
-                }}
-            >
-                <Typography
-                    color={main}
-                    variant="h5"
-                    fontWeight="500"
-                    sx={{
-                        "&:hover": {
-                            color: palette.primary.light,
-                            cursoer: "pointer",
-                        }
+        <FlexBetween>
+
+            {/* User Profile Picture, Name, Location */}
+            <FlexBetween gap="1rem">
+                <UserImage image={userPicturePath} size="55px" /> 
+                <Box
+                    onClick={() => {
+                        navigate(`/profile/${friendId}`);
+                        navigate(0);        // Refresh
                     }}
                 >
-                    {name}
-                </Typography>
-                <Typography color={medium} fontSize="0.75rem">
-                    {subtitle}
-                </Typography>
-            </Box>
+                    <Typography
+                        color={main}
+                        variant="h5"
+                        fontWeight="500"
+                        sx={{
+                            "&:hover": {
+                                color: palette.primary.light,
+                                cursoer: "pointer",
+                            }
+                        }}
+                    >
+                        {name}
+                    </Typography>
+                    <Typography color={medium} fontSize="0.75rem">
+                        {subtitle}
+                    </Typography>
+                </Box>
+            </FlexBetween>
+
+            {/* Add/Remove Friend */}
             <FlexBetween>
                 <IconButton
                     onClick={() => patchFriend()}
@@ -83,8 +89,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
                     }
                 </IconButton>
             </FlexBetween>
+
         </FlexBetween>
     )
 };
 
-export default Friend
+export default Friend;

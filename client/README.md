@@ -1,3 +1,18 @@
+# Differences
+Some code in widgets (postwidget) has an extra state because things aren't being updated.
+Even though the state is being udpated, it doesn't update the code's const variables in the widgets.
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
