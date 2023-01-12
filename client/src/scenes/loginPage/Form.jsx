@@ -53,6 +53,7 @@ const Form = () => {
 
     // Register Function
     const register = async (values, onSubmitProps) => {
+
         // This allows us to send form info with image
         const formData = new FormData();
 
@@ -69,13 +70,13 @@ const Form = () => {
                 body: formData,
             }
         )
+
+        // Get Backend Response (new user)
         const savedUser = await savedUserResponse.json();
-        onSubmitProps.resetForm();
+        onSubmitProps.resetForm();                          // Reset Form
 
         // Successful API Call, Go to Login Page
-        if (savedUser) {
-            setPageType("login")
-        }
+        if (savedUser) { setPageType("login") }
     }
 
     // Login Function
@@ -89,8 +90,10 @@ const Form = () => {
                 body: JSON.stringify(values),
             }
         )
-        const loggedIn = await loggedInResponse.json();
-        onSubmitProps.resetForm();
+
+        // Get Backend Response (User, Token)
+        const loggedIn = await loggedInResponse.json(); 
+        onSubmitProps.resetForm();                          // Reset Form
 
         // Successful API Call, Set State (Login), Go to Home Page
         if (loggedIn) {
@@ -110,6 +113,7 @@ const Form = () => {
         if (isRegister) await register(values, onSubmitProps);
     };
 
+    // Form Frontend
     return (
         <Formik
             onSubmit={handleFormSubmit}
@@ -135,6 +139,7 @@ const Form = () => {
                             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
                         }}
                     >
+                        {/* REGISTER FORM*/}
                         {isRegister && (
                             <>
                                 <TextField 
@@ -212,6 +217,7 @@ const Form = () => {
                                 </Box>
                             </>
                         )}
+
                         {/* LOGIN AND REGISTER */}
                         <TextField 
                             label="Email"
@@ -235,7 +241,8 @@ const Form = () => {
                             sx={{ gridColumn: "span 4" }}
                         />
                     </Box>
-                    {/* BUTTONS */}
+
+                    {/* SUBMIT BUTTON: Login / Register */}
                     <Box>
                         <Button
                             fullWidth
@@ -251,6 +258,8 @@ const Form = () => {
                             {isLogin ? "LOGIN" : "REGISTER"}
 
                         </Button>
+
+                        {/* CHANGE BETWEEN LOGIN / REGISTER */}
                         <Typography
                             onClick={() => {
                                 setPageType(isLogin ? "register" : "login")
@@ -270,6 +279,7 @@ const Form = () => {
                                 : "Already have an account? Login here!"
                             }
                         </Typography>
+                        
                     </Box>
                 </form>
             )}

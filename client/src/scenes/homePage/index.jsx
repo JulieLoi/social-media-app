@@ -8,6 +8,10 @@ import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 
+/**
+ * Home Page
+ * The Home Page of Sociopedia
+ */
 const HomePage = () => {
 
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -19,14 +23,13 @@ const HomePage = () => {
             <Navbar />
 
             {/* NAVIGATE TOP ICON */}
-            <IconButton>
+            <IconButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}>
                 <ArrowCircleUpRoundedIcon 
                     sx={{ 
                         position: "fixed", bottom: "2rem", right: "2rem", 
                         color: palette.primary.light, fontSize: "3rem",
                         "&:hover": { color: palette.primary.main }
                     }}
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}
                 />
             </IconButton>
             

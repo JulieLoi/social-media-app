@@ -1,10 +1,16 @@
+import FlexBetween from "components/FlexBetween";
 
 
+/**
+ * Profile Page
+ */
 const ProfilePage = () => {
+
+
     return (
-        <div>
-            Profile Page
-        </div>
+        <FlexBetween>
+
+        </FlexBetween>
     )
 }
 

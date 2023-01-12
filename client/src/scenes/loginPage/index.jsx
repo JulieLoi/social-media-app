@@ -1,13 +1,19 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
 
+/**
+ * Login Page
+ * You can either login or create an account, then login
+ */
 const LoginPage = () => {
 
-    const theme = useTheme();
-    const alt = theme.palette.background.alt;
+    // Theme Colors
+    const { palette } = useTheme();
+    const alt = palette.background.alt;
 
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
+    // Login Page
     return (
         <Box>
             <Box width="100%" 

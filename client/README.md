@@ -8,8 +8,8 @@ Edit Profile...
 User Widget does not update friend count...
 -Fix this
 
-
-
+Favicon Icon
+<a href="https://www.flaticon.com/free-icons/share" title="share icons">Share icons created by Vectors Market - Flaticon</a>
 
 
 

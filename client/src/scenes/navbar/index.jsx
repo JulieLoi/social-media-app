@@ -25,6 +25,10 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
+/**
+ * Navbar
+ * The navigation bar 
+ */
 const Navbar = () => {
 
     // Mobile/PC
@@ -43,7 +47,7 @@ const Navbar = () => {
     const alt = palette.background.alt;
     const primary = palette.primary.main;
 
-    // 
+    // Full Name
     const fullName = `${user.firstName} ${user.lastName}`;
 
     /**
