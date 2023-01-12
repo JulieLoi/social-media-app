@@ -29,7 +29,7 @@ const UserWidget = ({ userId, picturePath }) => {
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
 
-    // Get User Function (API Call)
+    // GET API Call (Get User)
     const getUser = async () => {
         const response = await fetch(`http://localhost:3001/users/${userId}`,
             {
@@ -37,9 +37,8 @@ const UserWidget = ({ userId, picturePath }) => {
                 headers: { Authorization: `Bearer ${token}`}
             }
         )
-
         const data = await response.json();
-        setUser(data);
+        setUser(data);          // Set User Data in 'user'
     }
 
     // Gets the user
@@ -164,7 +163,6 @@ const UserWidget = ({ userId, picturePath }) => {
                     </FlexBetween>
 
                 </Box>
-            
         </WidgetWrapper>
     )
 }
