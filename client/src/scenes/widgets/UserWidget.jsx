@@ -37,6 +37,8 @@ const UserWidget = ({ userId, picturePath }) => {
                 headers: { Authorization: `Bearer ${token}`}
             }
         )
+
+        // Get Backend Response
         const data = await response.json();
         setUser(data);          // Set User Data in 'user'
     }
@@ -66,6 +68,7 @@ const UserWidget = ({ userId, picturePath }) => {
     //
     return (
         <WidgetWrapper>
+            
             {/* FIRST ROW */}
             <FlexBetween gap="0.5rem" pb="1.1rem"
                 onClick={() => navigate(`/profile/${userId}`)}

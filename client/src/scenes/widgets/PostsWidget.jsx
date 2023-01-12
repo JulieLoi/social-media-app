@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
+/**
+ * Posts Widget
+ * Displays all posts in the database (most recent at the top)
+ */
 const PostsWidget = ({ userId, isProfile = false }) => {
 
     const dispatch = useDispatch();
 
     // Token, Posts (Frontend State)
     const token = useSelector((state) => state.token);  
-    const posts = useSelector((state) => state.posts);
+    const posts = useSelector((state) => [...state.posts].reverse());
 
     // GET API Call (Get All Posts)
     const getPosts = async () => {
@@ -22,9 +26,9 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             }
         );
 
-        // Get Backend Response
+        // Get Backend Response (Get All Posts in DB)
         const data = await response.json();
-        dispatch(setPosts({ posts: data }));        // Updates Frontend State
+        dispatch(setPosts({ posts: data }));    // Updates Frontend State
 
     }
 
@@ -38,19 +42,16 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                 headers: { Authorization: `Bearer ${token}`}
             }
         );
-        const data = await response.json();
-        dispatch(setPosts({ posts: data }));
-        //setAllPosts(data);
+
+        // Get Backend Response (Get All User Posts in DB)
+        const data = await response.json(); 
+        dispatch(setPosts({ posts: data }));    // Updates Frontend State
     }
 
     // Loads "all posts" or "user posts" based on isProfile
     useEffect(() => {
-        if (isProfile) {
-            getUserPosts();
-        }
-        else {
-            getPosts();
-        }
+        if (isProfile) { getUserPosts(); }
+        else { getPosts(); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

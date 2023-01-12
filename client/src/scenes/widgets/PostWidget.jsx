@@ -18,6 +18,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost } from "state";
 
+/**
+ * Post Widget
+ * A widget of a single post published
+ */
 const PostWidget = ({ postId, postUserId, name, description, location, picturePath, userPicturePath, likes, comments }) => {
 
     const dispatch = useDispatch();
@@ -65,9 +69,6 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     // Post Widget
     return (
         <WidgetWrapper m="2rem 0">
-            <Box>
-                
-            </Box>
             <Friend
                 friendId={postUserId}
                 name={name}

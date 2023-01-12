@@ -68,11 +68,14 @@ const MyPostWidget = ({ picturePath }) => {
                 body: formData,
             }
         );
+
+        // Gets Backend Response (Updated Posts - including the newly created post)
         const posts = await response.json();
         dispatch(setPosts({ posts }));          //  Updates Frontend State
 
         // Reset MyPostWidget
         setImage(null);
+        setIsImage(false);
         setPost("");
     }
     
@@ -96,7 +99,7 @@ const MyPostWidget = ({ picturePath }) => {
                 />
             </FlexBetween>
 
-            {/* Image Dropzone */}
+            {/* IMAGE DROPZONE */}
             {isImage && (
                 <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
                     <Dropzone
@@ -141,48 +144,48 @@ const MyPostWidget = ({ picturePath }) => {
 
             <Divider sx={{ margin: "1.25rem 0" }} />
 
-            {/* Icons: Image, Clip, Attachment, Audio */}
+            {/* ICONS: Image, Clip, Attachment, Audio */}
             <FlexBetween>
                 <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-                    <ImageOutlined sx={{ color: mediumMain }} />
-                    <Typography 
-                        color={mediumMain} 
+                    {isImage ?
+                        <ImageOutlined sx={{ color: palette.primary.main }} />
+                        :
+                        <ImageOutlined sx={{ color: mediumMain }} />
+                    }
+                    <Typography color={mediumMain} 
                         sx={{ "&:hover": { cursor: "pointer", color: medium } }}
                     >
                         Image
                     </Typography>
                 </FlexBetween>
 
+                {/* ICONS: Desktop Only */}
                 {isNonMobileScreens ? 
-                    (
-                        <>
-                            <FlexBetween gap="0.25rem">
-                                <GifBoxOutlined sx={{ color: mediumMain }} />
-                                <Typography color={mediumMain}>Clip</Typography>
-                            </FlexBetween>
+                    (<>
+                        <FlexBetween gap="0.25rem">
+                            <GifBoxOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain}>Clip</Typography>
+                        </FlexBetween>
 
-                            <FlexBetween gap="0.25rem">
-                                <AttachFileOutlined sx={{ color: mediumMain }} />
-                                <Typography color={mediumMain}>Attachment</Typography>
-                            </FlexBetween>
+                        <FlexBetween gap="0.25rem">
+                            <AttachFileOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain}>Attachment</Typography>
+                        </FlexBetween>
 
-                            <FlexBetween gap="0.25rem">
-                                <MicOutlined sx={{ color: mediumMain }} />
-                                <Typography color={mediumMain}>Audio</Typography>
-                            </FlexBetween>
-                        </>
-                    )
+                        <FlexBetween gap="0.25rem">
+                            <MicOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain}>Audio</Typography>
+                        </FlexBetween>
+                    </>)
                     :
-                    (
-                        <>
-                            <FlexBetween gap="0.25rem">
-                                <MoreHorizOutlined sx={{ color: mediumMain }} />
-                            </FlexBetween>
-                        </>
-                    )
+                    (<>
+                        <FlexBetween gap="0.25rem">
+                            <MoreHorizOutlined sx={{ color: mediumMain }} />
+                        </FlexBetween>
+                    </>)
                 }
 
-                {/* POST Button */}
+                {/* POST BUTTON */}
                 <Button
                     disabled={!post}
                     onClick={handlePost}

@@ -5,6 +5,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "state";
 
+/**
+ * Friends List Widget
+ * The widget that contains the list of the user's friends
+ */
 const FriendListWidget = ({ userId }) => {
 
     const dispatch = useDispatch();
@@ -30,7 +34,7 @@ const FriendListWidget = ({ userId }) => {
         dispatch(setFriends({ friends: data }));     // Update Frontend State   
     }
 
-    // Gets Friends
+    // Gets Friends List Data
     useEffect(() => {
         getFriends();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,6 +43,8 @@ const FriendListWidget = ({ userId }) => {
     // Friend List Widget
     return (
         <WidgetWrapper>
+
+            {/* FRIENDS LIST TITLE */}
             <Typography 
                 color={palette.neutral.dark}
                 variant="h5"
@@ -47,6 +53,8 @@ const FriendListWidget = ({ userId }) => {
             >
                 Friend List
             </Typography>
+
+            {/* FRIENDS LIST */}
             <Box display="flex" flexDirection="column" gap="1.5rem">
                 {friends.map((friend) => (
                         <Friend 
@@ -58,8 +66,8 @@ const FriendListWidget = ({ userId }) => {
                         />
                     ))
                 }
-
             </Box>
+
         </WidgetWrapper>
     )
 }

@@ -40,6 +40,14 @@ export const addRemoveFriend = async (req, res) => {
 
     try {
         const { id, friendId } = req.params;
+
+        // Cannot Add Self As Friend
+        if (id === friendId) {
+            res.status(405).json({ message: "You cannot add yourself as a friend." });
+            return;
+        }
+
+        // Finds User and Friend
         const user = await User.findById(id);
         const friend = await User.findById(friendId);
   
