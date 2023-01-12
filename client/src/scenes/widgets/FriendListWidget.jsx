@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, Divider, useTheme } from "@mui/material";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
@@ -42,30 +42,42 @@ const FriendListWidget = ({ userId }) => {
  
     // Friend List Widget
     return (
-        <WidgetWrapper>
+        <WidgetWrapper 
+            m="1rem 0" 
+            sx={{ 
+                position: "sticky", top:"35rem",
+            }}
+
+        >
 
             {/* FRIENDS LIST TITLE */}
             <Typography 
                 color={palette.neutral.dark}
                 variant="h5"
                 fontWeight="500"
-                sx={{ mb: "1.5rem" }}
+                sx={{ mb: "0.5rem" }}
             >
-                Friend List
+                Friends List
             </Typography>
 
+            <Divider />
+
             {/* FRIENDS LIST */}
-            <Box display="flex" flexDirection="column" gap="1.5rem">
+            <Box 
+                display="flex" flexDirection="column" 
+                gap="1.5rem"
+                sx={{ mt: "0.5rem", maxHeight: "30vh", overflowY: "scroll" }}
+            >
                 {friends.map((friend) => (
-                        <Friend 
-                            key={friend._id}
-                            friendId={friend._id}
-                            name={`${friend.firstName} ${friend.lastName}`}
-                            subtitle={friend.occupation}
-                            userPicturePath={friend.picturePath}
-                        />
-                    ))
-                }
+                    <Friend 
+                        key={friend._id}
+                        friendId={friend._id}
+                        name={`${friend.firstName} ${friend.lastName}`}
+                        subtitle={friend.occupation}
+                        userPicturePath={friend.picturePath}
+                        marginAmount={"1rem"}
+                    />
+                ))}
             </Box>
 
         </WidgetWrapper>

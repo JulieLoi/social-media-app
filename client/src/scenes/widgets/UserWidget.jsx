@@ -71,7 +71,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
     //
     return (
-        <WidgetWrapper>
+        <WidgetWrapper position="sticky" top="7rem">
 
             {/* FIRST ROW: Profile Image, Name, Friend Count, Profile Page Button */}
             <FlexBetween gap="0.5rem" pb="1.1rem">
@@ -162,7 +162,16 @@ const UserWidget = ({ userId, picturePath }) => {
                             onClick={() => window.open("https://twitter.com/")}
                         />
                         <Box>
-                            <Typography color={main} fontWeight="500">
+                            <Typography 
+                                color={main} fontWeight="500"
+                                sx={{
+                                    "&:hover": {
+                                        color: primary,
+                                        cursor: "pointer"
+                                    }
+                                }}
+                                onClick={() => window.open("https://twitter.com/")}
+                            >
                                 Twitter
                             </Typography>
                             <Typography color={medium}>
@@ -195,7 +204,16 @@ const UserWidget = ({ userId, picturePath }) => {
                             onClick={() => window.open("https://www.linkedin.com/")}
                         />
                         <Box>
-                            <Typography color={main} fontWeight="500">
+                            <Typography 
+                                color={main} fontWeight="500"
+                                sx={{
+                                    "&:hover": {
+                                        color: primary,
+                                        cursor: "pointer"
+                                    }
+                                }}
+                                onClick={() => window.open("https://www.linkedin.com/")}
+                            >
                                 LinkedIn
                             </Typography>
                             <Typography color={medium}>

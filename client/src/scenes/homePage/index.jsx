@@ -39,11 +39,10 @@ const HomePage = () => {
 
                 {/* FRIENDS LIST (DESKTOP ONLY) */}
                 {isNonMobileScreens && (
-                    <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+                    <Box flexBasis={isNonMobileScreens ? "26%" : undefined}
+                    >
                         <AdvertWidget />
-                        <Box m="2rem 0">
-                            <FriendListWidget userId={_id} />
-                        </Box>
+                        <FriendListWidget userId={_id} />
                     </Box>
                 )}
             </Box>

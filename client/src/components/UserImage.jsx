@@ -11,8 +11,9 @@ const UserImage = ({ userId, image, size="60px" }) => {
 
     // Palette Theme
     const { palette } = useTheme();
-    const main = palette.neutral.main;
     const primary = palette.primary.main;
+    const borderColor = palette.primary.light;
+    const background = palette.background.alt;
     
     // User Image
     return (
@@ -23,12 +24,12 @@ const UserImage = ({ userId, image, size="60px" }) => {
                 navigate(0);        // Refresh
             }}
             sx={{ 
-                color: main, 
-                fontSize: "2rem",
+                border: `0.1rem solid ${borderColor}`, borderRadius: "50%",
+                backgroundColor: background,
                 transition: "1s",
                 "&:hover": { 
                     cursor: "pointer", color: primary,
-                    transform: "scale(1.25)",
+                    transform: "scale(1.1)",
                     transition: "1s",
                 } 
             }} 

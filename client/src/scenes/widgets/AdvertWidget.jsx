@@ -16,7 +16,7 @@ import { Typography, useTheme } from "@mui/material";
 
     // Advert Widget
     return (
-        <WidgetWrapper>
+        <WidgetWrapper position="sticky" top="7rem">
 
             {/* FIRST ROW */}
             <FlexBetween>

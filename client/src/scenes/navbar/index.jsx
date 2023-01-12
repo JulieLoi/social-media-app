@@ -35,12 +35,13 @@ const Navbar = () => {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
     // Color Theme
-    const theme = useTheme();
-    const neutralLight = theme.palette.neutral.light;
-    const dark = theme.palette.neutral.dark;
-    const background = theme.palette.background.default;
-    const primaryLight = theme.palette.primary.light;
-    const alt = theme.palette.background.alt;
+    const { palette } = useTheme();
+    const neutralLight = palette.neutral.light;
+    const dark = palette.neutral.dark;
+    const background = palette.background.default;
+    const primaryLight = palette.primary.light;
+    const alt = palette.background.alt;
+    const primary = palette.primary.main;
 
     // 
     const fullName = `${user.firstName} ${user.lastName}`;
@@ -50,8 +51,17 @@ const Navbar = () => {
      * Mobile View: Shows logo only, everything else is in a dropdown icon
      */
     return (
-        <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+        <FlexBetween 
+            padding="1rem 6%" 
+            backgroundColor={alt} 
+            position="sticky" top="0"
+            zIndex="10"
+        >
+
+            {/* LOGO / SEARCH */}
             <FlexBetween gap="1.75rem">
+
+                {/* Logo Text*/}
                 <Typography
                     fontWeight="bold"
                     fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -66,10 +76,14 @@ const Navbar = () => {
                 >
                     Sociopedia
                 </Typography>
+
+                {/* SEARCH BAR */}
                 {isNonMobileScreens && (
                     <FlexBetween 
-                        background={neutralLight} borderRadius="9px" 
-                        gap="3rem" padding="0.1rem 1.5rem"
+                        backgroundColor={neutralLight} 
+                        borderRadius="9px" 
+                        gap="3rem" 
+                        padding="0.1rem 1.5rem"
                     >
                         <InputBase placeholder="Search..." />
                         <IconButton>
@@ -77,24 +91,45 @@ const Navbar = () => {
                         </IconButton>
                     </FlexBetween>
                 )}
+
             </FlexBetween>
 
 
-            {/* DESKTOP NAV */}
+            {/* ICONS / LOG OUT */}
             {isNonMobileScreens ? 
                 (
                     <FlexBetween gap="2rem">
-                        {/* Menu Icons */}
+                        {/* Light/Dark Mode */}
                         <IconButton onClick={() => dispatch(setMode())}>
-                            {theme.palette.mode === "dark" ? 
-                                (<DarkMode sx={{ fontSize:"25px" }} />) 
+                            {palette.mode === "dark" ? 
+                                (<DarkMode 
+                                    sx={{ 
+                                        fontSize:"25px",
+                                        "&:hover": { color: primary }
+                                    }} 
+                                />) 
                                 : 
-                                (<LightMode sx={{ color: dark, fontSize:"25px" }} />)
+                                (<LightMode 
+                                    sx={{ 
+                                        color: dark,
+                                        fontSize:"25px",
+                                        "&:hover": { color: primary }
+                                    }} 
+                                />) 
                             }
                         </IconButton>
-                        <Message sx={{ fontSize:"25px" }} />
-                        <Notifications sx={{ fontSize:"25px" }} />
-                        <Help sx={{ fontSize:"25px" }} />
+                        {/* Other Menu Icons */}
+                        <IconButton>
+                            <Message sx={{ fontSize:"25px" }} />
+                        </IconButton>
+                        <IconButton>
+                            <Notifications sx={{ fontSize:"25px" }} />
+                        </IconButton>
+                        <IconButton>
+                            <Help sx={{ fontSize:"25px" }} />
+                        </IconButton>
+                        
+                        {/* DROPDOWN BOX */}
                         <FormControl variable="standard" value={fullName}>
                             <Select
                                 value={fullName}
@@ -122,6 +157,7 @@ const Navbar = () => {
                                 </MenuItem>
                             </Select>
                         </FormControl>
+
                     </FlexBetween>
                 ) : (
                     <IconButton
@@ -165,7 +201,7 @@ const Navbar = () => {
                             onClick={() => dispatch(setMode())}
                             sx={{ fontSize:"25px" }}
                         >
-                            {theme.palette.mode === "dark" ? 
+                            {palette.mode === "dark" ? 
                                 (<DarkMode sx={{ fontSize:"25px" }} />) 
                                 : 
                                 (<LightMode sx={{ color: dark, fontSize:"25px" }} />)
