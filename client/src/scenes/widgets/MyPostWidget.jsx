@@ -44,7 +44,7 @@ const MyPostWidget = ({ picturePath }) => {
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
 
-    // User ID and Token (State)
+    // User ID and Token (Frontend State)
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 

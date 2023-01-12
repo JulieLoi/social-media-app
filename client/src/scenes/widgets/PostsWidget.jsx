@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
@@ -7,9 +7,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
     const dispatch = useDispatch();
 
-    // All Posts and Token (State)
-    const posts = useSelector((state) => state.posts);
-    const token = useSelector((state) => state.token);
+    // Posts State
+    const [allPosts, setAllPosts] = useState([])
+
+    // Token (Frontend State)
+    const token = useSelector((state) => state.token);  
 
     // GET API Call (Get All Posts)
     const getPosts = async () => {
@@ -23,6 +25,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         );
         const data = await response.json();
         dispatch(setPosts({ posts: data }));
+        setAllPosts(data);
     }
 
     // GET API Call (Get All User Posts)
@@ -37,6 +40,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         );
         const data = await response.json();
         dispatch(setPosts({ posts: data }));
+        setAllPosts(data);
     }
 
     // Loads "all posts" or "user posts" based on isProfile
@@ -53,33 +57,32 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     // Posts Widget
     return (
         <>
-            {posts.map(
-                    ({
-                        _id,
-                        userId,
-                        firstName,
-                        lastName,
-                        description,
-                        location,
-                        picturePath,
-                        userPicturePath,
-                        likes,
-                        comments,
-                    }) => (
-                        <PostWidget
-                            key={_id}
-                            postId={_id}
-                            postUserId={userId}
-                            name={`${firstName} ${lastName}`}
-                            description={description}
-                            location={location}
-                            picturePath={picturePath}
-                            userPicturePath={userPicturePath}
-                            likes={likes}
-                            comments={comments}
-                        />
-                    )
-                )
+            {allPosts.map(
+                ({
+                    _id,
+                    userId,
+                    firstName,
+                    lastName,
+                    description,
+                    location,
+                    picturePath,
+                    userPicturePath,
+                    likes,
+                    comments,
+                }) => (
+                    <PostWidget
+                        key={_id}
+                        postId={_id}
+                        postUserId={userId}
+                        name={`${firstName} ${lastName}`}
+                        description={description}
+                        location={location}
+                        picturePath={picturePath}
+                        userPicturePath={userPicturePath}
+                        likes={likes}
+                        comments={comments}
+                    />
+                ))
             }
         </>
     )

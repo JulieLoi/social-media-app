@@ -18,7 +18,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     const main = palette.primary.dark;
     const medium = palette.neutral.medium;
 
-    // User ID, Token, and User Friends (State)
+    // User ID, Token, and User Friends (Frontend State)
     const {_id} = useSelector((state) => state.token);
     const token = useSelector((state) => state.token);
     const friends = useSelector((state) => state.user.friends);

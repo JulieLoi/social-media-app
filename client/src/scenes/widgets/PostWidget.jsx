@@ -30,7 +30,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     const main = palette.neutral.main;
     const primary = palette.primary.main;
 
-    // Token, Logged In User ID (State)
+    // Token, Logged In User ID (Frontend State)
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
 
