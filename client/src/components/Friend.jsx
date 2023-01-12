@@ -1,5 +1,6 @@
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { setFriends } from "state";
@@ -11,6 +12,10 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // Friend State
+    const [userFriends, setUserFriends] = useState(useSelector((state) => state.user.friends));
+    const [isFriend, setIsFriend] = useState(userFriends.find((friend) => friend._id === friendId));
+
     // Theme Colors
     const { palette } = useTheme();
     const primaryLight = palette.primary.light;
@@ -19,12 +24,12 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     const medium = palette.neutral.medium;
 
     // User ID, Token, and User Friends (Frontend State)
-    const {_id} = useSelector((state) => state.token);
+    const {_id} = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
-    const friends = useSelector((state) => state.user.friends);
+    //const friends = useSelector((state) => state.user.friends);
 
-    // Boolean
-    const isFriend = friends.find((friend) => friend._id === friendId);
+    // Check for friendship
+    //const isFriend = friends.find((friend) => friend._id === friendId);
 
     // PATCH API Call (Add/Remove Friend)
     const patchFriend = async () => {
@@ -33,12 +38,14 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         const response = await fetch(`http://localhost:3001/users/${_id}/${friendId}`,
             {
                 method: "PATCH",
-                headers: { Authorization: `Beaer ${token}`},
+                headers: { Authorization: `Bearer ${token}`},
                 "Content-Type": "application/json"
             }
         );
         const data = await response.json();
         dispatch(setFriends({ friends: data }));    // Updates Frontend State
+        setUserFriends(data);                       // Updates Friend State (friend list)
+        setIsFriend(!isFriend);                     // Updates Friend State (boolean)
     }
 
     // Friend Component

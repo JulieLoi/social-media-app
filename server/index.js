@@ -74,6 +74,7 @@ mongoose.connect(process.env.MONGO_URL, {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
     // ADD FAKE DATA (Once)
+    //console.log("Load Fake Data")
     //User.insertMany(users);
     //Post.insertMany(posts);
 

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/**
+ * Manages State for the entire frontend
+ */
+
 const initialState = {
     mode: "light",
     user: null,
