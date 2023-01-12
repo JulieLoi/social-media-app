@@ -56,9 +56,10 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             }
         );
 
+        // Get Backend Response
         const updatedPost = await response.json();
         dispatch(setPost({ post: updatedPost }));       // Update Frontend State
-        setPostLikes(updatedPost.likes);
+        setPostLikes(updatedPost.likes);                // Update Post Widget State
     }
 
     // Post Widget

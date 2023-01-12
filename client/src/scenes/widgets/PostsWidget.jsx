@@ -23,9 +23,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                 headers: { Authorization: `Bearer ${token}`}
             }
         );
+
+        // Get Backend Response
         const data = await response.json();
-        dispatch(setPosts({ posts: data }));
-        setAllPosts(data);
+        dispatch(setPosts({ posts: data }));        // Updates Frontend State
+        setAllPosts(data);                          // Updates Posts Widget State (Post Data)
     }
 
     // GET API Call (Get All User Posts)
