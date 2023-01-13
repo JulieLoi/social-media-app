@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -18,7 +18,6 @@ const ProfilePage = () => {
     const token = useSelector((state) => state.token);
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
-
     // Get User of the Profile Page
     const getUser = async () => {
 
@@ -29,8 +28,10 @@ const ProfilePage = () => {
                 headers: { Authorization: `Bearer ${token}` },
             }
         );
-        const data = response.json();
-        setUser(data);
+
+        // Get Backend Response (Profile User Data)
+        const data = await response.json();
+        setUser(data);                          // Updates Profile Page State (User)
     }
 
     // Get User Data for Profile Page
@@ -43,6 +44,8 @@ const ProfilePage = () => {
     if (!user) {
         return null;
     }
+
+    console.log(userId)
 
     // Profile Page
     return (
@@ -70,7 +73,7 @@ const ProfilePage = () => {
                 >
                     <MyPostWidget picturePath={user.picturePath} />
                     <Box m="2rem 0" />
-                    <PostsWidget userId={userId} isProfile />
+                    <PostsWidget userId={userId} isProfile={true} />
                 </Box>
 
             </Box>
