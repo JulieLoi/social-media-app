@@ -3,16 +3,16 @@
 # Possible Features to add
 
 
-Edit Profile...
-
-
-FIX IMAGE DROPZONE, CANNOT UPLOAD NEW IMAGE DIFFERENT FROM PROFILE IMAGE.
--
+Edit account info...
 
 WORK ON MY LOGIN/REGISTER...
 -Add more restrictions on the data, mention it in the red text...
 -When logging in with non-existing account, mention that email is not in use.
 -Mention wrong password...
+
+    ADD COMMENTS
+    -comment should show user image of who said the comment.
+    - Order by old -> new (top -> bottom)
 
 
 

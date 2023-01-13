@@ -92,6 +92,8 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 subtitle={location}
                 userPicturePath={userPicturePath}
             />
+
+            {/* DESCRIPTION */}
             <Typography color={main}
                 sx={{ mt: "1rem", mb: "0.75rem" }}
             >   

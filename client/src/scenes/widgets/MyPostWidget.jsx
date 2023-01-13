@@ -1,6 +1,5 @@
 import {
     EditOutlined,
-    DeleteOutlined,
     AttachFileOutlined,
     GifBoxOutlined,
     ImageOutlined,
@@ -14,7 +13,6 @@ import {
     InputBase,
     useTheme,
     Button,
-    IconButton,
     useMediaQuery,
   } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
@@ -89,6 +87,9 @@ const MyPostWidget = ({ picturePath }) => {
                 <InputBase 
                     placeholder="What's on your mind..."
                     onChange={(e) => setPost(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === `Enter`) { handlePost() }
+                    }}
                     value={post}
                     sx={{
                         width: "100%",
