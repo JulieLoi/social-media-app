@@ -51,13 +51,13 @@ const MyPostWidget = ({ picturePath }) => {
     // POST API Call (Create Post)
     const handlePost = async () => {
 
-        // Form Data: [userId, description, picture, picturePath] (image is optional)
+        // Form Data: [userId, description, post image, post image path] (image is optional)
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
         if (image) {
             formData.append("picture", image);
-            formData.append("picturePath", picturePath);
+            formData.append("picturePath", image.path);
         }
 
         // Create Post in MongoDB
@@ -103,29 +103,29 @@ const MyPostWidget = ({ picturePath }) => {
             {isImage && (
                 <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
                     <Dropzone
-                                        acceptedFiles=".jpg,.jpeg,.png"
-                                        multiple={false}
-                                        onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
-                                    >
-                                        {({ getRootProps, getInputProps }) => (
-                                        <Box
-                                            {...getRootProps()}
-                                            border={`2px dashed ${palette.primary.main}`}
-                                            p="1rem"
-                                            sx={{ "&:hover": { cursor: "pointer" } }}
-                                        >
-                                            <input {...getInputProps()} />
-                                            {!image ? (
-                                            <p>Add Picture Here</p>
-                                            ) : (
-                                            <FlexBetween>
-                                                <Typography>{image.name}</Typography>
-                                                <EditOutlined />
-                                            </FlexBetween>
-                                            )}
-                                        </Box>
-                                        )}
-                                    </Dropzone>
+                        acceptedFiles=".jpg,.jpeg,.png"
+                        multiple={false}
+                        onDrop={ (acceptedFiles) =>  setImage(acceptedFiles[0]) }
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                        <Box
+                            {...getRootProps()}
+                            border={`2px dashed ${palette.primary.main}`}
+                            p="1rem"
+                            sx={{ "&:hover": { cursor: "pointer" } }}
+                        >
+                            <input {...getInputProps()} />
+                            {!image ? (
+                            <p>Add Image Here</p>
+                            ) : (
+                            <FlexBetween>
+                                <Typography>{image.name}</Typography>
+                                <EditOutlined />
+                            </FlexBetween>
+                            )}
+                        </Box>
+                        )}
+                    </Dropzone>
                 </Box>
             )}
 

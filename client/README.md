@@ -1,19 +1,35 @@
 
 
 # Possible Features to add
-delete my own post
+
+
 Edit Profile...
 
-https://www.youtube.com/watch?v=K8YELRmUb5o
 
-
+FIX IMAGE DROPZONE, CANNOT UPLOAD NEW IMAGE DIFFERENT FROM PROFILE IMAGE.
+-
 
 WORK ON MY LOGIN/REGISTER...
 -Add more restrictions on the data, mention it in the red text...
 -When logging in with non-existing account, mention that email is not in use.
 -Mention wrong password...
 
+
+
 Create Password requirements...
+
+
+
+
+
+https://www.youtube.com/watch?v=K8YELRmUb5o
+
+
+
+
+
+
+
 
 Favicon Icon
 <a href="https://www.flaticon.com/free-icons/share" title="share icons">Share icons created by Vectors Market - Flaticon</a>
