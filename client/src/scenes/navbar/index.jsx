@@ -167,7 +167,12 @@ const Navbar = () => {
                     <IconButton
                         onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                     >
-                        <Menu />
+                        <Menu 
+                            sx={{ 
+                                "&:hover": { color: primary },
+                                "&:focus": { color: primary },
+                            }}
+                        />
                     </IconButton>
                 )
             }
@@ -189,7 +194,12 @@ const Navbar = () => {
                         <IconButton
                             onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
                         >
-                            <Close />
+                            <Close
+                                sx={{ 
+                                    "&:hover": { color: primary },
+                                    "&:focus": { color: primary },
+                                }} 
+                            />
                         </IconButton>
                     </Box>
 
@@ -206,9 +216,20 @@ const Navbar = () => {
                             sx={{ fontSize:"25px" }}
                         >
                             {palette.mode === "dark" ? 
-                                (<DarkMode sx={{ fontSize:"25px" }} />) 
+                                (<DarkMode 
+                                    sx={{ 
+                                        fontSize:"25px",
+                                        "&:hover": { color: primary }
+                                    }} 
+                                />) 
                                 : 
-                                (<LightMode sx={{ color: dark, fontSize:"25px" }} />)
+                                (<LightMode 
+                                    sx={{ 
+                                        color: dark,
+                                        fontSize:"25px",
+                                        "&:hover": { color: primary }
+                                    }} 
+                                />) 
                             }
                         </IconButton>
                         <Message sx={{ fontSize:"25px" }} />

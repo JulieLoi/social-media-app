@@ -71,7 +71,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
     //
     return (
-        <WidgetWrapper position="sticky" top="7rem">
+        <WidgetWrapper>
 
             {/* FIRST ROW: Profile Image, Name, Friend Count, Profile Page Button */}
             <FlexBetween gap="0.5rem" pb="1.1rem">

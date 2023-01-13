@@ -1,7 +1,9 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, IconButton, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import ArrowCircleUpRoundedIcon from '@mui/icons-material/ArrowCircleUpRounded';
+
 import Navbar from "scenes/navbar";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
@@ -17,6 +19,7 @@ const ProfilePage = () => {
     const { userId } = useParams();                                 // Gets the User ID of the Profile Page
     const token = useSelector((state) => state.token);
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+    const { palette } = useTheme();
 
     // Get User of the Profile Page
     const getUser = async () => {
@@ -50,7 +53,7 @@ const ProfilePage = () => {
         <Box>
             <Navbar />
             <Box
-                width="100%" p="0.75rem 6%" gap="2rem"
+                width="100%" p="2rem 6%" gap="2rem"
                 display={isNonMobileScreens ? "flex" : "block"}
                 justifyContent="center"
             >
@@ -60,14 +63,13 @@ const ProfilePage = () => {
                         userId={userId}
                         picturePath={user.picturePath}
                     />
-                    <Box m="2rem 0" />
-                    <FriendListWidget userId={userId} />
+                    <FriendListWidget userId={userId} stickyTop="36rem" />
                 </Box>
 
                 {/* POST WIDGET */}
                 <Box 
                     flexBasis={isNonMobileScreens ? "42%" : undefined}
-                    mt={isNonMobileScreens ? undefined : "2rem"}
+                    mt={isNonMobileScreens ? "0rem" : "2rem"}
                 >
                     <MyPostWidget picturePath={user.picturePath} />
                     <Box m="2rem 0" />
@@ -75,6 +77,17 @@ const ProfilePage = () => {
                 </Box>
 
             </Box>
+
+            {/* NAVIGATE TOP ICON */}
+            <IconButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}>
+                <ArrowCircleUpRoundedIcon 
+                    sx={{ 
+                        position: "fixed", bottom: "0.5rem", right: "0.5rem", 
+                        color: palette.primary.light, fontSize: "3rem",
+                        "&:hover": { color: palette.primary.main }
+                    }}
+                />
+            </IconButton>
         </Box>
     )
 }

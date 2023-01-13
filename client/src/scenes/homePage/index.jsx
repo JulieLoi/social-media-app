@@ -21,21 +21,10 @@ const HomePage = () => {
     return (
         <Box>
             <Navbar />
-
-            {/* NAVIGATE TOP ICON */}
-            <IconButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}>
-                <ArrowCircleUpRoundedIcon 
-                    sx={{ 
-                        position: "fixed", bottom: "2rem", right: "2rem", 
-                        color: palette.primary.light, fontSize: "3rem",
-                        "&:hover": { color: palette.primary.main }
-                    }}
-                />
-            </IconButton>
             
             {/* ALL WIDGETS */}
             <Box
-                width="100%" p="0.75rem 6%" gap="0.5rem"
+                width="100%" p="2rem 6%" gap="0.5rem"
                 display={isNonMobileScreens ? "flex" : "block"}
                 justifyContent="space-between"
             >
@@ -56,7 +45,7 @@ const HomePage = () => {
                     <PostsWidget userId={_id} />
                 </Box>
 
-                {/* FRIENDS LIST (DESKTOP ONLY) */}
+                {/* ADVERT && FRIENDS LIST (DESKTOP ONLY) */}
                 {isNonMobileScreens && (
                     <Box flexBasis={isNonMobileScreens ? "26%" : undefined}
                     >
@@ -65,6 +54,17 @@ const HomePage = () => {
                     </Box>
                 )}
             </Box>
+
+            {/* NAVIGATE TOP ICON */}
+            <IconButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}>
+                <ArrowCircleUpRoundedIcon 
+                    sx={{ 
+                        position: "fixed", bottom: "0.5rem", right: "0.5rem", 
+                        color: palette.primary.light, fontSize: "3rem",
+                        "&:hover": { color: palette.primary.main }
+                    }}
+                />
+            </IconButton>
         </Box>
     )
 }

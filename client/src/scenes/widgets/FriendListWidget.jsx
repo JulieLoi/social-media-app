@@ -42,10 +42,7 @@ const FriendListWidget = ({ userId }) => {
  
     // Friend List Widget
     return (
-        <WidgetWrapper 
-            mt="1.5rem"
-            sx={{ position: "sticky", top:"35rem", }}
-        >
+        <WidgetWrapper mt="1.5rem">
 
             {/* FRIENDS LIST TITLE */}
             <Typography 
