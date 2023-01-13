@@ -31,7 +31,7 @@ picturePath: String Ref
 --
 likes: Object&lt;String Ref&gt;
 --
-comments: Array&lt;String&gt;
+comments: Array&lt;Object&gt;
 
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>620</x><y>460</y><w>210</w><h>130</h></coordinates><panel_attributes>Friend (Sub Doc)
 --

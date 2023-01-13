@@ -57,18 +57,12 @@ export const likePost = async (req, res) => {
     try {
         const { id } = req.params;              // Post ID
         const { userId } = req.body;
+
+        // Get Post, Check if Post is liked by user (user ID)
         const post = await Post.findById(id);
         const isLiked = post.likes.get(userId);
-        
-        // Unlikes Post
-        if (isLiked) {
-            post.likes.delete(userId);
-        }
-
-        // Likes Post
-        else {
-            post.likes.set(userId, true);
-        }
+        if (isLiked) {  post.likes.delete(userId); }        // Unlikes Post
+        else { post.likes.set(userId, true); }              // Likes Post
 
         // Updates Post
         const updatedPost = await Post.findByIdAndUpdate(
@@ -77,9 +71,40 @@ export const likePost = async (req, res) => {
             { new: true }
         );
 
-        // Returns Updated Posts
+        // Returns Updated Post (Single)
         res.status(200).json(updatedPost);
 
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+}
+
+export const commentPost = async (req, res) => {
+    try {
+
+        const { id } = req.params;      // Post ID
+        const { userId, userPicturePath, comment } = req.body;
+
+        // Get Post, Add comment
+        const post = await Post.findById(id);
+        const commentCount = post.comments.length;      // Comment Count, Acts as a Key
+        post.comments.push({ 
+            id: commentCount,
+            userId: userId,
+            userPicturePath: userPicturePath,
+            comment: comment,
+        });
+
+        // Updates Post (with comment)
+        const updatedPost = await Post.findByIdAndUpdate(
+            id,
+            { comments: post.comments },
+            { new: true }
+        );
+
+        // Returns Updated Post
+        res.status(200).json(updatedPost);
+        
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
