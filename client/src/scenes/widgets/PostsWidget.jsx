@@ -14,7 +14,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     // Token, Posts (Frontend State)
     const token = useSelector((state) => state.token);  
     const posts = useSelector((state) => [...state.posts].reverse());
-
+    
     // GET API Call (Get All Posts)
     const getPosts = async () => {
 
@@ -25,6 +25,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                 headers: { Authorization: `Bearer ${token}`}
             }
         );
+
 
         // Get Backend Response (Get All Posts in DB)
         const data = await response.json();
@@ -84,7 +85,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                         comments={comments}
                     />
                 ))
-            }
+                }
         </>
     )
 };
