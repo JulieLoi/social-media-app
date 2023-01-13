@@ -103,42 +103,29 @@ const MyPostWidget = ({ picturePath }) => {
             {isImage && (
                 <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
                     <Dropzone
-                        acceptedFiles=".jpg,.jpeg,.png"
-                        multiple={false}
-                        onDrop={(acceptedFiles) =>
-                            setImage("picture", acceptedFiles[0])
-                        }
-                    >
-                        {({ getRootProps, getInputProps }) => (
-                        <FlexBetween>
-                            <Box
-                                {...getRootProps()}
-                                border={`2px dashed ${palette.primary.main}`}
-                                p="1rem" 
-                                width="100%"
-                                sx={{ "&:hover": { cursor: "pointer" } }}
-                            >
-                                <input {...getInputProps()} />
-                                {!image ? (
-                                <p>Add Image Here</p>
-                                ) : (
-                                <FlexBetween>
-                                    <Typography>{image.name}</Typography>
-                                    <EditOutlined />
-                                </FlexBetween>
-                                )}
-                            </Box>
-                            {image && (
-                                <IconButton onClick={() => setImage(null)}
-                                    sx={{ width: "25%" }}
-                                >
-                                    <DeleteOutlined />
-                                </IconButton>
-                            )}
-                        </FlexBetween>
-                        )}
-
-                    </Dropzone>
+                                        acceptedFiles=".jpg,.jpeg,.png"
+                                        multiple={false}
+                                        onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
+                                    >
+                                        {({ getRootProps, getInputProps }) => (
+                                        <Box
+                                            {...getRootProps()}
+                                            border={`2px dashed ${palette.primary.main}`}
+                                            p="1rem"
+                                            sx={{ "&:hover": { cursor: "pointer" } }}
+                                        >
+                                            <input {...getInputProps()} />
+                                            {!image ? (
+                                            <p>Add Picture Here</p>
+                                            ) : (
+                                            <FlexBetween>
+                                                <Typography>{image.name}</Typography>
+                                                <EditOutlined />
+                                            </FlexBetween>
+                                            )}
+                                        </Box>
+                                        )}
+                                    </Dropzone>
                 </Box>
             )}
 

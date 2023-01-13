@@ -4,6 +4,10 @@
 delete my own post
 Edit Profile...
 
+
+
+
+
 WORK ON MY LOGIN/REGISTER...
 -Add more restrictions on the data, mention it in the red text...
 -When logging in with non-existing account, mention that email is not in use.
@@ -11,12 +15,13 @@ WORK ON MY LOGIN/REGISTER...
 
 Create Password requirements...
 
-
-
-
 Favicon Icon
 <a href="https://www.flaticon.com/free-icons/share" title="share icons">Share icons created by Vectors Market - Flaticon</a>
 
+
+Fake Accounts
+ethanhover@yahoo.com   
+Gr873!_dsf
 
 
 

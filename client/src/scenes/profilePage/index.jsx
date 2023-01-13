@@ -45,8 +45,6 @@ const ProfilePage = () => {
         return null;
     }
 
-    console.log(userId)
-
     // Profile Page
     return (
         <Box>
