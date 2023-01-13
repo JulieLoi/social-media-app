@@ -11,12 +11,13 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";  
-import { setPost } from "state";
+import { setPost, deletePost } from "state";
 
 /**
  * Post Widget
@@ -29,7 +30,6 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     // Post Widget State
     const [isComments, setIsComments] = useState(false);
     const [share, setShare] = useState(false);
-    const [postLikes, setPostLikes] = useState(likes);
 
     // Theme Colors
     const { palette } = useTheme();
@@ -41,9 +41,8 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     const loggedInUserId = useSelector((state) => state.user._id);
 
     // Likes (Does not update)
-    //const isLiked = Boolean(likes[loggedInUserId]);     // Logged In User Likes
-    //const likeCount = Object.keys(likes).length;        // Total Like Count
-
+    const isLiked = Boolean(likes[loggedInUserId]);     // Logged In User Likes
+    const likeCount = Object.keys(likes).length;        // Total Like Count
 
     // PATCH API Call (Like/Dislike Post)
     const patchLike = async () => {
@@ -60,10 +59,28 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             }
         );
 
-        // Get Backend Response
+        // Get Backend Response (Updated Posts - like/unlike post)
         const updatedPost = await response.json();
         dispatch(setPost({ post: updatedPost }));       // Update Frontend State
-        setPostLikes(updatedPost.likes);                // Update Post Widget State
+    }
+
+    // DELETE API Call (Delete Post)
+    const deleteUserPost = async () => {
+
+        // Delete Post
+        const response = await fetch(`http://localhost:3001/posts/${postId}/delete`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            }
+        ) 
+
+        // Get Backend Response (Deleted Post)
+        const deletedPost = await response.json();
+        dispatch(deletePost({ post: deletedPost }));       // Update Frontend State
     }
 
     // Post Widget
@@ -99,13 +116,13 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                     {/* Like Button and Like Counter */}
                     <FlexBetween gap="0.3rem">
                         <IconButton onClick={patchLike}>
-                            {Boolean(postLikes[loggedInUserId]) ? (
+                            {isLiked ? (
                                 <FavoriteOutlined sx={{ color: primary }} />
                             ) : (
                                 <FavoriteBorderOutlined />
                             )}
                         </IconButton>
-                        <Typography>{Object.keys(postLikes).length}</Typography>
+                        <Typography>{likeCount}</Typography>
                     </FlexBetween>
 
                     {/* Comment Button and Comment Count */}
@@ -122,14 +139,23 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
 
                 </FlexBetween>
 
-                {/* Share Button */}
-                <IconButton onClick={() => setShare(!share)}>
-                    {share ?
-                        <ShareOutlined sx={{ color: primary }} />
-                        :
-                        <ShareOutlined />
-                    }
-                </IconButton>
+                {/* Delete, Share Button */}
+                <FlexBetween>
+                        {postUserId === loggedInUserId &&  (
+                            <IconButton onClick={() => deleteUserPost()}>
+                                <DeleteIcon sx={{ "&:hover": { color: primary } }} />
+                            </IconButton>
+                        )}
+                        
+                        <IconButton onClick={() => setShare(!share)}>
+                            {share ?
+                                <ShareOutlined sx={{ color: primary }} />
+                                :
+                                <ShareOutlined />
+                            }
+                        </IconButton>
+                </FlexBetween>
+                
                 
 
             </FlexBetween>

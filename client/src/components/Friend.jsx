@@ -41,7 +41,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
         // Get Backend Response (Updated Friends List)
         const data = await response.json();
         dispatch(setFriends({ friends: data }));    // Updates Frontend State
-    }
+    }    
 
     // Friend Component
     return (
@@ -76,8 +76,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
                 </Box>
             </FlexBetween>
 
-            {/* ADD/REMOVE FRIEND */}
-            {_id !== friendId && (
+            {/* ADD/REMOVE FRIEND, DELETE POST */}
+            {_id !== friendId && 
+                (
                 <FlexBetween>
                     <IconButton
                         onClick={() => patchFriend()}
@@ -93,7 +94,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
                         }
                     </IconButton>
                 </FlexBetween>
-            )}
+                )
+            }
             
 
         </FlexBetween>

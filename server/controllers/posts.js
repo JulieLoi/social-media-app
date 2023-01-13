@@ -55,7 +55,7 @@ export const getUserPosts = async (req, res) => {
 /* UPDATE */
 export const likePost = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params;              // Post ID
         const { userId } = req.body;
         const post = await Post.findById(id);
         const isLiked = post.likes.get(userId);
@@ -76,9 +76,27 @@ export const likePost = async (req, res) => {
             { likes: post.likes },
             { new: true }
         );
+
+        // Returns Updated Posts
         res.status(200).json(updatedPost);
 
     } catch (err) {
-        ress.status(404).json({ message: err.message });
+        res.status(404).json({ message: err.message });
     }
 }
+
+/* DELETE */
+export const deletePost = async (req, res) => {
+    try {
+
+        const { id } = req.params;                      // Post ID
+        const post = await Post.findByIdAndDelete(id);  // Deleted Post
+
+        // Returns Deleted Post
+        res.status(202).json(post);
+
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+}
+
