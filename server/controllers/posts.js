@@ -83,7 +83,7 @@ export const commentPost = async (req, res) => {
     try {
 
         const { id } = req.params;      // Post ID
-        const { userId, userPicturePath, comment } = req.body;
+        const { userId, userName, userPicturePath, comment } = req.body;
 
         // Get Post, Add comment
         const post = await Post.findById(id);
@@ -91,6 +91,7 @@ export const commentPost = async (req, res) => {
         post.comments.push({ 
             id: commentCount,
             userId: userId,
+            userName: userName,
             userPicturePath: userPicturePath,
             comment: comment,
         });

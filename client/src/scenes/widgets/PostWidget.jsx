@@ -18,6 +18,7 @@ import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import UserImage from "components/UserImage";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost, deletePost } from "state";
 
@@ -28,7 +29,8 @@ import { setPost, deletePost } from "state";
 const PostWidget = ({ postId, postUserId, name, description, location, picturePath, userPicturePath, likes, comments }) => {
 
     const dispatch = useDispatch();
-    
+    const navigate = useNavigate();
+
     // Post Widget State
     const [userComment, setUserComment] = useState("");
     const [isComments, setIsComments] = useState(false);
@@ -46,11 +48,6 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     // Likes (Does not update)
     const isLiked = Boolean(likes[loggedInUserId]);     // Logged In User Likes
     const likeCount = Object.keys(likes).length;        // Total Like Count
-
-    console.log(comments[0])
-    console.log(comments[0].userId)
-    console.log(comments[0].userPicturePath)
-    console.log(comments[0].comment)
 
     // PATCH API Call (Like/Dislike Post)
     const patchLike = async () => {
@@ -104,6 +101,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 },
                 body: JSON.stringify({ 
                     userId: loggedInUserId, 
+                    userName: name,
                     userPicturePath: userPicturePath, 
                     comment: userComment 
                 }),
@@ -127,7 +125,13 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             />
 
             {/* DESCRIPTION */}
-            <Typography color={main} sx={{ mt: "1rem", mb: "0.75rem" }}>   
+            <Typography color={main} 
+                sx={{ 
+                    mt: "1rem", mb: "0.75rem",
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word",
+                }}
+            >   
                 {description}
             </Typography>
 
@@ -195,54 +199,66 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
 
             {/* Comment Section*/}
             {isComments && 
-                (
-                    <Box mt="0.5rem">
-                        {/*comments.map((comment, index) => (
-                            <Box key={`${name}-${index}`}>
-                                <Divider />
-                                <FlexBetween>
-                                    <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                                        {comment}
-                                    </Typography>
-                                </FlexBetween>
-                                
-                            </Box>
-                        ))*/}
-                        {comments.map((c, index) => (
-                            <>
-                                <Divider />
-                                <Box key={`${name}-${c.index}-${index}`} 
-                                    display="flex" p="0.5rem 0"
-                                >
+                (<Box mt="0.5rem">
+                    {comments.map((c) => (
+                        <Box key={`${c.userId}-${postId}-${Math.random()}`}>
+                            <Divider />
+                            <Box p="0.5rem 0">
+                                <Box display="flex" gap="1rem" alignItems="center" ml="1rem">
                                     <UserImage image={c.userPicturePath} size={"30px"} />
-                                    <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                                    <Typography variant="h5"
+                                        sx={{
+                                            "&:hover": {
+                                                color: palette.primary.main,
+                                                cursoer: "pointer",
+                                            }
+                                        }}
+                                        onClick={() => {
+                                            navigate(`/profile/${c.userId}`);
+                                            navigate(0);        // Refresh
+                                        }}
+                                    >
+                                        {c.userName}
+                                    </Typography>
+                                </Box>
+                                
+                                <Box ml="3rem">
+                                    <Typography noWrap
+                                        sx={{ 
+                                            color: main, m: "0.5rem 0", pl: "1rem",
+                                            whiteSpace: "pre-wrap",
+                                            wordBreak: "break-word",
+                                        }}
+                                    >
                                         {c.comment}
                                     </Typography>
                                 </Box>
-                            </>
-                        ))}
+                            </Box>
+                        </Box>
+                    ))}
 
-                        <Divider />
+                    <Divider />
 
-                        <FlexBetween m="1rem 0">
-                            <UserImage image={userPicturePath} size={"50px"} />
-                            <InputBase 
-                                placeholder="Type your comment here..."
-                                onChange={(e) => setUserComment(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === `Enter`) { addComment() }
-                                }}
-                                value={userComment}
-                                sx={{
-                                    width: "100%",
-                                    backgroundColor: palette.neutral.light,
-                                    borderRadius: "2rem",
-                                    p: "0.5rem 1rem",
-                                    ml: "0.5rem",
-                                }}
-                            />
-                        </FlexBetween>
-                    </Box>
+                    <FlexBetween m="1rem 0">
+                        <UserImage image={userPicturePath} size={"50px"} />
+                        <InputBase 
+                            placeholder="Type your comment here..."
+                            onChange={(e) => setUserComment(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === `Enter`) { addComment() }
+                            }}
+                            value={userComment}
+                            sx={{
+                                width: "100%",
+                                backgroundColor: palette.neutral.light,
+                                borderRadius: "2rem",
+                                p: "0.5rem 1rem",
+                                ml: "0.5rem",
+
+                            }}
+                        />
+                    </FlexBetween>
+                </Box>
                 )
             }
 
