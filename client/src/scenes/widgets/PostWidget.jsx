@@ -127,7 +127,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             />
 
             {/* DESCRIPTION */}
-            <Typography color={main} 
+            <Typography color={main} variant="h5"
                 sx={{ 
                     mt: "1rem", mb: "0.75rem",
                     whiteSpace: "pre-wrap",
@@ -227,7 +227,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                                 <Box ml="3rem">
                                     <Typography noWrap
                                         sx={{ 
-                                            color: main, m: "0.5rem 0", pl: "1rem",
+                                            color: main, m: "0.25rem 0", pl: "1rem",
                                             whiteSpace: "pre-wrap",
                                             wordBreak: "break-word",
                                         }}
@@ -248,12 +248,15 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                             onChange={(e) => {
                                 const commentLength = e.target.value.length;
                                 if (commentLength <= 100) {
-                                    setRemainChar(100 - commentLength)
-                                    setUserComment(e.target.value)
+                                    setRemainChar(100 - commentLength);
+                                    setUserComment(e.target.value);
                                 }
                             }}
                             onKeyDown={(e) => {
-                                if (e.key === `Enter`) { addComment() }
+                                if (e.key === `Enter`) { 
+                                    addComment();
+                                    setRemainChar(100);
+                                 }
                             }}
                             value={userComment}
                             maxLength="100"
