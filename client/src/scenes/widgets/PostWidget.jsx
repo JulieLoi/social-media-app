@@ -35,11 +35,13 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     const [userComment, setUserComment] = useState("");
     const [isComments, setIsComments] = useState(false);
     const [share, setShare] = useState(false);
+    const [remainChar, setRemainChar] = useState(100);
 
     // Theme Colors
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
+    const medium = palette.neutral.medium;
 
     // Token, Logged In User ID (Frontend State)
     const token = useSelector((state) => state.token);
@@ -239,25 +241,37 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
 
                     <Divider />
 
-                    <FlexBetween m="1rem 0">
+                    <FlexBetween mt="1rem">
                         <UserImage image={userPicturePath} size={"50px"} />
                         <InputBase 
                             placeholder="Type your comment here..."
-                            onChange={(e) => setUserComment(e.target.value)}
+                            onChange={(e) => {
+                                const commentLength = e.target.value.length;
+                                if (commentLength <= 100) {
+                                    setRemainChar(100 - commentLength)
+                                    setUserComment(e.target.value)
+                                }
+                            }}
                             onKeyDown={(e) => {
                                 if (e.key === `Enter`) { addComment() }
                             }}
                             value={userComment}
+                            maxLength="100"
                             sx={{
                                 width: "100%",
                                 backgroundColor: palette.neutral.light,
                                 borderRadius: "2rem",
                                 p: "0.5rem 1rem",
                                 ml: "0.5rem",
-
+                                maxLength: "100"
                             }}
                         />
                     </FlexBetween>
+                    <Box ml="4rem" mb="0.25rem" mt="0.25rem">
+                        <Typography color={medium}>
+                            Remaining Character(s): {remainChar} 
+                        </Typography>
+                    </Box>
                 </Box>
                 )
             }
