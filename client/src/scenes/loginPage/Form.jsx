@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Box, Button, TextField, useMediaQuery, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
+import { Box, Button, TextField, useMediaQuery, Typography, Divider, useTheme } from "@mui/material";
 import EditOutlined from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -16,13 +16,6 @@ import Location from "components/Location";
 
 
 
-import { Autocomplete } from '@mui/material';
-
-import { Country, State, City }  from 'country-state-city';
-
-
-
-
 
 // Register Schema and Initial Values
 const registerSchema = yup.object().shape({
@@ -35,7 +28,6 @@ const registerSchema = yup.object().shape({
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
-    location: yup.string().required("Location Required"),
     occupation: yup.string().required("Occupation Required"),
     picture: yup.string().required("Picture Required"),
 });
@@ -45,7 +37,6 @@ const initialValuesRegister = {
     lastName: "",
     email: "",
     password: "",
-    location: "",
     occupation: "",
     picture: "",
 };
@@ -81,13 +72,8 @@ const Form = () => {
     // Location
     const [location, setLocation] = useState("")    
 
-
-
     // Register Function
     const register = async (values, onSubmitProps) => {
-
-        values.location = location;
-        console.log(values)
 
         // This allows us to send form info with image
         const formData = new FormData();
@@ -95,6 +81,7 @@ const Form = () => {
         for (let value in values) {
             formData.append(value, values[value]);
         }
+        formData.append('location', location);
         formData.append('picturePath', values.picture.name);
 
         // POST API call (sends form data)
@@ -179,46 +166,7 @@ const Form = () => {
                         {/* REGISTER FORM*/}
                         {isRegister && (
                             <>
-                                <TextField 
-                                    label="First Name" name="firstName"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.firstName}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                                    helperText={touched.firstName && errors.firstName}
-                                    sx={{ gridColumn: "span 2" }}
-                                />
-                                <TextField 
-                                    label="Last Name" name="lastName"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.lastName}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                    helperText={touched.lastName && errors.lastName}
-                                    sx={{ gridColumn: "span 2" }}
-                                />
 
-
-                                <Location setLocation={setLocation} />
-                                <TextField 
-                                    label="Location" name="location"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.location}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.location) && Boolean(errors.location)}
-                                    helperText={touched.location && errors.location}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
-
-                                <TextField 
-                                    label="Occupation" name="occupation"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.occupation}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.occupation) && Boolean(errors.occupation)}
-                                    helperText={touched.occupation && errors.occupation}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
                                 <Box
                                     gridColumn="span 4"
                                     border={`1px solid ${palette.neutral.medium}`}
@@ -252,6 +200,47 @@ const Form = () => {
                                         )}
                                     </Dropzone>
                                 </Box>
+
+                                <TextField 
+                                    label="First Name" name="firstName"
+                                    onBlur={handleBlur} onChange={handleChange}
+                                    value={values.firstName}
+                                    inputProps={{ maxLength: 50 }}
+                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                                    helperText={touched.firstName && errors.firstName}
+                                    sx={{ gridColumn: "span 2" }}
+                                />
+                                <TextField 
+                                    label="Last Name" name="lastName"
+                                    onBlur={handleBlur} onChange={handleChange}
+                                    value={values.lastName}
+                                    inputProps={{ maxLength: 50 }}
+                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                                    helperText={touched.lastName && errors.lastName}
+                                    sx={{ gridColumn: "span 2" }}
+                                />
+
+                                <TextField 
+                                    label="Occupation" name="occupation"
+                                    onBlur={handleBlur} onChange={handleChange}
+                                    value={values.occupation}
+                                    inputProps={{ maxLength: 50 }}
+                                    error={Boolean(touched.occupation) && Boolean(errors.occupation)}
+                                    helperText={touched.occupation && errors.occupation}
+                                    sx={{ gridColumn: "span 4" }}
+                                />
+
+                                <Divider sx={{ gridColumn: "span 4" }} />
+                                <Location setLocation={setLocation}  />
+                                <TextField disabled
+                                    label="Location (Optional)" name="location" 
+                                    onBlur={handleBlur} 
+                                    value={location}
+                                    sx={{ gridColumn: "span 4" }}
+                                />
+                                <Divider sx={{ gridColumn: "span 4" }} />
+
+                                
                             </>
                         )}
 
