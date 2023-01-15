@@ -8,14 +8,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
-
-
 import Location from "components/Location";
-
-
-
-
-
 
 // Register Schema and Initial Values
 const registerSchema = yup.object().shape({
@@ -65,17 +58,20 @@ const Form = () => {
     const isNonMobile = useMediaQuery("(min-width: 600px)");
 
     // Page State (Login / Register)
-    const [pageType, setPageType] = useState("register");
+    const [pageType, setPageType] = useState("login");
     const isLogin = (pageType === "login");
     const isRegister = (pageType === "register");
     
     // Location
-    const [location, setLocation] = useState("")    
+    const [location, setLocation] = useState("")  
+    
+    // Response JSON
+    const [errorMessage, setErrorMessage] = useState("")
 
     // Register Function
     const register = async (values, onSubmitProps) => {
 
-        // This allows us to send form info with image
+        // Form Data
         const formData = new FormData();
 
         for (let value in values) {
@@ -91,14 +87,23 @@ const Form = () => {
                 method: "POST",
                 body: formData,
             }
-        )
+        ).then(async (response) => {
+            const jsonObject = await response.json();
 
-        // Get Backend Response (new user)
-        const savedUser = await savedUserResponse.json();
-        onSubmitProps.resetForm();                          // Reset Form
+            // Register Successful
+            if (response.status === 201) {
+                // Get Backend Response (Created New User)
+                const savedUser = await savedUserResponse.json();
+                onSubmitProps.resetForm();                          // Reset Form
 
-        // Successful API Call, Go to Login Page
-        if (savedUser) { setPageType("login") }
+                // Successful API Call, Go to Login Page
+                if (savedUser) { setPageType("login") }
+
+            }
+            else {
+                setErrorMessage(jsonObject.msg);
+            }
+        });
     }
 
     // Login Function
@@ -112,26 +117,36 @@ const Form = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),
             }
-        )
+        ).then(async (response) =>  {
+            const jsonObject = await response.json();
 
-        // Get Backend Response (User, Token)
-        const loggedIn = await loggedInResponse.json(); 
-        onSubmitProps.resetForm();                          // Reset Form
+            // Authentication Successful
+            if (response.status === 200) {
+                // Get Backend Response (User, Token)
+                const loggedIn = await loggedInResponse.json(); 
+                onSubmitProps.resetForm();                          // Reset Form
 
-        // Successful API Call, Set State (Login), Go to Home Page
-        if (loggedIn) {
-            dispatch(
-                setLogin({
-                    user: loggedIn.user,
-                    token: loggedIn.token,
-                })
-            );
-            navigate("/home");
-        }
+                // Successful API Call, Set State (Login), Go to Home Page
+                if (loggedIn) {
+                    dispatch(
+                        setLogin({
+                            user: loggedIn.user,
+                            token: loggedIn.token,
+                        })
+                    );
+                    navigate("/home");
+                }
+            }
+            else  {
+                setErrorMessage(jsonObject.msg)
+            }
+            
+        });
     }
 
     // Handle Form Submit
     const handleFormSubmit = async(values, onSubmitProps) => {
+        console.log("HANDLE FORM SUBMIT")
         if (isLogin) await login(values, onSubmitProps);
         if (isRegister) await register(values, onSubmitProps);
     };
@@ -250,8 +265,8 @@ const Form = () => {
                             onBlur={handleBlur} onChange={handleChange}
                             value={values.email}
                             inputProps={{ maxLength: 254 }}
-                            error={Boolean(touched.email) && Boolean(errors.email)}
-                            helperText={touched.email && errors.email}
+                            error={(Boolean(touched.email) && Boolean(errors.email)) || errorMessage !== ""}
+                            helperText={isRegister ? (touched.email && errors.email) : ""}
                             sx={{ gridColumn: "span 4" }}
                         />
                         <TextField 
@@ -260,10 +275,18 @@ const Form = () => {
                             onBlur={handleBlur} onChange={handleChange}
                             value={values.password}
                             inputProps={{ maxLength: 128 }}
-                            error={Boolean(touched.password) && Boolean(errors.password)}
-                            helperText={touched.password && errors.password}
+                            error={(Boolean(touched.password) && Boolean(errors.password)) || errorMessage !== ""}
+                            helperText={isRegister ? (touched.password && errors.password) : ""}
                             sx={{ gridColumn: "span 4" }}
                         />
+                        {isLogin && errorMessage !== "" &&
+                            <Typography 
+                                color="red" sx={{ gridColumn: "span 4" }} 
+                                margin="-25px 0px"
+                            >
+                                {errorMessage}
+                            </Typography>
+                        }
                     </Box>
 
                     {/* SUBMIT BUTTON: Login / Register */}
@@ -286,8 +309,9 @@ const Form = () => {
                         {/* CHANGE BETWEEN LOGIN / REGISTER */}
                         <Typography
                             onClick={() => {
-                                setPageType(isLogin ? "register" : "login")
-                                resetForm()
+                                setPageType(isLogin ? "register" : "login");
+                                setErrorMessage("");
+                                resetForm();
                             }}
                             sx={{
                                 textDecoration: "underline",

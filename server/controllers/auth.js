@@ -41,19 +41,24 @@ export const register = async(req, res) => {
 /**
  * Logging In User
  */
+
 export const login = async (req, res) => {
+
     try {
+
+        console.log("SERVER LOGIN")
+
         // Destructures Request Parameters
         const { email, password } = req.body;
 
         // Finds user (email unique) and checks password
         const user = await User.findOne({ email: email });
         if (!user) {
-            return res.status(400).json({ msg: "User does not exist."});
+            return res.status(400).json({ msg: "Invalid Credentials"});
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ msg: "Invalid credentials." });
+            return res.status(400).json({ msg: "Invalid Credentials" });
         }
 
         // Creates a token and sends the token and user (minus password) back
@@ -65,4 +70,3 @@ export const login = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
-

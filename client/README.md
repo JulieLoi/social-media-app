@@ -6,11 +6,12 @@
 Edit account info...
 
 WORK ON MY LOGIN/REGISTER...
--Add more restrictions on the data, mention it in the red text...
+-Add more restrictions on the data, mention it in the red text...                   DONE
 -When logging in with non-existing account, mention that email is not in use.
--Mention wrong password...
+-For wrong user/pass, use "wrong email or password"
 
 
+Location
 npm i country-state-city
 
 

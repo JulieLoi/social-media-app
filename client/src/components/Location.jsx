@@ -3,7 +3,6 @@ import { Autocomplete, TextField } from '@mui/material';
 import { Country, State, City }  from 'country-state-city';
 import { useEffect, useState } from 'react';
 
-
 /**
  * Location Component
  * Select a country, state, city
