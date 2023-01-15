@@ -117,7 +117,7 @@ const MyPostWidget = ({ picturePath }) => {
                         >
                             <input {...getInputProps()} />
                             {!image ? (
-                            <p>Add Image Here</p>
+                            <div>Add Image Here</div>
                             ) : (
                             <FlexBetween>
                                 <Typography>{image.name}</Typography>

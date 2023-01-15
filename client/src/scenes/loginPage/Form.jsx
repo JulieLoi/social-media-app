@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, TextField, useMediaQuery, Typography, useTheme } from "@mui/material";
 import EditOutlined from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -9,15 +9,35 @@ import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
+
+import Location from "components/Location";
+
+
+
+
+
+import { Autocomplete } from '@mui/material';
+
+import { Country, State, City }  from 'country-state-city';
+
+
+
+
+
 // Register Schema and Initial Values
 const registerSchema = yup.object().shape({
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
-    location: yup.string().required("required"),
-    occupation: yup.string().required("required"),
-    picture: yup.string().required("required"),
+    firstName: yup.string().required("First Name Required")
+        .matches(/(?=.{2,})/, "Must Be 2-50 Characters"),
+    lastName: yup.string().required("Last Name Required")
+        .matches(/(?=.{2,})/, "Must Be 2-50 Characters"),
+    email: yup.string().email("Invalid Email").required("Email Required"),
+    password: yup.string().required('Password Required')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    ),
+    location: yup.string().required("Location Required"),
+    occupation: yup.string().required("Occupation Required"),
+    picture: yup.string().required("Picture Required"),
 });
 
 const initialValuesRegister = {
@@ -32,8 +52,12 @@ const initialValuesRegister = {
 
 // Login Register Schema and Initial Values
 const loginSchema = yup.object().shape({
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
+    email: yup.string().email("Invalid Email").required("Please Enter your email"),
+    password: yup.string().required('Please Enter your password')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    )
+    ,
 });
 
 const initialValuesLogin = {
@@ -43,16 +67,27 @@ const initialValuesLogin = {
 
 // Form
 const Form = () => {
-    const [pageType, setPageType] = useState("login");
-    const { palette } = useTheme();
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { palette } = useTheme();
     const isNonMobile = useMediaQuery("(min-width: 600px)");
+
+    // Page State (Login / Register)
+    const [pageType, setPageType] = useState("register");
     const isLogin = (pageType === "login");
     const isRegister = (pageType === "register");
+    
+    // Location
+    const [location, setLocation] = useState("")    
+
+
 
     // Register Function
     const register = async (values, onSubmitProps) => {
+
+        values.location = location;
+        console.log(values)
 
         // This allows us to send form info with image
         const formData = new FormData();
@@ -81,6 +116,7 @@ const Form = () => {
 
     // Login Function
     const login = async (values, onSubmitProps) => {
+
         // POST API call (sends login data)
         const loggedInResponse = await fetch(
             "http://localhost:3001/auth/login", 
@@ -130,7 +166,8 @@ const Form = () => {
                 setFieldValue,
                 resetForm,
             }) => (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
+                    
                     <Box
                         display="grid"
                         gap="30px"
@@ -143,41 +180,41 @@ const Form = () => {
                         {isRegister && (
                             <>
                                 <TextField 
-                                    label="First Name"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
+                                    label="First Name" name="firstName"
+                                    onBlur={handleBlur} onChange={handleChange}
                                     value={values.firstName}
-                                    name="firstName"
+                                    inputProps={{ maxLength: 50 }}
                                     error={Boolean(touched.firstName) && Boolean(errors.firstName)}
                                     helperText={touched.firstName && errors.firstName}
                                     sx={{ gridColumn: "span 2" }}
                                 />
                                 <TextField 
-                                    label="Last Name"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
+                                    label="Last Name" name="lastName"
+                                    onBlur={handleBlur} onChange={handleChange}
                                     value={values.lastName}
-                                    name="lastName"
+                                    inputProps={{ maxLength: 50 }}
                                     error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                                     helperText={touched.lastName && errors.lastName}
                                     sx={{ gridColumn: "span 2" }}
                                 />
+
+
+                                <Location setLocation={setLocation} />
                                 <TextField 
-                                    label="Location"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
+                                    label="Location" name="location"
+                                    onBlur={handleBlur} onChange={handleChange}
                                     value={values.location}
-                                    name="location"
+                                    inputProps={{ maxLength: 50 }}
                                     error={Boolean(touched.location) && Boolean(errors.location)}
                                     helperText={touched.location && errors.location}
                                     sx={{ gridColumn: "span 4" }}
                                 />
+
                                 <TextField 
-                                    label="Occupation"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
+                                    label="Occupation" name="occupation"
+                                    onBlur={handleBlur} onChange={handleChange}
                                     value={values.occupation}
-                                    name="occupation"
+                                    inputProps={{ maxLength: 50 }}
                                     error={Boolean(touched.occupation) && Boolean(errors.occupation)}
                                     helperText={touched.occupation && errors.occupation}
                                     sx={{ gridColumn: "span 4" }}
@@ -204,7 +241,7 @@ const Form = () => {
                                         >
                                             <input {...getInputProps()} />
                                             {!values.picture ? (
-                                            <p>Add Picture Here</p>
+                                            <div>Add Profile Picture Here</div>
                                             ) : (
                                             <FlexBetween>
                                                 <Typography>{values.picture.name}</Typography>
@@ -220,22 +257,20 @@ const Form = () => {
 
                         {/* LOGIN AND REGISTER */}
                         <TextField 
-                            label="Email"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
+                            label="Email" name="email"
+                            onBlur={handleBlur} onChange={handleChange}
                             value={values.email}
-                            name="email"
+                            inputProps={{ maxLength: 254 }}
                             error={Boolean(touched.email) && Boolean(errors.email)}
                             helperText={touched.email && errors.email}
                             sx={{ gridColumn: "span 4" }}
                         />
                         <TextField 
-                            label="Password"
-                            type="password"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
+                            label="Password" name="password"
+                            type="password" 
+                            onBlur={handleBlur} onChange={handleChange}
                             value={values.password}
-                            name="password"
+                            inputProps={{ maxLength: 128 }}
                             error={Boolean(touched.password) && Boolean(errors.password)}
                             helperText={touched.password && errors.password}
                             sx={{ gridColumn: "span 4" }}

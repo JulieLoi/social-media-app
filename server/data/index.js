@@ -158,11 +158,7 @@ export const posts = [
       [userIds[3], true],
       [userIds[4], true],
     ]),
-    comments: [
-      "random comment",
-      "another random comment",
-      "yet another random comment",
-    ],
+    comments: [],
   },
   {
     _id: new mongoose.Types.ObjectId(),
@@ -180,12 +176,7 @@ export const posts = [
       [userIds[1], true],
       [userIds[2], true],
     ]),
-    comments: [
-      "one more random comment",
-      "and another random comment",
-      "no more random comments",
-      "I lied, one more random comment",
-    ],
+    comments: [],
   },
   {
     _id: new mongoose.Types.ObjectId(),
@@ -203,13 +194,7 @@ export const posts = [
       [userIds[3], true],
       [userIds[5], true],
     ]),
-    comments: [
-      "one more random comment",
-      "I lied, one more random comment",
-      "I lied again, one more random comment",
-      "Why am I doing this?",
-      "I'm bored",
-    ],
+    comments: [],
   },
   {
     _id: new mongoose.Types.ObjectId(),
@@ -251,13 +236,7 @@ export const posts = [
       [userIds[5], true],
       [userIds[7], true],
     ]),
-    comments: [
-      "I lied again, one more random comment",
-      "Why am I doing this?",
-      "Man I'm bored",
-      "What should I do?",
-      "I'm going to play video games",
-    ],
+    comments: [],
   },
   {
     _id: new mongoose.Types.ObjectId(),
@@ -274,12 +253,6 @@ export const posts = [
       [userIds[2], true],
     ]),
 
-    comments: [
-      "Can I play video games now?",
-      "No let's actually study",
-      "Never mind, I'm going to play video games",
-      "Stop it.",
-      "Michael, stop it.",
-    ],
+    comments: [],
   },
 ];

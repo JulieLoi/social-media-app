@@ -10,9 +10,9 @@ WORK ON MY LOGIN/REGISTER...
 -When logging in with non-existing account, mention that email is not in use.
 -Mention wrong password...
 
-    ADD COMMENTS
-    -comment should show user image of who said the comment.
-    - Order by old -> new (top -> bottom)
+
+npm i country-state-city
+
 
 
 
