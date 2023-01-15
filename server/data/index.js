@@ -148,7 +148,7 @@ export const posts = [
     userId: userIds[1],
     firstName: "Steve",
     lastName: "Ralph",
-    location: "New York, CA",
+    location: "New York, CA, United States",
     description: "Some really long random description",
     picturePath: "post1.jpeg",
     userPicturePath: "p3.jpeg",
@@ -165,7 +165,7 @@ export const posts = [
     userId: userIds[3],
     firstName: "Whatcha",
     lastName: "Doing",
-    location: "Korea, CA",
+    location: "Korea",
     description:
       "Another really long random description. This one is longer than the previous one.",
     picturePath: "post2.jpeg",
@@ -183,7 +183,7 @@ export const posts = [
     userId: userIds[4],
     firstName: "Jane",
     lastName: "Doe",
-    location: "Utah, CA",
+    location: "Utah, United States",
     description:
       "This is the last really long random description. This one is longer than the previous one.",
     picturePath: "post3.jpeg",
@@ -201,7 +201,7 @@ export const posts = [
     userId: userIds[5],
     firstName: "Harvey",
     lastName: "Dunn",
-    location: "Los Angeles, CA",
+    location: "Los Angeles, California, United States",
     description:
       "This is the last really long random description. This one is longer than the previous one. Man I'm bored. I'm going to keep typing until I run out of things to say.",
     picturePath: "post4.jpeg",
@@ -225,7 +225,7 @@ export const posts = [
     userId: userIds[6],
     firstName: "Carly",
     lastName: "Vowel",
-    location: "Chicago, IL",
+    location: "Chicago, Illinois, United States",
     description:
       "Just a short description. I'm tired of typing. I'm going to play video games now.",
     picturePath: "post5.jpeg",
@@ -243,7 +243,7 @@ export const posts = [
     userId: userIds[7],
     firstName: "Jessica",
     lastName: "Dunn",
-    location: "Washington, DC",
+    location: "Hawaii, United States",
     description:
       "For the last time, I'm going to play video games now. I'm tired of typing. I'm going to play video games now.",
     picturePath: "post6.jpeg",

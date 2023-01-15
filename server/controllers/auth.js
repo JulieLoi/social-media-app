@@ -46,8 +46,6 @@ export const login = async (req, res) => {
 
     try {
 
-        console.log("SERVER LOGIN")
-
         // Destructures Request Parameters
         const { email, password } = req.body;
 

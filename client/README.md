@@ -11,14 +11,9 @@ WORK ON MY LOGIN/REGISTER...
 -For wrong user/pass, use "wrong email or password"
 
 
+
 Location
 npm i country-state-city
-
-
-
-
-Create Password requirements...
-
 
 
 
@@ -37,10 +32,11 @@ Favicon Icon
 
 
 Fake Accounts
-ethanhover@yahoo.com   
-georgefrancis@hotmail.com
-pabloheimplatz@gmail.com
-^ExAM44)_pass
+pablohelmplatz@gmail.com
+ethanhoover@gmail.com
+
+P5p)&2dsf
+
 
 
 

@@ -62,18 +62,15 @@ const Form = () => {
     const isLogin = (pageType === "login");
     const isRegister = (pageType === "register");
     
-    // Location
-    const [location, setLocation] = useState("")  
-    
-    // Response JSON
-    const [errorMessage, setErrorMessage] = useState("")
+    // States
+    const [location, setLocation] = useState("");            // Location Value
+    const [errorMessage, setErrorMessage] = useState("");       // Error Message
 
     // Register Function
     const register = async (values, onSubmitProps) => {
 
         // Form Data
         const formData = new FormData();
-
         for (let value in values) {
             formData.append(value, values[value]);
         }
@@ -81,36 +78,29 @@ const Form = () => {
         formData.append('picturePath', values.picture.name);
 
         // POST API call (sends form data)
-        const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register", 
+        await fetch("http://localhost:3001/auth/register", 
             {
                 method: "POST",
                 body: formData,
             }
         ).then(async (response) => {
+            // Response JSON Object
             const jsonObject = await response.json();
 
-            // Register Successful
+            // Register Successful (Go to Login)
             if (response.status === 201) {
-                // Get Backend Response (Created New User)
-                const savedUser = await savedUserResponse.json();
-                onSubmitProps.resetForm();                          // Reset Form
-
-                // Successful API Call, Go to Login Page
-                if (savedUser) { setPageType("login") }
-
+                onSubmitProps.resetForm();     // Reset Form
+                setPageType("login");
             }
-            else {
-                setErrorMessage(jsonObject.msg);
-            }
+            else { setErrorMessage(jsonObject.msg); }
         });
     }
 
     // Login Function
-    const login = async (values, onSubmitProps) => {
+    const login = async (values) => {
 
         // POST API call (sends login data)
-        const loggedInResponse = await fetch(
+        await fetch(
             "http://localhost:3001/auth/login", 
             {
                 method: "POST",
@@ -118,36 +108,26 @@ const Form = () => {
                 body: JSON.stringify(values),
             }
         ).then(async (response) =>  {
+            // Response JSON Object
             const jsonObject = await response.json();
 
-            // Authentication Successful
+            // Authentication Successful (Login, Go to Home Page)
             if (response.status === 200) {
-                // Get Backend Response (User, Token)
-                const loggedIn = await loggedInResponse.json(); 
-                onSubmitProps.resetForm();                          // Reset Form
-
-                // Successful API Call, Set State (Login), Go to Home Page
-                if (loggedIn) {
-                    dispatch(
-                        setLogin({
-                            user: loggedIn.user,
-                            token: loggedIn.token,
-                        })
-                    );
-                    navigate("/home");
-                }
+                dispatch(
+                    setLogin({
+                        user: jsonObject.user,
+                        token: jsonObject.token,
+                    })
+                );
+                navigate("/home");
             }
-            else  {
-                setErrorMessage(jsonObject.msg)
-            }
-            
+            else { setErrorMessage(jsonObject.msg) }
         });
     }
 
     // Handle Form Submit
     const handleFormSubmit = async(values, onSubmitProps) => {
-        console.log("HANDLE FORM SUBMIT")
-        if (isLogin) await login(values, onSubmitProps);
+        if (isLogin) await login(values);
         if (isRegister) await register(values, onSubmitProps);
     };
 
@@ -159,57 +139,43 @@ const Form = () => {
             validationSchema={isLogin ? loginSchema : registerSchema}
         >
             {({
-                values,
-                errors,
-                touched,
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                setFieldValue,
-                resetForm,
+                values, errors, touched,
+                handleBlur, handleChange, handleSubmit,
+                setFieldValue, resetForm,
             }) => (
                 <form onSubmit={handleSubmit} autoComplete="off">
                     
-                    <Box
-                        display="grid"
-                        gap="30px"
+                    <Box display="grid" gap="30px"
                         gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                        sx={{
-                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
-                        }}
+                        sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}
                     >
                         {/* REGISTER FORM*/}
                         {isRegister && (
                             <>
-
                                 <Box
-                                    gridColumn="span 4"
+                                    gridColumn="span 4" borderRadius="5px" p="1rem"
                                     border={`1px solid ${palette.neutral.medium}`}
-                                    borderRadius="5px"
-                                    p="1rem"
                                 >
                                     <Dropzone
-                                        acceptedFiles=".jpg,.jpeg,.png"
-                                        multiple={false}
+                                        acceptedFiles=".jpg,.jpeg,.png" multiple={false}
                                         onDrop={(acceptedFiles) =>
-                                        setFieldValue("picture", acceptedFiles[0])
+                                            setFieldValue("picture", acceptedFiles[0])
                                         }
                                     >
                                         {({ getRootProps, getInputProps }) => (
                                         <Box
-                                            {...getRootProps()}
+                                            {...getRootProps()} p="1rem"
                                             border={`2px dashed ${palette.primary.main}`}
-                                            p="1rem"
                                             sx={{ "&:hover": { cursor: "pointer" } }}
                                         >
                                             <input {...getInputProps()} />
                                             {!values.picture ? (
-                                            <div>Add Profile Picture Here</div>
+                                                <div>Add Profile Picture Here</div>
                                             ) : (
-                                            <FlexBetween>
-                                                <Typography>{values.picture.name}</Typography>
-                                                <EditOutlined />
-                                            </FlexBetween>
+                                                <FlexBetween>
+                                                    <Typography>{values.picture.name}</Typography>
+                                                    <EditOutlined />
+                                                </FlexBetween>
                                             )}
                                         </Box>
                                         )}
@@ -225,6 +191,7 @@ const Form = () => {
                                     helperText={touched.firstName && errors.firstName}
                                     sx={{ gridColumn: "span 2" }}
                                 />
+                                
                                 <TextField 
                                     label="Last Name" name="lastName"
                                     onBlur={handleBlur} onChange={handleChange}
