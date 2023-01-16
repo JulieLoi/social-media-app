@@ -20,18 +20,22 @@ const FriendListWidget = ({ userId }) => {
 
     // GET API Call (Get All User Friends)
     const getFriends = async () => {
-
-        // Get User Friends in MongoDB
-        const response = await fetch(`http://localhost:3001/users/${userId}/friends`,
+        await fetch(`http://localhost:3001/users/${userId}/friends`,
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}`},
             }
-        )
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
 
-        // Get Backend Response
-        const data = await response.json();
-        dispatch(setFriends({ friends: data }));     // Update Frontend State   
+            if (response.status === 200) {
+                dispatch(setFriends({ friends: jsonObject }));     // Update Frontend State   
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }
 
     // Gets Friends List Data
@@ -73,7 +77,6 @@ const FriendListWidget = ({ userId }) => {
                     />
                 ))}
             </Box>
-
         </WidgetWrapper>
     )
 }

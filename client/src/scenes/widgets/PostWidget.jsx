@@ -63,6 +63,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 body: JSON.stringify({ userId: loggedInUser._id })
             }
         ).then(async (response) => {
+            // Response JSON Object
             const jsonObject = await response.json();
 
             if (response.status === 200) {
@@ -85,6 +86,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 }
             }
         ).then(async (response) => {
+            // Response JSON Object
             const jsonObject = response.json();
 
             if (response.status === 202) {
@@ -113,10 +115,10 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                 }),
             }
         ).then(async (response) => {
+            // Response JSON Object
             const jsonObject = await response.json();
 
             if (response.status === 200) {
-                console.log("UPDATE POST COMMENT POSTED")
                 dispatch(setPost({ post: jsonObject }));       // Update Frontend State
                 setUserComment("");                             // Resets User Comment
             }

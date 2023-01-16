@@ -59,22 +59,28 @@ const MyPostWidget = ({ picturePath }) => {
         }
 
         // Create Post in MongoDB
-        const response = await fetch(`http://localhost:3001/posts`, 
+        await fetch(`http://localhost:3001/posts`, 
             {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,
             }
-        );
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = response.json();
 
-        // Gets Backend Response (Updated Posts - including the newly created post)
-        const posts = await response.json();
-        dispatch(setPosts({ posts }));          //  Updates Frontend State
+            if (response.status === 201) {
+                dispatch(setPosts({ jsonObject }));          //  Updates Frontend State
 
-        // Reset MyPostWidget
-        setImage(null);
-        setIsImage(false);
-        setPost("");
+                // Reset MyPostWidget
+                setImage(null);
+                setIsImage(false);
+                setPost("");
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }
     
     // My Post Widget 

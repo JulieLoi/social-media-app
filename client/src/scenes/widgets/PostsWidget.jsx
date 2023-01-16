@@ -17,36 +17,42 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     
     // GET API Call (Get All Posts)
     const getPosts = async () => {
-
-        // Get Posts in MongoDB
-        const response = await fetch(`http://localhost:3001/posts`, 
+        await fetch(`http://localhost:3001/posts`, 
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}`}
             }
-        );
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
 
-
-        // Get Backend Response (Get All Posts in DB)
-        const data = await response.json();
-        dispatch(setPosts({ posts: data }));    // Updates Frontend State
-
+            if (response.status === 200) {
+                dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }
 
     // GET API Call (Get All User Posts)
     const getUserPosts = async () => {
-
-        // Get Posts in MongoDB
-        const response = await fetch(`http://localhost:3001/posts/${userId}/posts`, 
+        await fetch(`http://localhost:3001/posts/${userId}/posts`, 
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}`}
             }
-        );
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
 
-        // Get Backend Response (Get All User Posts in DB)
-        const data = await response.json(); 
-        dispatch(setPosts({ posts: data }));    // Updates Frontend State
+            if (response.status === 200) {
+                dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }
 
     // Loads "all posts" or "user posts" based on isProfile
