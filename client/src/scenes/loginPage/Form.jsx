@@ -137,7 +137,7 @@ const Form = () => {
      */
     const onKeyDown = (keyEvent) => {
         if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-        keyEvent.preventDefault();
+            keyEvent.preventDefault();
         }
     }
 
@@ -154,158 +154,156 @@ const Form = () => {
                 setFieldValue, resetForm,
             }) => (
                 <form onSubmit={handleSubmit} onKeyDown={onKeyDown}>
-                    
-                    <Box display="grid" gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                        sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}
-                    >
-                        {/* REGISTER FORM*/}
-                        {isRegister && (
-                            <>
-                                <Box
-                                    gridColumn="span 4" borderRadius="5px" p="1rem"
-                                    border={`1px solid ${palette.neutral.medium}`}
-                                >
-                                    <Dropzone
-                                        acceptedFiles=".jpg,.jpeg,.png" multiple={false}
-                                        onDrop={(acceptedFiles) =>
-                                            setFieldValue("picture", acceptedFiles[0])
-                                        }
-                                    >
-                                        {({ getRootProps, getInputProps }) => (
-                                        <Box
-                                            {...getRootProps()} p="1rem"
-                                            border={`2px dashed ${palette.primary.main}`}
-                                            sx={{ "&:hover": { cursor: "pointer" } }}
-                                        >
-                                            <input {...getInputProps()} />
-                                            {!values.picture ? (
-                                                <div>Add Profile Picture Here</div>
-                                            ) : (
-                                                <FlexBetween>
-                                                    <Typography>{values.picture.name}</Typography>
-                                                    <EditOutlined />
-                                                </FlexBetween>
-                                            )}
-                                        </Box>
-                                        )}
-                                    </Dropzone>
-                                </Box>
-
-                                <TextField 
-                                    label="First Name" name="firstName"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.firstName}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                                    helperText={touched.firstName && errors.firstName}
-                                    sx={{ gridColumn: "span 2" }}
-                                />
-                                
-                                <TextField 
-                                    label="Last Name" name="lastName"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.lastName}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                    helperText={touched.lastName && errors.lastName}
-                                    sx={{ gridColumn: "span 2" }}
-                                />
-
-                                <TextField 
-                                    label="Occupation" name="occupation"
-                                    onBlur={handleBlur} onChange={handleChange}
-                                    value={values.occupation}
-                                    inputProps={{ maxLength: 50 }}
-                                    error={Boolean(touched.occupation) && Boolean(errors.occupation)}
-                                    helperText={touched.occupation && errors.occupation}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
-
-                                <Divider sx={{ gridColumn: "span 4" }} />
-                                <Location setLocation={setLocation}  />
-                                <TextField disabled
-                                    label="Location (Optional)" name="location" 
-                                    onBlur={handleBlur} 
-                                    value={location}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
-                                <Divider sx={{ gridColumn: "span 4" }} />
-
-                                
-                            </>
-                        )}
-
-                        {/* LOGIN AND REGISTER */}
-                        <TextField 
-                            label="Email" name="email"
-                            onBlur={handleBlur} onChange={handleChange}
-                            value={values.email}
-                            inputProps={{ maxLength: 254 }}
-                            error={(Boolean(touched.email) && Boolean(errors.email)) || errorMessage !== ""}
-                            helperText={isRegister ? (touched.email && errors.email) : ""}
-                            sx={{ gridColumn: "span 4" }}
-                        />
-                        <TextField 
-                            label="Password" name="password"
-                            type="password" 
-                            onBlur={handleBlur} onChange={handleChange}
-                            value={values.password}
-                            inputProps={{ maxLength: 128 }}
-                            error={(Boolean(touched.password) && Boolean(errors.password)) || errorMessage !== ""}
-                            helperText={isRegister ? (touched.password && errors.password) : ""}
-                            sx={{ gridColumn: "span 4" }}
-                        />
-                        {isLogin && errorMessage !== "" &&
-                            <Typography 
-                                color="red" sx={{ gridColumn: "span 4" }} 
-                                margin="-25px 0px"
+                <Box display="grid" gap="30px"
+                    gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                    sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}
+                >
+                    {/* REGISTER FORM*/}
+                    {isRegister && (
+                        <>
+                            <Box
+                                gridColumn="span 4" borderRadius="5px" p="1rem"
+                                border={`1px solid ${palette.neutral.medium}`}
                             >
-                                {errorMessage}
-                            </Typography>
-                        }
-                    </Box>
+                                <Dropzone
+                                    acceptedFiles=".jpg,.jpeg,.png" multiple={false}
+                                    onDrop={(acceptedFiles) =>
+                                        setFieldValue("picture", acceptedFiles[0])
+                                    }
+                                >
+                                    {({ getRootProps, getInputProps }) => (
+                                    <Box
+                                        {...getRootProps()} p="1rem"
+                                        border={`2px dashed ${palette.primary.main}`}
+                                        sx={{ "&:hover": { cursor: "pointer" } }}
+                                    >
+                                        <input {...getInputProps()} />
+                                        {!values.picture ? (
+                                            <div>Add Profile Picture Here</div>
+                                        ) : (
+                                            <FlexBetween>
+                                                <Typography>{values.picture.name}</Typography>
+                                                <EditOutlined />
+                                            </FlexBetween>
+                                        )}
+                                    </Box>
+                                    )}
+                                </Dropzone>
+                            </Box>
 
-                    {/* SUBMIT BUTTON: Login / Register */}
-                    <Box>
-                        <Button
-                            fullWidth
-                            type="submit"
-                            sx={{
-                                m: "2rem 0",
-                                p: "1 rem",
-                                backgroundColor: palette.primary.main,
-                                color: palette.background.alt,
-                                "&:hover": { color: palette.primary.main }
-                            }}
+                            <TextField 
+                                label="First Name" name="firstName"
+                                onBlur={handleBlur} onChange={handleChange}
+                                value={values.firstName}
+                                inputProps={{ maxLength: 50 }}
+                                error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                                helperText={touched.firstName && errors.firstName}
+                                sx={{ gridColumn: "span 2" }}
+                            />
+                            
+                            <TextField 
+                                label="Last Name" name="lastName"
+                                onBlur={handleBlur} onChange={handleChange}
+                                value={values.lastName}
+                                inputProps={{ maxLength: 50 }}
+                                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                                helperText={touched.lastName && errors.lastName}
+                                sx={{ gridColumn: "span 2" }}
+                            />
+
+                            <TextField 
+                                label="Occupation" name="occupation"
+                                onBlur={handleBlur} onChange={handleChange}
+                                value={values.occupation}
+                                inputProps={{ maxLength: 50 }}
+                                error={Boolean(touched.occupation) && Boolean(errors.occupation)}
+                                helperText={touched.occupation && errors.occupation}
+                                sx={{ gridColumn: "span 4" }}
+                            />
+
+                            <Divider sx={{ gridColumn: "span 4" }} />
+                            <Location setLocation={setLocation}  />
+                            <TextField disabled
+                                label="Location (Optional)" name="location" 
+                                onBlur={handleBlur} 
+                                value={location}
+                                sx={{ gridColumn: "span 4" }}
+                            />
+                            <Divider sx={{ gridColumn: "span 4" }} />
+
+                            
+                        </>
+                    )}
+
+                    {/* LOGIN AND REGISTER */}
+                    <TextField 
+                        label="Email" name="email"
+                        onBlur={handleBlur} onChange={handleChange}
+                        value={values.email}
+                        inputProps={{ maxLength: 254 }}
+                        error={(Boolean(touched.email) && Boolean(errors.email)) || errorMessage !== ""}
+                        helperText={isRegister ? (touched.email && errors.email) : ""}
+                        sx={{ gridColumn: "span 4" }}
+                    />
+                    <TextField 
+                        label="Password" name="password"
+                        type="password" 
+                        onBlur={handleBlur} onChange={handleChange}
+                        value={values.password}
+                        inputProps={{ maxLength: 128 }}
+                        error={(Boolean(touched.password) && Boolean(errors.password)) || errorMessage !== ""}
+                        helperText={isRegister ? (touched.password && errors.password) : ""}
+                        sx={{ gridColumn: "span 4" }}
+                    />
+                    {isLogin && errorMessage !== "" &&
+                        <Typography 
+                            color="red" sx={{ gridColumn: "span 4" }} 
+                            margin="-25px 0px"
                         >
-                            {isLogin ? "LOGIN" : "REGISTER"}
-
-                        </Button>
-
-                        {/* CHANGE BETWEEN LOGIN / REGISTER */}
-                        <Typography
-                            onClick={() => {
-                                setPageType(isLogin ? "register" : "login");
-                                setErrorMessage("");
-                                resetForm();
-                            }}
-                            sx={{
-                                textDecoration: "underline",
-                                color: palette.primary.main,
-                                "&:hover": {
-                                    cursor: "pointer",
-                                    color: palette.primary.light,
-                                },
-                            }}
-                        >
-                            {isLogin 
-                                ? "Don't have an account? Sign up here!" 
-                                : "Already have an account? Login here!"
-                            }
+                            {errorMessage}
                         </Typography>
-                        
-                    </Box>
+                    }
+                </Box>
+
+                {/* SUBMIT BUTTON: Login / Register */}
+                <Box>
+                    <Button
+                        fullWidth
+                        type="submit"
+                        sx={{
+                            m: "2rem 0", p: "1 rem",
+                            backgroundColor: palette.primary.main,
+                            color: palette.background.alt,
+                            "&:hover": { color: palette.primary.main }
+                        }}
+                    >
+                        {isLogin ? "LOGIN" : "REGISTER"}
+
+                    </Button>
+
+                    {/* CHANGE BETWEEN LOGIN / REGISTER */}
+                    <Typography
+                        onClick={() => {
+                            setPageType(isLogin ? "register" : "login");
+                            setErrorMessage("");
+                            resetForm();
+                        }}
+                        sx={{
+                            textDecoration: "underline",
+                            color: palette.primary.main,
+                            "&:hover": {
+                                cursor: "pointer",
+                                color: palette.primary.light,
+                            },
+                        }}
+                    >
+                        {isLogin 
+                            ? "Don't have an account? Sign up here!" 
+                            : "Already have an account? Login here!"
+                        }
+                    </Typography>
+                    
+                </Box>
                 </form>
             )}
         </Formik>

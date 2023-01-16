@@ -14,9 +14,9 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
  */
 const HomePage = () => {
 
-    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-    const { _id, picturePath } = useSelector((state) => state.user);
-    const { palette } = useTheme();
+    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");    // Mobile/PC
+    const { _id, picturePath } = useSelector((state) => state.user);    // User ID, User Image
+    const { palette } = useTheme();                                     // Theme Colors
 
     return (
         <Box>

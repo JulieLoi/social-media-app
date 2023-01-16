@@ -15,26 +15,32 @@ import UserWidget from "scenes/widgets/UserWidget";
  */
 const ProfilePage = () => {
 
-    const [user, setUser] = useState(null);
     const { userId } = useParams();                                 // Gets the User ID of the Profile Page
-    const token = useSelector((state) => state.token);
+    const token = useSelector((state) => state.token);              // Logged In User Token
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
     const { palette } = useTheme();
 
+    const [user, setUser] = useState(null);                         // The Profile Page's User State (Not Logged In User)
+
     // Get User of the Profile Page
     const getUser = async () => {
-
-        // GET API Call (Get User Information)
-        const response = await fetch(`http://localhost:3001/users/${userId}`, 
+        await fetch(`http://localhost:3001/users/${userId}`, 
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
             }
-        );
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
 
-        // Get Backend Response (Profile User Data)
-        const data = await response.json();
-        setUser(data);                          // Updates Profile Page State (User)
+            if (response.status === 200) {
+                setUser(jsonObject);  // Updates Profile Page State (User)
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        })
+
     }
 
     // Get User Data for Profile Page
@@ -44,9 +50,7 @@ const ProfilePage = () => {
     }, []);
 
     // User Does Not Exist
-    if (!user) {
-        return null;
-    }
+    if (!user) { return null; }
 
     // Profile Page
     return (
