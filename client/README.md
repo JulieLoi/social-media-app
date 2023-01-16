@@ -2,13 +2,17 @@
 
 # Possible Features to add
 
+DO ACCOUNT SETTINGS AND UPDATE USER (update frontend and backend...)
+-----------------------------
+Finished Login/Register (ignore the rest of the things i don't want)
+Finished Comment Section
+Finished Editting Social Profiles
+
 
 Edit account info...
 
 WORK ON MY LOGIN/REGISTER...
 -Add more restrictions on the data, mention it in the red text...                   DONE
--When logging in with non-existing account, mention that email is not in use.
--For wrong user/pass, use "wrong email or password"
 
 
 

@@ -38,7 +38,6 @@ const UserWidget = ({ userId, picturePath }) => {
     // Twitter Dialog Box
     const [editTwitterHandle, setEditTwitterHandle] = useState("");
     const [twitterDialogBox, setTwitterDialogBox] = useState(false);
-    const handleTwitterOpen = () => { setTwitterDialogBox(true) }
     const handleTwitterClose = () => { 
         updateUserHandles();
         setTwitterDialogBox(false);
@@ -47,10 +46,9 @@ const UserWidget = ({ userId, picturePath }) => {
     //LinkedIn Dialog Box
     const [editLinkedInHandle, setEditLinkedInHandle] = useState("");
     const [LinkedInDialogBox, setLinkedInDialogBox] = useState(false);
-    const handleLinkedInOpen = () => { setLinkedInDialogBox(true) }
     const handleLinkedInClose = () => { 
         updateUserHandles();
-        setLinkedInDialogBox(false) ;
+        setLinkedInDialogBox(false);
     }
 
     // Palette Theme
@@ -141,21 +139,11 @@ const UserWidget = ({ userId, picturePath }) => {
             {/* FIRST ROW: Profile Image, Name, Friend Count, Profile Page Button */}
             <FlexBetween gap="0.5rem" pb="1.1rem">
                 <FlexBetween gap="1rem">
-                    <div >
-                        <UserImage 
-                            userId={userId}
-                            image={picturePath} 
-                        />
-                    </div>
+                    <UserImage userId={userId} image={picturePath} />
                     <Box>
                         <Typography
                             variant="h4" color={dark} fontWeight="500"
-                            sx={{
-                                "&:hover": {
-                                    color: primary,
-                                    cursor: "pointer"
-                                }
-                            }}
+                            sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
                             onClick={() => navigate(`/profile/${userId}`)}
                         >
                             {firstName} {lastName}
@@ -167,10 +155,7 @@ const UserWidget = ({ userId, picturePath }) => {
                     
                 </FlexBetween>
                     <ManageAccountsOutlined 
-                        sx={{ 
-                            color: main, 
-                            "&:hover": { cursor: "pointer", color: primary } 
-                        }} 
+                        sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
                     />
             </FlexBetween>
 
@@ -233,10 +218,12 @@ const UserWidget = ({ userId, picturePath }) => {
                             <Typography color={medium}>Social Network</Typography>
                         </Box>
                     </FlexBetween>
-                    {loggedInUser === userId &&
-                        <EditOutlined onClick={handleTwitterOpen}
+                    {loggedInUser === userId ?
+                        <EditOutlined onClick={setTwitterDialogBox(true)}
                             sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
                         />
+                        :
+                        <Typography color={medium}>/{user.twitterHandle}</Typography>
                     }
                 </FlexBetween>
                 
@@ -255,12 +242,7 @@ const UserWidget = ({ userId, picturePath }) => {
                         <Box>
                             <Typography 
                                 color={main} fontWeight="500"
-                                sx={{
-                                    "&:hover": {
-                                        color: primary,
-                                        cursor: "pointer"
-                                    }
-                                }}
+                                sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
                                 onClick={() => window.open(`https://www.linkedin.com/${user.linkedInHandle}`)}
                             >
                                 LinkedIn
@@ -270,10 +252,12 @@ const UserWidget = ({ userId, picturePath }) => {
                             </Typography>
                         </Box>
                     </FlexBetween>
-                    {loggedInUser === userId && 
-                        <EditOutlined onClick={handleLinkedInOpen}
+                    {loggedInUser === userId ?
+                        <EditOutlined onClick={setLinkedInDialogBox(true)}
                             sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
                         />
+                        :
+                        <Typography color={medium}>/{user.linkedInHandle}</Typography>
                     }
                 </FlexBetween>
             </Box>
