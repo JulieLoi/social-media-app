@@ -43,39 +43,40 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     const primary = palette.primary.main;
     const medium = palette.neutral.medium;
 
-    // Token, Logged In User ID (Frontend State)
+    // Token, Logged In User (Frontend State)
     const token = useSelector((state) => state.token);
-    const loggedInUserId = useSelector((state) => state.user._id);
+    const loggedInUser = useSelector((state) => state.user);
 
     // Likes (Does not update)
-    const isLiked = Boolean(likes[loggedInUserId]);     // Logged In User Likes
+    const isLiked = Boolean(likes[loggedInUser._id]);     // Logged In User Likes
     const likeCount = Object.keys(likes).length;        // Total Like Count
 
     // PATCH API Call (Like/Dislike Post)
     const patchLike = async () => {
-
-        // Like/Dislike Post (add/remove userID from post's like array)
-        const response = await fetch(`http://localhost:3001/posts/${postId}/like`,
+        await fetch(`http://localhost:3001/posts/${postId}/like`,
             {
                 method: "PATCH",
                 headers: { 
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ userId: loggedInUserId })
+                body: JSON.stringify({ userId: loggedInUser._id })
             }
-        );
+        ).then(async (response) => {
+            const jsonObject = await response.json();
 
-        // Get Backend Response (Updated Post - like/unlike post)
-        const updatedPost = await response.json();
-        dispatch(setPost({ post: updatedPost }));       // Update Frontend State
+            if (response.status === 200) {
+                dispatch(setPost({ post: jsonObject }));       // Update Frontend State
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }
 
     // DELETE API Call (Delete Post)
     const deleteUserPost = async () => {
-
-        // Delete Post
-        const response = await fetch(`http://localhost:3001/posts/${postId}/delete`,
+        await fetch(`http://localhost:3001/posts/${postId}/delete`,
             {
                 method: "DELETE",
                 headers: {
@@ -83,18 +84,21 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                     "Content-Type": "application/json"
                 }
             }
-        ) 
+        ).then(async (response) => {
+            const jsonObject = response.json();
 
-        // Get Backend Response (Deleted Post)
-        const deletedPost = await response.json();
-        dispatch(deletePost({ post: deletedPost }));       // Update Frontend State
-    }
+            if (response.status === 202) {
+                dispatch(deletePost({ post: jsonObject }));       // Update Frontend State
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
+    };
 
     // PATCH API Call (Add Comment)
     const addComment = async () => {
-
-        // Add Comment to Post
-        const response = await fetch(`http://localhost:3001/posts/${postId}/comment`,
+        await fetch(`http://localhost:3001/posts/${postId}/comment`,
             {
                 method: "PATCH",
                 headers: { 
@@ -102,18 +106,24 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ 
-                    userId: loggedInUserId, 
-                    userName: name,
-                    userPicturePath: userPicturePath, 
+                    userId: loggedInUser._id, 
+                    userName: `${loggedInUser.firstName} ${loggedInUser.lastName}`,
+                    userPicturePath: loggedInUser.picturePath, 
                     comment: userComment 
                 }),
             }
-        );
+        ).then(async (response) => {
+            const jsonObject = await response.json();
 
-        // Get Backend Response (Updated Post - add comment)
-        const updatedPost = await response.json();
-        dispatch(setPost({ post: updatedPost }));       // Update Frontend State
-        setUserComment("");                             // Resets User Comment
+            if (response.status === 200) {
+                console.log("UPDATE POST COMMENT POSTED")
+                dispatch(setPost({ post: jsonObject }));       // Update Frontend State
+                setUserComment("");                             // Resets User Comment
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }
 
     // Post Widget
@@ -180,23 +190,20 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
 
                 {/* Delete, Share Button */}
                 <FlexBetween>
-                        {postUserId === loggedInUserId &&  (
-                            <IconButton onClick={() => deleteUserPost()}>
-                                <DeleteIcon sx={{ "&:hover": { color: primary } }} />
-                            </IconButton>
-                        )}
-                        
-                        <IconButton onClick={() => setShare(!share)}>
-                            {share ?
-                                <ShareOutlined sx={{ color: primary }} />
-                                :
-                                <ShareOutlined />
-                            }
+                    {postUserId === loggedInUser._id &&  (
+                        <IconButton onClick={() => deleteUserPost()}>
+                            <DeleteIcon sx={{ "&:hover": { color: primary } }} />
                         </IconButton>
+                    )}
+                    
+                    <IconButton onClick={() => setShare(!share)}>
+                        {share ?
+                            <ShareOutlined sx={{ color: primary }} />
+                            :
+                            <ShareOutlined />
+                        }
+                    </IconButton>
                 </FlexBetween>
-                
-                
-
             </FlexBetween>
 
             {/* Comment Section*/}
@@ -242,7 +249,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
                     <Divider />
 
                     <FlexBetween mt="1rem">
-                        <UserImage image={userPicturePath} size={"50px"} />
+                        <UserImage image={loggedInUser.picturePath} size={"50px"} />
                         <InputBase 
                             placeholder="Type your comment here..."
                             onChange={(e) => {
