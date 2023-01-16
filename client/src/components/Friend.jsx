@@ -28,19 +28,23 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
 
     // PATCH API Call (Add/Remove Friend)
     const patchFriend = async () => {
-
-        // Add/Removes Friend from User's Friends List
-        const response = await fetch(`http://localhost:3001/users/${_id}/${friendId}`,
+        await fetch(`http://localhost:3001/users/${_id}/${friendId}`,
             {
                 method: "PATCH",
                 headers: { Authorization: `Bearer ${token}`},
                 "Content-Type": "application/json"
             }
-        );
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
 
-        // Get Backend Response (Updated Friends List)
-        const data = await response.json();
-        dispatch(setFriends({ friends: data }));    // Updates Frontend State
+            if (response.status === 200) {
+                dispatch(setFriends({ friends: jsonObject }));    // Updates Frontend State
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
     }    
 
     // Friend Component
@@ -49,20 +53,11 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
 
             {/* User Profile Picture, Name, Location */}
             <FlexBetween gap="1rem">
-                <UserImage 
-                    userId={friendId}
-                    image={userPicturePath} 
-                    size="55px" 
-                /> 
+                <UserImage userId={friendId} image={userPicturePath} size="55px" /> 
                 <Box>
                     <Typography
                         color={main} variant="h5" fontWeight="500"
-                        sx={{
-                            "&:hover": {
-                                color: palette.primary.main,
-                                cursoer: "pointer",
-                            }
-                        }}
+                        sx={{ "&:hover": { color: palette.primary.main, cursoer: "pointer", } }}
                         onClick={() => {
                             navigate(`/profile/${friendId}`);
                             navigate(0);        // Refresh
@@ -80,12 +75,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
             {_id !== friendId && 
                 (
                 <FlexBetween>
-                    <IconButton
-                        onClick={() => patchFriend()}
-                        sx={{
-                            backgroundColor: primaryLight,
-                            p: "0.6rem", mr: marginAmount
-                        }}
+                    <IconButton onClick={() => patchFriend()}
+                        sx={{ backgroundColor: primaryLight, p: "0.6rem", mr: marginAmount }}
                     >
                         {isFriend ? 
                             <PersonRemoveOutlined sx={{ color: primaryDark }} /> 
@@ -96,8 +87,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
                 </FlexBetween>
                 )
             }
-            
-
         </FlexBetween>
     )
 };

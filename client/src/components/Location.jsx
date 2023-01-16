@@ -40,11 +40,8 @@ const Location = ({ setLocation }) => {
     // Location
     return (
         <>
-
-            <Autocomplete disablePortal required autoSelect
-                id="country-location" 
-                options={countryOptions}
-                
+            {/* COUNTRY SELECT */}
+            <Autocomplete disablePortal id="country-location" options={countryOptions}
                 onInputChange={(e) => {
 
                     // Textfield, Selected Option
@@ -69,7 +66,6 @@ const Location = ({ setLocation }) => {
                             setStateSelect(""); 
                             setCitySelect(""); setCityOptions([]);
                         }
-
                     }
 
                     // Clear Country Select (Reset All)
@@ -88,13 +84,10 @@ const Location = ({ setLocation }) => {
                 sx={{ gridColumn: "span 2" }}
             />
 
-            
-            <Autocomplete disablePortal
-                id="state-location"
-                options={stateOptions}
+            {/* STATE SELECT */}
+            <Autocomplete disablePortal id="state-location" options={stateOptions}
                 disabled={countrySelect.label === "" || stateOptions.length === 0}
                 onInputChange={(e) => {
-
                     if (e) {
                         // Textfield, Selected Option
                         const textInput = e.target.value;
@@ -131,12 +124,10 @@ const Location = ({ setLocation }) => {
                 sx={{ gridColumn: "span 1" }}
             />
 
-            <Autocomplete disablePortal
-                id="city-location"
-                options={cityOptions}
+            {/* CITY SELECT */}
+            <Autocomplete disablePortal id="city-location" options={cityOptions}
                 disabled={stateSelect.label === "" || cityOptions.length === 0}
                 onInputChange={(e) => {
-
                     if (e) {
                         // Textfield, Selected Option
                         const textInput = e.target?.value;
@@ -155,7 +146,6 @@ const Location = ({ setLocation }) => {
                 renderInput={(params) => <TextField {...params} label="City" />}
                 sx={{ gridColumn: "span 1" }}
             />
-
         </>
     )
 }
