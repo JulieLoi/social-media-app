@@ -131,10 +131,20 @@ const Form = () => {
         if (isRegister) await register(values, onSubmitProps);
     };
 
+    /**
+     * Stop enter submitting the form.
+     * @param keyEvent Event triggered when the user presses a key.
+     */
+    const onKeyDown = (keyEvent) => {
+        if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+        keyEvent.preventDefault();
+        }
+    }
+
     // Form Frontend
     return (
         <Formik
-            onSubmit={handleFormSubmit}
+            onSubmit={handleFormSubmit} 
             initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
             validationSchema={isLogin ? loginSchema : registerSchema}
         >
@@ -143,7 +153,7 @@ const Form = () => {
                 handleBlur, handleChange, handleSubmit,
                 setFieldValue, resetForm,
             }) => (
-                <form onSubmit={handleSubmit} autoComplete="off">
+                <form onSubmit={handleSubmit} onKeyDown={onKeyDown}>
                     
                     <Box display="grid" gap="30px"
                         gridTemplateColumns="repeat(4, minmax(0, 1fr))"
@@ -301,5 +311,7 @@ const Form = () => {
         </Formik>
     );
 };
+
+
 
 export default Form;

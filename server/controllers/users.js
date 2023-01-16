@@ -81,5 +81,27 @@ export const addRemoveFriend = async (req, res) => {
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
-  };
+};
+
+export const updateHandles = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { twitter, linkedIn } = req.body;
+        
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { 
+                twitterHandle: twitter, 
+                linkedInHandle: linkedIn 
+            },
+            { new: true } // returns the new document
+        );
+
+        res.status(200).json(updatedUser);
+        
+    } catch (err) {
+        console.log(err.message)
+        res.status(404).json({ message: err.message });
+    }
+};
   

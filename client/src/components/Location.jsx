@@ -41,7 +41,7 @@ const Location = ({ setLocation }) => {
     return (
         <>
 
-            <Autocomplete disablePortal required
+            <Autocomplete disablePortal required autoSelect
                 id="country-location" 
                 options={countryOptions}
                 
