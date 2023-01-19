@@ -1,19 +1,12 @@
 import {
-    EditOutlined,
-    AttachFileOutlined,
-    GifBoxOutlined,
-    ImageOutlined,
-    MicOutlined,
-    MoreHorizOutlined,
+    EditOutlined, AttachFileOutlined,
+    GifBoxOutlined, ImageOutlined,
+    MicOutlined, MoreHorizOutlined,
   } from "@mui/icons-material";
   import {
-    Box,
-    Divider,
-    Typography,
-    InputBase,
-    useTheme,
-    Button,
-    useMediaQuery,
+    Box, Divider, Typography,
+    InputBase, Button, Menu, MenuItem,
+    useTheme, useMediaQuery,
   } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
   import Dropzone from "react-dropzone";
@@ -22,6 +15,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "state";
+
 
 /**
  * MyPostWidget
@@ -45,6 +39,12 @@ const MyPostWidget = ({ picturePath }) => {
     // User ID and Token (Frontend State)
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
+
+    // Dropdown Menu
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+    const handleClose = () => { setAnchorEl(null); };
 
     // POST API Call (Create Post)
     const handlePost = async () => {
@@ -85,23 +85,20 @@ const MyPostWidget = ({ picturePath }) => {
     
     // My Post Widget 
     return (
+        <>
         <WidgetWrapper>
 
             {/* Post Input */}
             <FlexBetween gap="1.5rem">
                 <UserImage image={picturePath} />
-                <InputBase 
-                    placeholder="What's on your mind..."
+                <InputBase  placeholder="What's on your mind..."
                     onChange={(e) => setPost(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === `Enter`) { handlePost() }
-                    }}
+                    onKeyDown={(e) => { if (e.key === `Enter`) { handlePost() } }}
                     value={post}
                     sx={{
-                        width: "100%",
+                        width: "100%", p: "1rem 2rem",
                         backgroundColor: palette.neutral.light,
                         borderRadius: "2rem",
-                        p: "1rem 2rem"
                     }}
                 />
             </FlexBetween>
@@ -109,27 +106,24 @@ const MyPostWidget = ({ picturePath }) => {
             {/* IMAGE DROPZONE */}
             {isImage && (
                 <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
-                    <Dropzone
-                        acceptedFiles=".jpg,.jpeg,.png"
-                        multiple={false}
+                    <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false}
                         onDrop={ (acceptedFiles) =>  setImage(acceptedFiles[0]) }
                     >
                         {({ getRootProps, getInputProps }) => (
                         <Box
                             {...getRootProps()}
                             border={`2px dashed ${palette.primary.main}`}
-                            p="1rem"
-                            sx={{ "&:hover": { cursor: "pointer" } }}
+                            p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}
                         >
                             <input {...getInputProps()} />
-                            {!image ? (
-                            <div>Add Image Here</div>
-                            ) : (
-                            <FlexBetween>
-                                <Typography>{image.name}</Typography>
-                                <EditOutlined />
-                            </FlexBetween>
-                            )}
+                            {!image ? 
+                                <div>Add Image Here</div>
+                                : 
+                                <FlexBetween>
+                                    <Typography>{image.name}</Typography>
+                                    <EditOutlined />
+                                </FlexBetween>
+                            }
                         </Box>
                         )}
                     </Dropzone>
@@ -141,14 +135,8 @@ const MyPostWidget = ({ picturePath }) => {
             {/* ICONS: Image, Clip, Attachment, Audio */}
             <FlexBetween>
                 <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-                    {isImage ?
-                        <ImageOutlined sx={{ color: palette.primary.main }} />
-                        :
-                        <ImageOutlined sx={{ color: mediumMain }} />
-                    }
-                    <Typography color={mediumMain} 
-                        sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-                    >
+                    <ImageOutlined sx={{ color: isImage ? palette.primary.main : mediumMain }} />
+                    <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
                         Image
                     </Typography>
                 </FlexBetween>
@@ -174,15 +162,20 @@ const MyPostWidget = ({ picturePath }) => {
                     :
                     (<>
                         <FlexBetween gap="0.25rem">
-                            <MoreHorizOutlined sx={{ color: mediumMain }} />
+                            <Button id="expand-mobile-menu-button"
+                                aria-controls={open ? 'expand-mobile-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}
+                            >
+                                <MoreHorizOutlined sx={{ color: open ? palette.primary.main : mediumMain }} />
+                            </Button>
                         </FlexBetween>
                     </>)
                 }
 
                 {/* POST BUTTON */}
-                <Button
-                    disabled={!post}
-                    onClick={handlePost}
+                <Button disabled={!post} onClick={handlePost}
                     sx={{ 
                         color: palette.background.alt, 
                         backgroundColor: palette.primary.main,
@@ -191,8 +184,36 @@ const MyPostWidget = ({ picturePath }) => {
                 >
                     POST
                 </Button>
+
             </FlexBetween>
         </WidgetWrapper>
+
+
+        {/* MOBILE MENU */}
+        <Menu id="expand-mobile-menu" anchorEl={anchorEl}
+            open={open} onClose={handleClose}
+            MenuListProps={{ 'aria-labelledby': 'expand-mobile-menu-button', }}
+        >
+            <MenuItem onClick={handleClose}>
+                <FlexBetween gap="0.25rem">
+                    <GifBoxOutlined sx={{ color: mediumMain }} />
+                    <Typography color={mediumMain}>Clip</Typography>
+                </FlexBetween>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+                <FlexBetween gap="0.25rem">
+                    <AttachFileOutlined sx={{ color: mediumMain }} />
+                    <Typography color={mediumMain}>Attachment</Typography>
+                </FlexBetween>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+                <FlexBetween gap="0.25rem">
+                    <MicOutlined sx={{ color: mediumMain }} />
+                    <Typography color={mediumMain}>Audio</Typography>
+                </FlexBetween>
+            </MenuItem>
+        </Menu>
+        </>
     )
 }
 
