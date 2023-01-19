@@ -50,8 +50,10 @@ export const authSlice = createSlice({
         },
 
         // Updates Logged In User's Handles (Twitter / LinkedIn)
-        setHandles: (state, action) => {
+        setUserInformation: (state, action) => {
             if (state.user) {
+                state.user.firstName = action.payload.firstName;
+                state.user.lastName = action.payload.lastName;
                 state.user.twitterHandle = action.payload.twitterHandle;
                 state.user.linkedInHandle = action.payload.linkedInHandle;
             }
@@ -83,5 +85,5 @@ export const authSlice = createSlice({
     }
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setHandles, setPosts, setPost, deletePost } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, deletePost } = authSlice.actions;
 export default authSlice.reducer;

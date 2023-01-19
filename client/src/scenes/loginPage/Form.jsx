@@ -92,7 +92,7 @@ const Form = () => {
                 onSubmitProps.resetForm();     // Reset Form
                 setPageType("login");
             }
-            else { setErrorMessage(jsonObject.msg); }
+            else { setErrorMessage(jsonObject.message); }
         });
     }
 
@@ -121,7 +121,7 @@ const Form = () => {
                 );
                 navigate("/home");
             }
-            else { setErrorMessage(jsonObject.msg) }
+            else { setErrorMessage(jsonObject.message); }
         });
     }
 

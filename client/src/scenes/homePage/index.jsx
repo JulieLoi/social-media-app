@@ -60,7 +60,7 @@ const HomePage = () => {
                 <ArrowCircleUpRoundedIcon 
                     sx={{ 
                         position: "fixed", bottom: "0.5rem", right: "0.5rem", 
-                        color: palette.primary.light, fontSize: "3rem",
+                        color: palette.primary.light, fontSize: isNonMobileScreens ? "5rem" : "3rem",
                         "&:hover": { color: palette.primary.main }
                     }}
                 />

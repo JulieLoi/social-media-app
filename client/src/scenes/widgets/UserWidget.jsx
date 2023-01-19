@@ -1,6 +1,5 @@
 import { 
     ManageAccountsOutlined, 
-    EditOutlined, 
     LocationOnOutlined, 
     WorkOutlineOutlined,
 } from "@mui/icons-material";
@@ -9,7 +8,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 import {
     Box, Typography, Divider, TextField, Button, InputAdornment, useTheme,
-    Dialog, DialogActions, DialogContent, DialogTitle,
+    Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText
 } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
@@ -17,7 +16,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";  
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setHandles } from "state";
+import { setUserInformation } from "state";
 
 /**
  * User Widget
@@ -29,26 +28,26 @@ const UserWidget = ({ userId, picturePath }) => {
     const navigate = useNavigate();
 
     // Logged In User
-    const loggedInUser = useSelector((state) => state.user._id);
+    const loggedInUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 
     // User Widget - User
     const [user, setUser] = useState(null);
 
-    // Twitter Dialog Box
-    const [editTwitterHandle, setEditTwitterHandle] = useState("");
-    const [twitterDialogBox, setTwitterDialogBox] = useState(false);
-    const handleTwitterClose = () => { 
-        updateUserHandles();
-        setTwitterDialogBox(false);
-    }
-
-    //LinkedIn Dialog Box
-    const [editLinkedInHandle, setEditLinkedInHandle] = useState("");
-    const [LinkedInDialogBox, setLinkedInDialogBox] = useState(false);
-    const handleLinkedInClose = () => { 
-        updateUserHandles();
-        setLinkedInDialogBox(false);
+    // User Account Information Dialog Box
+    const initialUserValues = {
+        firstName: loggedInUser.firstName,
+        lastName: loggedInUser.lastName,
+        location: loggedInUser.location,
+        occupation: loggedInUser.occupation,
+        twitterHandle: loggedInUser.twitterHandle,
+        linkedInHandle: loggedInUser.linkedInHandle,
+    };
+    const [editUserInformation, setEditUserInformation] = useState(initialUserValues);
+    const [dialogBox, setDialogBox] = useState(false);
+    const handleDialogClose = () => {
+        updateUserInformation();
+        setDialogBox(false);
     }
 
     // Palette Theme
@@ -71,8 +70,6 @@ const UserWidget = ({ userId, picturePath }) => {
 
             if (response.status === 200) {
                 setUser(jsonObject);
-                setEditTwitterHandle(jsonObject.twitterHandle);
-                setEditLinkedInHandle(jsonObject.linkedInHandle);
             }
             else {
                 console.log(jsonObject.message);
@@ -81,18 +78,15 @@ const UserWidget = ({ userId, picturePath }) => {
     }
 
     // PATCH API CALL (Edit User - Twitter/LinkedIn Handle)
-    const updateUserHandles = async () => {
-        await fetch(`http://localhost:3001/users/${loggedInUser}`,
+    const updateUserInformation = async () => {
+        await fetch(`http://localhost:3001/users/${loggedInUser._id}`,
             {
                 method: "PATCH",
                 headers: { 
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ 
-                    twitter: editTwitterHandle,
-                    linkedIn: editLinkedInHandle 
-                }),
+                body: JSON.stringify(editUserInformation),
             }
         ).then(async (response) => {
             // Response JSON Object
@@ -101,10 +95,7 @@ const UserWidget = ({ userId, picturePath }) => {
             if (response.status === 200) {
                 setUser(jsonObject);
                 dispatch(
-                    setHandles({ 
-                        twitterHandle: editTwitterHandle,
-                        linkedInHandle: editLinkedInHandle,
-                    })
+                    setUserInformation(editUserInformation)
                 )
             }
 
@@ -128,7 +119,8 @@ const UserWidget = ({ userId, picturePath }) => {
         firstName, lastName,
         location, occupation,
         viewedProfile, impressions,
-        friends
+        friends,
+        twitterHandle, linkedInHandle
     } = user;
 
     // User Widget
@@ -154,8 +146,9 @@ const UserWidget = ({ userId, picturePath }) => {
                     </Box>
                     
                 </FlexBetween>
-                    <ManageAccountsOutlined 
+                <ManageAccountsOutlined 
                         sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
+                        onClick={() => setDialogBox(true)}
                     />
             </FlexBetween>
 
@@ -205,26 +198,21 @@ const UserWidget = ({ userId, picturePath }) => {
                                     transform: "scale(1.25)", transition: "1s",
                                 } 
                             }} 
-                            onClick={() => window.open(`https://twitter.com/${user.twitterHandle}`)}
+                            onClick={() => window.open(`https://twitter.com/${twitterHandle}`)}
                         />
                         <Box>
                             <Typography 
                                 color={main} fontWeight="500"
                                 sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
-                                onClick={() => window.open(`https://twitter.com/${user.twitterHandle}`)}
+                                onClick={() => window.open(`https://twitter.com/${twitterHandle}`)}
                             >
                                 Twitter
                             </Typography>
                             <Typography color={medium}>Social Network</Typography>
                         </Box>
                     </FlexBetween>
-                    {loggedInUser === userId ?
-                        <EditOutlined onClick={setTwitterDialogBox(true)}
-                            sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
-                        />
-                        :
-                        <Typography color={medium}>/{user.twitterHandle}</Typography>
-                    }
+                    <Typography color={medium}>/{twitterHandle}</Typography>
+
                 </FlexBetween>
                 
                 {/* LinkedIn */}
@@ -237,13 +225,13 @@ const UserWidget = ({ userId, picturePath }) => {
                                     transform: "scale(1.25)", transition: "1s",
                                 } 
                             }} 
-                            onClick={() => window.open(`https://www.linkedin.com/${user.linkedInHandle}`)}
+                            onClick={() => window.open(`https://www.linkedin.com/${linkedInHandle}`)}
                         />
                         <Box>
                             <Typography 
                                 color={main} fontWeight="500"
                                 sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
-                                onClick={() => window.open(`https://www.linkedin.com/${user.linkedInHandle}`)}
+                                onClick={() => window.open(`https://www.linkedin.com/${linkedInHandle}`)}
                             >
                                 LinkedIn
                             </Typography>
@@ -252,55 +240,63 @@ const UserWidget = ({ userId, picturePath }) => {
                             </Typography>
                         </Box>
                     </FlexBetween>
-                    {loggedInUser === userId ?
-                        <EditOutlined onClick={setLinkedInDialogBox(true)}
-                            sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
-                        />
-                        :
-                        <Typography color={medium}>/{user.linkedInHandle}</Typography>
-                    }
+                    <Typography color={medium}>/{linkedInHandle}</Typography>
                 </FlexBetween>
             </Box>
         </WidgetWrapper>
 
-        {/* Edit Twitter Handle */}
-        <Dialog open={twitterDialogBox} onClose={handleTwitterClose}>
+        {/* EDIT USER INFORMATION */}
+        <Dialog open={dialogBox} onClose={handleDialogClose}>
             <DialogTitle>Twitter Account</DialogTitle>
             <DialogContent>
+                <DialogContentText>
+                    Update User Information
+                </DialogContentText>
+
+                <TextField autoFocus fullWidth id="first-name"                        
+                    label="First Name" variant="filled"
+                    onChange={(e) => setEditUserInformation({...editUserInformation, firstName: e.target.value})}
+                    value={editUserInformation.firstName}
+                />
+                <TextField autoFocus fullWidth id="last-name"                        
+                    label="Last Name" variant="filled"
+                    onChange={(e) => setEditUserInformation({...editUserInformation, lastName: e.target.value})}
+                    value={editUserInformation.lastName}
+                />
+                
+                <TextField autoFocus fullWidth id="location" disabled                     
+                    label="Location" variant="filled"
+                    value={editUserInformation.location}
+                />
+
+                <TextField autoFocus fullWidth id="occupation"                        
+                    label="Occupation" variant="filled"
+                    onChange={(e) => setEditUserInformation({...editUserInformation, occupation: e.target.value})}
+                    value={editUserInformation.occupation}
+                />
+
                 <TextField autoFocus fullWidth id="twitter-handle"                        
                     label="Twitter Account Handle" variant="filled"
                     InputProps={{
                         startAdornment: <InputAdornment position="start">https://twitter.com/</InputAdornment>,
                     }}
-                    onChange={(e) => setEditTwitterHandle(e.target.value) }
-                    value={editTwitterHandle}
+                    onChange={(e) => setEditUserInformation({...editUserInformation, twitterHandle: e.target.value})}
+                    value={editUserInformation.twitterHandle}
                 />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleTwitterClose}>Save</Button>
-            </DialogActions>
-        </Dialog>
-
-        {/* Edit LinkedIn Handle */}
-        <Dialog open={LinkedInDialogBox} onClose={handleLinkedInClose}>
-            <DialogTitle>LinkedIn Account</DialogTitle>
-            <DialogContent>
                 <TextField autoFocus fullWidth id="linkedin-handle"                        
                     label="LinkedIn Account Handle" variant="filled"
                     InputProps={{
                         startAdornment: <InputAdornment position="start">https://linkedin.com/</InputAdornment>,
                     }}
-                    onChange={(e) => setEditLinkedInHandle(e.target.value) }
-                    value={editLinkedInHandle}
+                    onChange={(e) => setEditUserInformation({...editUserInformation, linkedInHandle: e.target.value})}
+                    value={editUserInformation.linkedInHandle}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleLinkedInClose}>Save</Button>
+                <Button onClick={handleDialogClose}>Save</Button>
             </DialogActions>
         </Dialog>
         </>
-
-
     )
 }
 
