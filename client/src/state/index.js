@@ -65,6 +65,9 @@ export const authSlice = createSlice({
             if (Array.isArray(value)) {
                 state.posts = value;
             }
+            else {
+                console.log("Given 'posts' value is not an array of posts.")
+            }
         },
 
         // Updates a post in the frontend state (updates posts)

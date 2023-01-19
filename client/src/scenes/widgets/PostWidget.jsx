@@ -87,7 +87,7 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             }
         ).then(async (response) => {
             // Response JSON Object
-            const jsonObject = response.json();
+            const jsonObject = await response.json();
 
             if (response.status === 202) {
                 dispatch(deletePost({ post: jsonObject }));       // Update Frontend State

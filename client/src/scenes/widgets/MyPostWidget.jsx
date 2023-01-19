@@ -67,10 +67,10 @@ const MyPostWidget = ({ picturePath }) => {
             }
         ).then(async (response) => {
             // Response JSON Object
-            const jsonObject = response.json();
+            const jsonObject = await response.json();
 
             if (response.status === 201) {
-                dispatch(setPosts({ jsonObject }));          //  Updates Frontend State
+                dispatch(setPosts({ posts: jsonObject }));          //  Updates Frontend State
 
                 // Reset MyPostWidget
                 setImage(null);
