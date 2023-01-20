@@ -111,17 +111,6 @@ export const commentPost = async (req, res) => {
     }
 }
 
-export const updateUserPost = async (req, res) => {
-    try {
-
-        const { id } = req.params;      // User ID
-        
-    }
-    catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-}
-
 /* DELETE */
 export const deletePost = async (req, res) => {
     try {

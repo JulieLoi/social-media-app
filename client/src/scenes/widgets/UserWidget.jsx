@@ -146,10 +146,12 @@ const UserWidget = ({ userId, picturePath }) => {
                     </Box>
                     
                 </FlexBetween>
-                <ManageAccountsOutlined 
+                {userId === loggedInUser._id &&
+                    <ManageAccountsOutlined 
                         sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
                         onClick={() => setDialogBox(true)}
                     />
+                }
             </FlexBetween>
 
             <Divider />
@@ -258,29 +260,11 @@ const UserWidget = ({ userId, picturePath }) => {
             </DialogTitle>
             <DialogContent>
                 
-                {/* Full Name ? Occupation */}
+                {/* Occupation */}
                 <Box width="25vw" mb="1rem">
                 <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
-                    Name / Occupation
+                    Occupation
                 </Typography>
-
-                <Box mb="1rem">
-                <TextField autoFocus id="first-name" fullWidth              
-                    label="First Name" variant="filled"
-                    inputProps={{ maxLength: 50 }}
-                    onChange={(e) => setEditUserInformation({...editUserInformation, firstName: e.target.value})}
-                    value={editUserInformation.firstName}
-                />
-                </Box>
-
-                <Box mb="1rem">
-                <TextField autoFocus id="last-name" fullWidth                     
-                    label="Last Name" variant="filled"
-                    inputProps={{ maxLength: 50 }}
-                    onChange={(e) => setEditUserInformation({...editUserInformation, lastName: e.target.value})}
-                    value={editUserInformation.lastName}
-                />
-                </Box>
 
                 <Box mb="1rem">
                 <TextField autoFocus fullWidth id="occupation"                        
