@@ -40,7 +40,8 @@ const Navbar = () => {
 
     // Current User (Logged In)
     const user = useSelector((state) => state.user);
-    const fullName = `${user.firstName} ${user.lastName}`;
+    const combinedName = `${user.firstName} ${user.lastName}`;
+    const fullName = combinedName.length > 20 ? `${combinedName.substring(0, 20)}...` : combinedName;
 
     // Color Theme
     const { palette } = useTheme();
@@ -176,7 +177,9 @@ const Navbar = () => {
                                 }}
                                 input={<InputBase />}
                             >
-                                <MenuItem value={fullName}> <Typography>{fullName}</Typography> </MenuItem>
+                                <MenuItem value={fullName}> 
+                                    <Typography>{fullName}</Typography> 
+                                </MenuItem>
                                 <MenuItem onClick={() => dispatch(setLogout())}> Log Out </MenuItem>
                             </Select>
                         </FormControl>

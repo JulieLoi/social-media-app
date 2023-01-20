@@ -63,10 +63,10 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
                             navigate(0);        // Refresh
                         }}
                     >
-                        {name}
+                        {name.length > 20 ? `${name.substring(0, 20)}...` : name}
                     </Typography>
                     <Typography color={medium} fontSize="0.75rem">
-                        {subtitle}
+                        {subtitle === "" ? <i>No Location</i> : subtitle}
                     </Typography>
                 </Box>
             </FlexBetween>

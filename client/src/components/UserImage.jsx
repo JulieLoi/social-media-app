@@ -20,8 +20,11 @@ const UserImage = ({ userId, image, size="60px" }) => {
         <Box
             width={size} height={size}
             onClick={() => {
-                navigate(`/profile/${userId}`);
-                navigate(0);        // Refresh
+                if(window.location.pathname !== `/profile/${userId}`) {
+                    navigate(`/profile/${userId}`);
+                    navigate(0);        // Refresh
+                }
+                
             }}
             sx={{ 
                 border: `0.1rem solid ${borderColor}`, borderRadius: "50%",

@@ -21,6 +21,7 @@ const ProfilePage = () => {
     const { palette } = useTheme();
 
     const [user, setUser] = useState(null);                         // The Profile Page's User State (Not Logged In User)
+    const loggedInUser = useSelector((state) => state.user);
 
     // Get User of the Profile Page
     const getUser = async () => {
@@ -75,8 +76,13 @@ const ProfilePage = () => {
                     flexBasis={isNonMobileScreens ? "42%" : undefined}
                     mt={isNonMobileScreens ? "0rem" : "2rem"}
                 >
-                    <MyPostWidget picturePath={user.picturePath} />
-                    <Box m="2rem 0" />
+                    {userId === loggedInUser._id &&
+                        <>
+                        <MyPostWidget picturePath={user.picturePath} />
+                        <Box m="2rem 0" />
+                        </>
+                    }
+                    
                     <PostsWidget userId={userId} isProfile={true} />
                 </Box>
 

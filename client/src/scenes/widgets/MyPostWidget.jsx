@@ -86,11 +86,11 @@ const MyPostWidget = ({ picturePath }) => {
     // My Post Widget 
     return (
         <>
-        <WidgetWrapper>
+        <WidgetWrapper mb="2rem">
 
             {/* Post Input */}
             <FlexBetween gap="1.5rem">
-                <UserImage image={picturePath} />
+                <UserImage userId={_id} image={picturePath} />
                 <InputBase  placeholder="What's on your mind..."
                     onChange={(e) => setPost(e.target.value)}
                     onKeyDown={(e) => { if (e.key === `Enter`) { handlePost() } }}

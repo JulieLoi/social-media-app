@@ -15,6 +15,11 @@ WORK ON MY LOGIN/REGISTER...
 -Add more restrictions on the data, mention it in the red text...                   DONE
 
 
+UPDATE NAME/LOCATINO
+-Can update in user database collection
+-update it in posts using userID
+
+
 
 Location
 npm i country-state-city
