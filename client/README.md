@@ -2,6 +2,19 @@
 
 # Possible Features to add
 
+Things to do:
+-Redo Login/Register
+-Do something for profiles with no posts
+-REDO Posts, take info from user calling (using userid)
+-UPDATE Dialog Box (update account information)
+----First Name, Last Name, Location, etc.
+-FIX FRIENDS LIST (remove the add/remove friend feature when looking at someones profile page...)
+
+
+
+
+
+
 DO ACCOUNT SETTINGS AND UPDATE USER (update frontend and backend...)
 -----------------------------
 Finished Login/Register (ignore the rest of the things i don't want)
@@ -41,12 +54,26 @@ Favicon Icon
 
 
 Fake Accounts
-pablohelmplatz@gmail.com
-ethanhoover@gmail.com
+-----------------
+elijahpilchard@gmail.com
+1B4O3ds164N*
 
-P5p)&2dsf
+
+martinbaron@gmail.com
+qe$9D764D1*J0@1iH
+
+markdoyle@hotmail.com
+qksgTi%v3616%pml1
 
 
+
+
+alirezarostami@gmail.com
+g!H9pDLvYSKXP8M2&i&ygJ00RptTQ$
+
+
+marlamaldonado@gmail.com
+G6B^!k50N9p@ADNSC3F#$9P
 
 
 

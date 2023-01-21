@@ -17,7 +17,7 @@ const FriendListWidget = ({ userId }) => {
     // Token, User Friends (Frontend State)
     const token = useSelector((state) => state.token);
     const friends = useSelector((state) => state.user.friends);
-
+    
     // GET API Call (Get All User Friends)
     const getFriends = async () => {
         await fetch(`http://localhost:3001/users/${userId}/friends`,
@@ -68,7 +68,7 @@ const FriendListWidget = ({ userId }) => {
             >
                 {friends.map((friend) => (
                     <Friend 
-                        key={`${friend._id}_${userId}`}
+                        key={`${friend._id}_${userId}-${Math.random()}`}
                         friendId={friend._id}
                         name={`${friend.firstName} ${friend.lastName}`}
                         subtitle={friend.occupation}

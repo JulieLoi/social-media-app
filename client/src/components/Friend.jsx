@@ -72,7 +72,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
             </FlexBetween>
 
             {/* ADD/REMOVE FRIEND, DELETE POST */}
-            {_id !== friendId && 
+            {_id !== friendId &&
                 (
                 <FlexBetween>
                     <IconButton onClick={() => patchFriend()}

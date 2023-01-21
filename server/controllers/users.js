@@ -87,8 +87,7 @@ export const updateUserInformation = async (req, res) => {
     try {
         const { id } = req.params;
         const { 
-            firstName, lastName,
-            location, occupation,
+            occupation,
             twitterHandle, linkedInHandle,
         
         } = req.body;
@@ -96,9 +95,6 @@ export const updateUserInformation = async (req, res) => {
         const updatedUser = await User.findByIdAndUpdate(
             id,
             { 
-                firstName: firstName,
-                lastName: lastName,
-                location: location,
                 occupation: occupation,
                 twitterHandle: twitterHandle, 
                 linkedInHandle: linkedInHandle 
