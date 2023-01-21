@@ -17,7 +17,7 @@ import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import UserImage from "components/UserImage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost, deletePost } from "state";
@@ -26,7 +26,7 @@ import { setPost, deletePost } from "state";
  * Post Widget
  * A widget of a single post published
  */
-const PostWidget = ({ postId, postUserId, name, description, location, picturePath, userPicturePath, likes, comments }) => {
+const PostWidget = ({ postId, postUserId, description, picturePath, likes, comments }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -47,9 +47,32 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
     const token = useSelector((state) => state.token);
     const loggedInUser = useSelector((state) => state.user);
 
+    // Post Owner (User)
+    const [postOwner, setPostOwner] = useState("");
+
     // Likes (Does not update)
     const isLiked = Boolean(likes[loggedInUser._id]);     // Logged In User Likes
     const likeCount = Object.keys(likes).length;        // Total Like Count
+
+    // GET API Call (Get Post Owner)
+    const getPostOwner = async () => {
+        await fetch(`http://localhost:3001/users/${postUserId}`,
+            {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}`}
+            }
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
+
+            if (response.status === 200) {
+                setPostOwner(jsonObject);
+            }
+            else {
+                console.log(jsonObject.message);
+            }
+        });
+    }
 
     // PATCH API Call (Like/Dislike Post)
     const patchLike = async () => {
@@ -128,15 +151,21 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
         });
     }
 
+    useEffect(() => {
+        getPostOwner();
+    }, [])
+
     // Post Widget
     return (
         <WidgetWrapper mb="2rem">
-            <Friend
-                friendId={postUserId}
-                name={name}
-                subtitle={location}
-                userPicturePath={userPicturePath}
-            />
+            {postOwner &&
+                <Friend
+                    friendId={postUserId}
+                    name={`${postOwner.firstName} ${postOwner.lastName}`}
+                    subtitle={postOwner.location}
+                    userPicturePath={postOwner.picturePath}
+                />
+            }
 
             {/* DESCRIPTION */}
             <Typography color={main} variant="h5"
@@ -150,11 +179,11 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
             </Typography>
 
             {/* Post Picture (if exists) */}
-            {picturePath && (
+            {postOwner && (
                 <img 
                     width="100%" height="auto" alt="post"
                     style={{ borderRadius: "0.75rem", marginBottom: "0.75rem" }}
-                    src={`http://localhost:3001/assets/${picturePath}`}
+                    src={`http://localhost:3001/assets/${postOwner.picturePath}`}
                 />
             )}
 
