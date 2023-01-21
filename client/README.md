@@ -5,13 +5,13 @@
 Things to do:
 -Redo Login/Register
 -Do something for profiles with no posts
--REDO Posts, take info from user calling (using userid)
 -UPDATE Dialog Box (update account information)
 ----First Name, Last Name, Location, etc.
 -FIX FRIENDS LIST (remove the add/remove friend feature when looking at someones profile page...)
 
 
-
+DONE:-------------------------
+-REDO Posts, take info from user calling (using userid)         DONE
 
 
 

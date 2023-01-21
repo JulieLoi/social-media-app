@@ -5,12 +5,8 @@ import {
     ShareOutlined,
 } from "@mui/icons-material";
 import { 
-    Box,
-    Divider,
-    IconButton,
-    Typography,
-    InputBase,
-    useTheme,
+    Box, Divider, IconButton,
+    Typography, InputBase, useTheme,
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlexBetween from "components/FlexBetween";
@@ -153,6 +149,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     useEffect(() => {
         getPostOwner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // Post Widget
@@ -179,11 +176,11 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             </Typography>
 
             {/* Post Picture (if exists) */}
-            {postOwner && (
+            {picturePath && (
                 <img 
                     width="100%" height="auto" alt="post"
                     style={{ borderRadius: "0.75rem", marginBottom: "0.75rem" }}
-                    src={`http://localhost:3001/assets/${postOwner.picturePath}`}
+                    src={`http://localhost:3001/assets/${picturePath}`}
                 />
             )}
 
@@ -239,84 +236,79 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
             {/* Comment Section*/}
             {isComments && 
-                (<Box mt="0.5rem">
-                    {comments.map((c) => (
-                        <Box key={`${c.userId}-${postId}-${Math.random()}`}>
-                            <Divider />
-                            <Box p="0.5rem 0">
-                                <Box display="flex" gap="1rem" alignItems="center" ml="1rem">
-                                    <UserImage image={c.userPicturePath} size={"30px"} />
-                                    <Typography variant="h5"
-                                        sx={{
-                                            "&:hover": {
-                                                color: palette.primary.main,
-                                                cursoer: "pointer",
-                                            }
-                                        }}
-                                        onClick={() => {
-                                            navigate(`/profile/${c.userId}`);
-                                            navigate(0);        // Refresh
-                                        }}
-                                    >
-                                        {c.userName}
-                                    </Typography>
-                                </Box>
-                                
-                                <Box ml="3rem">
-                                    <Typography noWrap
-                                        sx={{ 
-                                            color: main, m: "0.25rem 0", pl: "1rem",
-                                            whiteSpace: "pre-wrap",
-                                            wordBreak: "break-word",
-                                        }}
-                                    >
-                                        {c.comment}
-                                    </Typography>
-                                </Box>
+            (<Box mt="0.5rem">
+                {comments.map((c) => (
+                    <Box key={`${c.userId}-${postId}-${Math.random()}`}>
+                    <Divider />
+                    <Box p="0.5rem 0">
+                        <Box display="flex" gap="1rem" alignItems="center" ml="1rem">
+                            <UserImage image={c.userPicturePath} size={"30px"} />
+                            <Typography variant="h5"
+                                sx={{
+                                    "&:hover": {
+                                        color: palette.primary.main,
+                                        cursoer: "pointer",
+                                    }
+                                }}
+                                onClick={() => {
+                                    navigate(`/profile/${c.userId}`);
+                                    navigate(0);        // Refresh
+                                }}
+                            >
+                                    {c.userName}
+                            </Typography>
+                            </Box>
+                            
+                            <Box ml="3rem">
+                            <Typography noWrap
+                                sx={{ 
+                                    color: main, m: "0.25rem 0", pl: "1rem",
+                                    whiteSpace: "pre-wrap", wordBreak: "break-word",
+                                }}
+                            >
+                                {c.comment}
+                            </Typography>
                             </Box>
                         </Box>
-                    ))}
-
-                    <Divider />
-
-                    <FlexBetween mt="1rem">
-                        <UserImage image={loggedInUser.picturePath} size={"50px"} />
-                        <InputBase 
-                            placeholder="Type your comment here..."
-                            onChange={(e) => {
-                                const commentLength = e.target.value.length;
-                                if (commentLength <= 100) {
-                                    setRemainChar(100 - commentLength);
-                                    setUserComment(e.target.value);
-                                }
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === `Enter`) { 
-                                    addComment();
-                                    setRemainChar(100);
-                                 }
-                            }}
-                            value={userComment}
-                            maxLength="100"
-                            sx={{
-                                width: "100%",
-                                backgroundColor: palette.neutral.light,
-                                borderRadius: "2rem",
-                                p: "0.5rem 1rem",
-                                ml: "0.5rem",
-                                maxLength: "100"
-                            }}
-                        />
-                    </FlexBetween>
-                    <Box ml="4rem" mb="0.25rem" mt="0.25rem">
-                        <Typography color={medium}>
-                            Remaining Character(s): {remainChar} 
-                        </Typography>
                     </Box>
-                </Box>
-                )
-            }
+                ))}
 
+                <Divider />
+
+                {/* ADD COMMENT */}
+                <FlexBetween mt="1rem">
+                <UserImage image={loggedInUser.picturePath} size={"50px"} />
+                <InputBase placeholder="Type your comment here..."
+                    onChange={(e) => {
+                        const commentLength = e.target.value.length;
+                        if (commentLength <= 100) {
+                            setRemainChar(100 - commentLength);
+                            setUserComment(e.target.value);
+                        }
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === `Enter`) { 
+                            addComment();
+                            setRemainChar(100);
+                        }
+                    }}
+                    value={userComment}
+                    maxLength="100"
+                    sx={{
+                        width: "100%", maxLength: "100",
+                        backgroundColor: palette.neutral.light,
+                        borderRadius: "2rem",
+                        p: "0.5rem 1rem", ml: "0.5rem",
+                    }}
+                />
+                </FlexBetween>
+                <Box ml="4rem" mb="0.25rem" mt="0.25rem">
+                    <Typography color={medium}>
+                        Remaining Character(s): {remainChar} 
+                    </Typography>
+                </Box>
+            </Box>)
+            }
         </WidgetWrapper>
     )
 };
