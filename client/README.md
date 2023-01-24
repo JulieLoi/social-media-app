@@ -9,6 +9,9 @@ Things to do:
 ----First Name, Last Name, Location, etc.
 -FIX FRIENDS LIST (remove the add/remove friend feature when looking at someones profile page...)
 
+ADD FAKE DATA (data.js in server folder)
+CREATE FAKE ADS other than mika cosmetics (randomize choose)
+
 
 DONE:-------------------------
 -REDO Posts, take info from user calling (using userid)         DONE
@@ -66,8 +69,6 @@ markdoyle@hotmail.com
 qksgTi%v3616%pml1
 
 
-
-
 alirezarostami@gmail.com
 g!H9pDLvYSKXP8M2&i&ygJ00RptTQ$
 
@@ -75,8 +76,8 @@ g!H9pDLvYSKXP8M2&i&ygJ00RptTQ$
 marlamaldonado@gmail.com
 G6B^!k50N9p@ADNSC3F#$9P
 
-
-
+nimasarram@gmail.com
+5e6I8AGu'W&1D8k7
 
 
 

@@ -150,7 +150,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     useEffect(() => {
         getPostOwner();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     // Post Widget
     return (

@@ -87,14 +87,20 @@ export const updateUserInformation = async (req, res) => {
     try {
         const { id } = req.params;
         const { 
-            occupation,
+            firstName, lastName,
+            location, occupation,
             twitterHandle, linkedInHandle,
         
         } = req.body;
 
+        console.log(req.body)
+
         const updatedUser = await User.findByIdAndUpdate(
             id,
             { 
+                firstName: firstName,
+                lastName: lastName,
+                location: location,
                 occupation: occupation,
                 twitterHandle: twitterHandle, 
                 linkedInHandle: linkedInHandle 

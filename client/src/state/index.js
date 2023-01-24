@@ -52,6 +52,9 @@ export const authSlice = createSlice({
         // Updates Logged In User's Handles (Twitter / LinkedIn)
         setUserInformation: (state, action) => {
             if (state.user) {
+                state.user.firstName = action.payload.firstName;
+                state.user.lastName = action.payload.lastName;
+                state.user.location = action.payload.location;
                 state.user.occupation = action.payload.occupation;
                 state.user.twitterHandle = action.payload.twitterHandle;
                 state.user.linkedInHandle = action.payload.linkedInHandle;

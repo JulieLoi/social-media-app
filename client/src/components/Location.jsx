@@ -1,5 +1,5 @@
 
-import { Autocomplete, TextField } from '@mui/material';
+import { Select, InputLabel, MenuItem, Box } from '@mui/material';
 import { Country, State, City }  from 'country-state-city';
 import { useEffect, useState } from 'react';
 
@@ -7,30 +7,84 @@ import { useEffect, useState } from 'react';
  * Location Component
  * Select a country, state, city
  */
-const Location = ({ setLocation }) => {
+const Location = ({ setLocation, givenLocation="" }) => {
 
-    // Country
-    const [countrySelect, setCountrySelect] = useState("");
+    // Country Options
     const countryOptions = (Country.getAllCountries()).map((country) => ({label: country.name, id: country.isoCode}));
 
-    // State
-    const [stateSelect, setStateSelect] = useState("");
-    const [stateOptions, setStateOptions] = useState([]);
+    // Initial State of Country, State, City
+    const initialState = {
+        country: "",
+        state: "",
+        stateOptions: [],
+        city: "",
+        cityOptions: [],
+    }
 
-    // City
-    const [citySelect, setCitySelect] = useState("");
-    const [cityOptions, setCityOptions] = useState([]);
+    // Existing Given Location
+    if (givenLocation !== "") {
+        const myArray = givenLocation.split(", ").reverse();
+        
+        // Initial Country
+        if (myArray.length >= 1) { 
+            const countryIndex = countryOptions.findIndex((country) => country.label === myArray[0]);
+            initialState.country = countryIndex;
+
+            // Initial State
+            if (myArray.length >= 2) {
+
+                // Country Object ---
+                const country = countryOptions[countryIndex];
+
+                // Get State Options of Selected Country
+                const stateOptions = State.getStatesOfCountry(country.id).map((state) => ({
+                    countryCode: state.countryCode, id: state.isoCode, label: state.name, 
+                }));
+                initialState.stateOptions = stateOptions;
+
+                const stateIndex = stateOptions.findIndex((state) => state.label === myArray[1]);
+                initialState.state = stateIndex;
+
+                // State Object ---
+                const state = stateOptions[stateIndex];
+
+                // Get City Options of Selected State
+                const cityOptions = (City.getCitiesOfState(state.countryCode, state.id)).map((city) => ({
+                    countryCode: city.countryCode, stateCode: city.stateCode, label: city.name
+                }));
+                initialState.cityOptions = cityOptions;
+                
+                // Initial City
+                if (myArray.length === 3) { 
+                    const cityIndex = cityOptions.findIndex((city) => city.label === myArray[2]);
+                    initialState.city = cityIndex; 
+                }
+            }
+        }
+    }
+
+    // Country Index
+    const [countrySelect, setCountrySelect] = useState(initialState.country);
+    
+
+    // State Index / State Options
+    const [stateSelect, setStateSelect] = useState(initialState.state);
+    const [stateOptions, setStateOptions] = useState(initialState.stateOptions);
+
+    // City Index / City Options
+    const [citySelect, setCitySelect] = useState(initialState.city);
+    const [cityOptions, setCityOptions] = useState(initialState.cityOptions);
     
     useEffect(() => {
         let location = "";
         if (citySelect !== "") {
-            location = `${citySelect}, `;
+            location = `${cityOptions[citySelect].label}, `;
         }
         if (stateSelect !== "") {
-            location += `${stateSelect.label}, `;
+            location += `${stateOptions[stateSelect].label}, `;
         }
         if (countrySelect !== "") {
-            location += `${countrySelect.label}`;
+            location += `${countryOptions[countrySelect].label}`;
         }
         setLocation(location)
         
@@ -40,112 +94,90 @@ const Location = ({ setLocation }) => {
     // Location
     return (
         <>
-            {/* COUNTRY SELECT */}
-            <Autocomplete disablePortal id="country-location" options={countryOptions}
-                onInputChange={(e) => {
 
-                    // Textfield, Selected Option
-                    const textInput = e.target.value;
-                    const selectedOption = e.target.innerText;  
+            {/* COUTNRY SELECT */}
+            <Box fullwidth="true" sx={{ gridColumn: "span 2" }}>
+            <InputLabel id="country-label">Country</InputLabel>
+            <Select fullWidth disabled={countryOptions.length === 0}
+                labelId="country-label" id="country-select"
+                label="Country" value={countrySelect}
+                onChange={(e) => {
 
-                    // An Option is Selected
-                    if (textInput === 0) {
+                    // Select a Country
+                    const value = e.target.value;
+                    if (value !== countrySelect) {
+                        setCountrySelect(value);
+                        setStateSelect("");         // Reset State Select
+                        setCitySelect("");          // Reset City Select
+                        setCityOptions([]);         // Reset City Options
 
-                        // Set Selected Country
-                        const selectedCountry = countryOptions.find((option) => option.label === selectedOption);
-                        setCountrySelect(selectedCountry);
-
-                        // Get States of Selected Country
-                        const getStates = State.getStatesOfCountry(selectedCountry.id).map((state) => ({
-                            label: state.name, id: state.isoCode
-                        }));
-                        setStateOptions(getStates)
-
-                        // Choosing a different country (Reset State/City)
-                        if (selectedOption !== countrySelect.label) {
-                            setStateSelect(""); 
-                            setCitySelect(""); setCityOptions([]);
+                        // Reset State Options
+                        if (value !== "") {
+                            const countryCode = countryOptions[value].id;
+                            const states = (State.getStatesOfCountry(countryCode)).map((state) => ({
+                                countryCode: state.countryCode, id: state.isoCode, label: state.name, 
+                            }))
+                            setStateOptions(states);
                         }
+                        else { setStateOptions([]); }
                     }
-
-                    // Clear Country Select (Reset All)
-                    else if (textInput === undefined || textInput === "") {
-                        setCountrySelect("");
-                        setStateOptions([]); setStateSelect("");
-                        setCityOptions([]); setCitySelect(""); 
-                    }
-
                 }}
-                
-                isOptionEqualToValue={(option, value) => {
-                    return value === undefined || value === "" || option.label === value.label;
-                }}
-                renderInput={(params) => <TextField {...params} label="Country" />}
-                sx={{ gridColumn: "span 2" }}
-            />
+            >
+                <MenuItem value=""><i>None</i></MenuItem>
+                {countryOptions.map((country, index) => (
+                    <MenuItem key={country.id} value={index}>{country.label}</MenuItem>
+                ))}
+            </Select>
+            </Box>
 
             {/* STATE SELECT */}
-            <Autocomplete disablePortal id="state-location" options={stateOptions}
-                disabled={countrySelect.label === "" || stateOptions.length === 0}
-                onInputChange={(e) => {
-                    if (e) {
-                        // Textfield, Selected Option
-                        const textInput = e.target.value;
-                        const selectedOption = e.target.innerText;  
+            <Box fullwidth="true">
+            <InputLabel id="state-label">State</InputLabel>
+            <Select fullWidth disabled={stateOptions.length === 0}
+                labelId="state-label" id="state-select"
+                label="State" value={stateSelect}
+                onChange={(e) => {
+                    
+                    // Select a State
+                    const value = e.target.value;
+                    if (value !== stateSelect) {
+                        setStateSelect(e.target.value);
+                        setCitySelect("");                  // Reset City
 
-                        // An Option is Selected
-                        if (textInput === 0) {
-
-                            // Set Selected State
-                            const selectedState = stateOptions.find((option) => option.label === selectedOption);
-                            setStateSelect(selectedState);
-                            
-                            // Get Cities of Selected State
-                            const getCities = City.getCitiesOfState(countrySelect.id, selectedState.id).map((city) => ({
-                                label: city.name, id: city.isoCode
+                        // Reset City Options
+                        if (value !== "") {
+                            const state = stateOptions[value];
+                            const cities = (City.getCitiesOfState(state.countryCode, state.id)).map((city) => ({
+                                countryCode: city.countryCode, stateCode: city.stateCode, id: city.isoCode, label: city.name
                             }));
-                            setCityOptions(getCities);
-
-                            // Choosing a different state (Reset City)
-                            if (selectedOption !== selectedState.label) {
-                                setCitySelect(""); 
-                            }
+                            setCityOptions(cities)
                         }
-
-                        // Clear State Select (Reset All)
-                        else if (textInput === undefined || textInput === "") {
-                            setStateSelect("");
-                            setCityOptions([]); setCitySelect(""); 
-                        }
+                        else { setCityOptions([]); }
                     }
                 }}
-                inputValue={stateSelect.label ? stateSelect.label : ""}
-                renderInput={(params) => <TextField {...params} label="State" />}
-                sx={{ gridColumn: "span 1" }}
-            />
+            >
+                <MenuItem value=""><i>None</i></MenuItem>
+                {stateOptions.map((state, index) => (
+                    <MenuItem key={`${state.countryCode}-${state.id}`} value={index}>{state.label}</MenuItem>
+                ))}
+            </Select>
+            </Box>
+            
+            {/* City SELECT */}
+            <Box fullwidth="true">
+            <InputLabel id="city-label">City</InputLabel>
+            <Select fullWidth disabled={cityOptions.length === 0}
+                labelId="city-label" id="city-select"
+                label="City" value={citySelect}
+                onChange={(e) => setCitySelect(e.target.value) }
+            >
+                <MenuItem value=""><i>None</i></MenuItem>
+                {cityOptions.map((city, index) => (
+                    <MenuItem key={`${city.countryCode}-${city.stateCode}-${city.label}`} value={index}>{city.label}</MenuItem>
+                ))}
+            </Select>
+            </Box>
 
-            {/* CITY SELECT */}
-            <Autocomplete disablePortal id="city-location" options={cityOptions}
-                disabled={stateSelect.label === "" || cityOptions.length === 0}
-                onInputChange={(e) => {
-                    if (e) {
-                        // Textfield, Selected Option
-                        const textInput = e.target?.value;
-                        const selectedOption = e.target?.innerText; 
-
-                        // An Option is Selected
-                        if (textInput === 0) { setCitySelect(selectedOption); }
-
-                        // Clear City Select 
-                        else if (textInput === undefined || textInput === "") {
-                            setCitySelect(""); 
-                        }
-                    }
-                }}
-                inputValue={citySelect}
-                renderInput={(params) => <TextField {...params} label="City" />}
-                sx={{ gridColumn: "span 1" }}
-            />
         </>
     )
 }

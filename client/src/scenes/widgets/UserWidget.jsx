@@ -8,7 +8,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 import {
     Box, Typography, Divider, TextField, Button, InputAdornment, useTheme,
-    Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText
+    Dialog, DialogActions, DialogContent, DialogTitle
 } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
@@ -50,6 +50,9 @@ const UserWidget = ({ userId, picturePath }) => {
         updateUserInformation();
         setDialogBox(false);
     }
+
+    // Location
+    const [newLocation, setNewLocation] = useState(loggedInUser.location)
 
     // Palette Theme
     const { palette } = useTheme();
@@ -95,7 +98,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
             if (response.status === 200) {
                 setUser(jsonObject);
-                dispatch(setUserInformation(editUserInformation));
+                dispatch(setUserInformation(jsonObject));
             }
             else {
                 console.log(jsonObject.message)
@@ -109,6 +112,13 @@ const UserWidget = ({ userId, picturePath }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [useSelector((state) => state.user)])
 
+    // Update location
+    useEffect(() => {
+        setEditUserInformation({...editUserInformation, location: newLocation});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [newLocation])
+
+
     // No User, return null
     if (!user) { return null; }
 
@@ -121,7 +131,7 @@ const UserWidget = ({ userId, picturePath }) => {
         twitterHandle, linkedInHandle
     } = user;
     const fullName = `${firstName} ${lastName}`;
-    const linkedInHandleTrim = linkedInHandle.length > 15 ? `/${linkedInHandle.substring(0, 15)}...` : `/${linkedInHandle}`
+    const linkedInHandleTrim = linkedInHandle.length > 15 ? `/${linkedInHandle.substring(0, 15)}...` : `/${linkedInHandle}`;
 
     // User Widget
     return (
@@ -254,14 +264,46 @@ const UserWidget = ({ userId, picturePath }) => {
         </WidgetWrapper>
 
         {/* EDIT USER INFORMATION */}
-        <Dialog open={dialogBox} onClose={handleDialogClose}>
+        <Dialog open={dialogBox} onClose={handleDialogClose} fullWidth>
             <DialogTitle fontSize="1.5rem" sx={{ textDecoration: "underline" }}>
                 Update Account Information
             </DialogTitle>
             <DialogContent>
+
+                {/* Full Name */}
+                <Box mb="1rem">
+                <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
+                    Full Name
+                </Typography>
+
+                <FlexBetween gap="1rem">
+                <TextField autoFocus fullWidth id="first-name"                        
+                    label="First Name" variant="filled"
+                    inputProps={{ maxLength: 50 }}
+                    onChange={(e) => setEditUserInformation({...editUserInformation, firstName: e.target.value})}
+                    value={editUserInformation.firstName}
+                />
+                
+                <TextField autoFocus fullWidth id="last-name"                        
+                    label="Last Name" variant="filled"
+                    inputProps={{ maxLength: 50 }}
+                    onChange={(e) => setEditUserInformation({...editUserInformation, lastName: e.target.value})}
+                    value={editUserInformation.lastName}
+                />
+                </FlexBetween>
+                </Box>
+
+                {/* Location */}
+                <Box>
+                <Location setLocation={setNewLocation} givenLocation={newLocation} />
+                <TextField autoFocus fullWidth id="location" disabled                     
+                    label="Location" variant="filled"
+                    value={newLocation}
+                />
+                </Box>
                 
                 {/* Occupation */}
-                <Box width="25vw" mb="1rem">
+                <Box mb="1rem">
                 <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
                     Occupation
                 </Typography>
