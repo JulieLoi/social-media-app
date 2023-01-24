@@ -296,6 +296,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 {/* Location */}
                 <Box>
                 <Location setLocation={setNewLocation} givenLocation={newLocation} />
+                <Box mb="1rem" />
                 <TextField autoFocus fullWidth id="location" disabled                     
                     label="Location" variant="filled"
                     value={newLocation}

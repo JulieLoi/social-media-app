@@ -6,7 +6,7 @@ import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" }) => {
+const Friend = ({ friendId, allowAddRemove, name, subtitle, userPicturePath, marginAmount = "0" }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -72,7 +72,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
             </FlexBetween>
 
             {/* ADD/REMOVE FRIEND, DELETE POST */}
-            {_id !== friendId &&
+            {_id !== friendId && !allowAddRemove &&
                 (
                 <FlexBetween>
                     <IconButton onClick={() => patchFriend()}

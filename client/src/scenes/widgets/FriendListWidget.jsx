@@ -14,9 +14,9 @@ const FriendListWidget = ({ userId }) => {
     const dispatch = useDispatch();
     const { palette } = useTheme();
 
-    // Token, User Friends (Frontend State)
+    // Token, Logged In User ID, Friends (Frontend State)
     const token = useSelector((state) => state.token);
-    const friends = useSelector((state) => state.user.friends);
+    const { _id, friends } = useSelector((state) => state.user);
     
     // GET API Call (Get All User Friends)
     const getFriends = async () => {
@@ -70,6 +70,7 @@ const FriendListWidget = ({ userId }) => {
                     <Friend 
                         key={`${friend._id}_${userId}-${Math.random()}`}
                         friendId={friend._id}
+                        allowAddRemove={_id !== userId}
                         name={`${friend.firstName} ${friend.lastName}`}
                         subtitle={friend.occupation}
                         userPicturePath={friend.picturePath}
