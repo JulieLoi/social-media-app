@@ -14,10 +14,9 @@ export const createPost = async (req, res) => {
             likes: {},
             comments: []
         });
-        await newPost.save();
 
-        // Returns all user posts (updated)
-        const post = await Post.find();
+        // Returns newly created post
+        const post = await newPost.save();
         res.status(201).json(post);
 
     } catch (err) {

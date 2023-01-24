@@ -1,5 +1,5 @@
 import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowCircleUpRoundedIcon from '@mui/icons-material/ArrowCircleUpRounded';
 import Navbar from "scenes/navbar";
 import UserWidget from "scenes/widgets/UserWidget";
@@ -7,6 +7,8 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
+import { setProfileUser } from "state";
+import { useEffect } from "react";
 
 /**
  * Home Page
@@ -14,9 +16,17 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
  */
 const HomePage = () => {
 
+    const dispatch = useDispatch();
+    const { palette } = useTheme();    
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");    // Mobile/PC
+    const user = useSelector((state) => state.user);
     const { _id, picturePath } = useSelector((state) => state.user);    // User ID, User Image
-    const { palette } = useTheme();                                     // Theme Colors
+
+    // Update Profile User
+    useEffect(() => {
+        dispatch(setProfileUser(user)); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Box>

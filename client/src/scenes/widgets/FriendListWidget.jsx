@@ -3,7 +3,7 @@ import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriends } from "state";
+import { setProfileUser } from "state";
 
 /**
  * Friends List Widget
@@ -16,7 +16,7 @@ const FriendListWidget = ({ userId }) => {
 
     // Token, Logged In User ID, Friends (Frontend State)
     const token = useSelector((state) => state.token);
-    const { _id, friends } = useSelector((state) => state.user);
+    const profileUser = useSelector((state) => state.profileUser);
     
     // GET API Call (Get All User Friends)
     const getFriends = async () => {
@@ -30,7 +30,7 @@ const FriendListWidget = ({ userId }) => {
             const jsonObject = await response.json();
 
             if (response.status === 200) {
-                dispatch(setFriends({ friends: jsonObject }));     // Update Frontend State   
+                dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     // Update Frontend State   
             }
             else {
                 console.log(jsonObject.message);
@@ -66,11 +66,10 @@ const FriendListWidget = ({ userId }) => {
                 gap="1.5rem" p="0.75rem 0"
                 sx={{ maxHeight: "30vh", overflowY: "auto" }}
             >
-                {friends.map((friend) => (
+                {profileUser.friends.map((friend) => (
                     <Friend 
                         key={`${friend._id}_${userId}-${Math.random()}`}
                         friendId={friend._id}
-                        allowAddRemove={_id !== userId}
                         name={`${friend.firstName} ${friend.lastName}`}
                         subtitle={friend.occupation}
                         userPicturePath={friend.picturePath}

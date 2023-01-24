@@ -1,6 +1,6 @@
 import { Box, useMediaQuery, IconButton, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ArrowCircleUpRoundedIcon from '@mui/icons-material/ArrowCircleUpRounded';
 
@@ -9,19 +9,26 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import { setProfileUser } from "state";
 
 /**
  * Profile Page
  */
 const ProfilePage = () => {
 
-    const { userId } = useParams();                                 // Gets the User ID of the Profile Page
-    const token = useSelector((state) => state.token);              // Logged In User Token
-    const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+    const dispatch = useDispatch();
     const { palette } = useTheme();
+    const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
-    const [user, setUser] = useState(null);                         // The Profile Page's User State (Not Logged In User)
+    // Logged In User
     const loggedInUser = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token);
+
+    // Profile User
+    const { userId } = useParams();                                 // Gets the User ID of the Profile Page
+    const profileUser = useSelector((state) => state.profileUser);
+    const [userExists, setUserExists] = useState(null);           // Check Profile User Exists
+
 
     // Get User of the Profile Page
     const getUser = async () => {
@@ -35,7 +42,8 @@ const ProfilePage = () => {
             const jsonObject = await response.json();
 
             if (response.status === 200) {
-                setUser(jsonObject);  // Updates Profile Page State (User)
+                dispatch(setProfileUser(jsonObject));   // Update Frontend State (Profile User)
+                setUserExists(true);                    // Updates Profile Page State (User)
             }
             else {
                 console.log(jsonObject.message);
@@ -51,7 +59,7 @@ const ProfilePage = () => {
     }, []);
 
     // User Does Not Exist
-    if (!user) { return null; }
+    if (!userExists) { return null; }
 
     // Profile Page
     return (
@@ -66,7 +74,7 @@ const ProfilePage = () => {
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
                     <UserWidget 
                         userId={userId}
-                        picturePath={user.picturePath}
+                        picturePath={profileUser.picturePath}
                     />
                     <FriendListWidget userId={userId} stickyTop="36rem" />
                 </Box>
@@ -78,7 +86,7 @@ const ProfilePage = () => {
                 >
                     {userId === loggedInUser._id &&
                         <>
-                        <MyPostWidget picturePath={user.picturePath} />
+                        <MyPostWidget picturePath={profileUser.picturePath} />
                         <Box m="2rem 0" />
                         </>
                     }

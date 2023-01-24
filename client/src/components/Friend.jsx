@@ -1,15 +1,16 @@
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { setFriends } from "state";
+import { useNavigate, useParams } from "react-router";
+import { setFriends, setProfileUser } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({ friendId, allowAddRemove, name, subtitle, userPicturePath, marginAmount = "0" }) => {
+const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { userId } = useParams();     // Profile User ID (from params)
 
     // Theme Colors
     const { palette } = useTheme();
@@ -19,16 +20,26 @@ const Friend = ({ friendId, allowAddRemove, name, subtitle, userPicturePath, mar
     const medium = palette.neutral.medium;
 
     // User ID, Token, and User Friends (Frontend State)
-    const { _id } = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
-    const friends = useSelector((state) => state.user.friends);
+
+    // Profile User
+    const profileUser = useSelector((state) => state.profileUser)
 
     // Check for friendship
-    const isFriend = friends.find((friend) => friend._id === friendId);
+    let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
+    
+
+    // WHO ADDS WHO (Updates Profile Page of a not-logged-in user)
+    let addString = `http://localhost:3001/users/${user._id}/${friendId}`;
+    if (profileUser._id === userId) {
+        isFriend = (profileUser.friends.find((friend) => friend._id === user._id) ? true : false);
+        addString = `http://localhost:3001/users/${friendId}/${user._id}`;
+    }
 
     // PATCH API Call (Add/Remove Friend)
     const patchFriend = async () => {
-        await fetch(`http://localhost:3001/users/${_id}/${friendId}`,
+        await fetch(addString,
             {
                 method: "PATCH",
                 headers: { Authorization: `Bearer ${token}`},
@@ -39,7 +50,10 @@ const Friend = ({ friendId, allowAddRemove, name, subtitle, userPicturePath, mar
             const jsonObject = await response.json();
 
             if (response.status === 200) {
-                dispatch(setFriends({ friends: jsonObject }));    // Updates Frontend State
+                if (profileUser._id === user._id) {
+                    dispatch(setFriends({ friends: jsonObject }));    // Updates Frontend State
+                }
+                dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     // Update Frontend State   
             }
             else {
                 console.log(jsonObject.message);
@@ -72,13 +86,13 @@ const Friend = ({ friendId, allowAddRemove, name, subtitle, userPicturePath, mar
             </FlexBetween>
 
             {/* ADD/REMOVE FRIEND, DELETE POST */}
-            {_id !== friendId && !allowAddRemove &&
+            {(user._id !== friendId) &&
                 (
                 <FlexBetween>
                     <IconButton onClick={() => patchFriend()}
                         sx={{ backgroundColor: primaryLight, p: "0.6rem", mr: marginAmount }}
                     >
-                        {isFriend ? 
+                        {isFriend || userId === user._id ? 
                             <PersonRemoveOutlined sx={{ color: primaryDark }} /> 
                             : 
                             <PersonAddOutlined sx={{ color: primaryDark }} />

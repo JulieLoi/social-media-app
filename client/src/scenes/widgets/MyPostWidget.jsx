@@ -36,9 +36,10 @@ const MyPostWidget = ({ picturePath }) => {
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
 
-    // User ID and Token (Frontend State)
+    // User ID, Token, Posts (Frontend State)
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
+    const posts = useSelector((state) => state.posts);
 
     // Dropdown Menu
     const [anchorEl, setAnchorEl] = useState(null);
@@ -66,11 +67,11 @@ const MyPostWidget = ({ picturePath }) => {
                 body: formData,
             }
         ).then(async (response) => {
-            // Response JSON Object
+            // Response JSON Object (Newly Created Post)
             const jsonObject = await response.json();
 
             if (response.status === 201) {
-                dispatch(setPosts({ posts: jsonObject }));          //  Updates Frontend State
+                dispatch(setPosts({ posts: [...posts, jsonObject] }));          //  Updates Frontend State
 
                 // Reset MyPostWidget
                 setImage(null);

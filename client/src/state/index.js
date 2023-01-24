@@ -8,7 +8,8 @@ const initialState = {
     mode: "light",
     user: null,
     token: null,
-    posts: []
+    posts: [],
+    profileUser: null,
 }
 
 /**
@@ -30,6 +31,7 @@ export const authSlice = createSlice({
         // Login Successful - Set User/Token
         setLogin: (state, action) => {
             state.user = action.payload.user;
+            state.profileUser = action.payload.user;
             state.token = action.payload.token;
         },
 
@@ -86,9 +88,14 @@ export const authSlice = createSlice({
         // Delete a post in the frontend state (updates posts)
         deletePost: (state, action) => {
             state.posts = state.posts.filter((post) => post._id !== action.payload.post._id);
+        },
+
+        // Set Profile User
+        setProfileUser: (state, action) => {
+            state.profileUser = action.payload;
         }
     }
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, deletePost } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, deletePost, setProfileUser } = authSlice.actions;
 export default authSlice.reducer;
