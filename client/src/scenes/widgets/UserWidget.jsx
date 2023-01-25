@@ -294,7 +294,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 </Box>
 
                 {/* Location */}
-                <Box>
+                <Box mb="1rem">
                 <Location setLocation={setNewLocation} givenLocation={newLocation} />
                 <Box mb="1rem" />
                 <TextField autoFocus fullWidth id="location" disabled                     
@@ -353,7 +353,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleDialogClose}>Save</Button>
+                <Button onClick={handleDialogClose} sx={{ fontSize: "1rem"}}>Save</Button>
             </DialogActions>
         </Dialog>
         </>

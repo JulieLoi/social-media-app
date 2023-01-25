@@ -5,25 +5,35 @@
 Things to do:
 -Redo Login/Register
 -Do something for profiles with no posts
--UPDATE Dialog Box (update account information)
-----First Name, Last Name, Location, etc.
--FIX FRIENDS LIST (remove the add/remove friend feature when looking at someones profile page...)
 
 ADD FAKE DATA (data.js in server folder)
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
-DONE:-------------------------
--REDO Posts, take info from user calling (using userid)         DONE
 
 
 
-DO ACCOUNT SETTINGS AND UPDATE USER (update frontend and backend...)
+
 -----------------------------
 Finished Login/Register (ignore the rest of the things i don't want)
 Finished Comment Section
 Finished Editting Social Profiles
+FINISHED FIXING LOCATION (using select instead of autocomplete)
+FINISHED FIXING FRIEND COMPONENT (add/remove friend button update and update friends list )
+----No more bugs
+FINISHED DIALOG BOX
 
+
+DONE:D++++++
+-UPDATE Dialog Box (update account information)
+----First Name, Last Name, Location, etc.
+-FIX FRIENDS LIST (remove the add/remove friend feature when looking at someones profile page...)
+-REDO Posts, take info from user calling (using userid)         DONE
+DO ACCOUNT SETTINGS AND UPDATE USER (update frontend and backend...)
+
+
+
+---------
 
 Edit account info...
 
@@ -79,6 +89,9 @@ G6B^!k50N9p@ADNSC3F#$9P
 nimasarram@gmail.com
 5e6I8AGu'W&1D8k7
 
+
+ethanhoover@gmail.com
+5Ad%BUK8M6GvLOrdi432X@
 
 
 # Getting Started with Create React App
