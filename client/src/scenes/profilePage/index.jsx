@@ -76,7 +76,10 @@ const ProfilePage = () => {
                         userId={userId}
                         picturePath={profileUser.picturePath}
                     />
-                    <FriendListWidget userId={userId} stickyTop="36rem" />
+                    <FriendListWidget 
+                        userId={userId} stickyTop="36rem" 
+                        allowAddRemove={true} isProfile={true} 
+                    />
                 </Box>
 
                 {/* POST WIDGET */}

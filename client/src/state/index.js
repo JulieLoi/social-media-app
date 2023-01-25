@@ -93,7 +93,7 @@ export const authSlice = createSlice({
         // Set Profile User
         setProfileUser: (state, action) => {
             state.profileUser = action.payload;
-        }
+        },
     }
 });
 

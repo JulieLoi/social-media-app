@@ -6,7 +6,7 @@ import { setFriends, setProfileUser } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" }) => {
+const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0", allowAddRemove=true }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,7 +28,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
 
     // Check for friendship
     let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
-    
 
     // WHO ADDS WHO (Updates Profile Page of a not-logged-in user)
     let addString = `http://localhost:3001/users/${user._id}/${friendId}`;
@@ -50,10 +49,39 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
             const jsonObject = await response.json();
 
             if (response.status === 200) {
+                // Updates Logged In User Profile Page Friend List (on user friend list)
                 if (profileUser._id === user._id) {
-                    dispatch(setFriends({ friends: jsonObject }));    // Updates Frontend State
+                    dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));
                 }
-                dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     // Update Frontend State   
+
+                // Adds Logged in user as friend...
+                else {
+                    // Checks if the logged in user is a friend of the profile page user we are looking at.
+                    const check = profileUser.friends.find((f) => f._id === user._id) === undefined ? false : true;
+
+                    // Remove Friend (Logged In User)
+                    if (check) {
+                        const newArray = [...profileUser.friends];
+                        const result = newArray.filter((f) => f._id !== user._id)
+                        dispatch(setProfileUser({ ...profileUser, friends: result }));
+                    }
+                    // Add Friend (Logged In User)
+                    else {
+                        const formattedUser = { 
+                            _id: user._id, 
+                            firstName: user.firstName, 
+                            lastName: user.lastName, 
+                            occupation: user.occupation, 
+                            location: user.location, 
+                            picturePath: user.picturePath 
+                        };
+                        dispatch(setProfileUser({ ...profileUser, friends: [...profileUser.friends, formattedUser] }));
+                    }
+
+                }
+
+                // Updates Logged In User's Friends List
+                dispatch(setFriends({ friends: jsonObject }));
             }
             else {
                 console.log(jsonObject.message);
@@ -86,7 +114,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0" 
             </FlexBetween>
 
             {/* ADD/REMOVE FRIEND, DELETE POST */}
-            {(user._id !== friendId) &&
+            {(user._id !== friendId) && allowAddRemove &&
                 (
                 <FlexBetween>
                     <IconButton onClick={() => patchFriend()}

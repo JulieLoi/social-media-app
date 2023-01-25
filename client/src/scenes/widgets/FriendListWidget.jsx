@@ -9,7 +9,7 @@ import { setProfileUser } from "state";
  * Friends List Widget
  * The widget that contains the list of the user's friends
  */
-const FriendListWidget = ({ userId }) => {
+const FriendListWidget = ({ userId, allowAddRemove=true, isProfile=false }) => {
 
     const dispatch = useDispatch();
     const { palette } = useTheme();
@@ -40,7 +40,9 @@ const FriendListWidget = ({ userId }) => {
 
     // Gets Friends List Data
     useEffect(() => {
-        getFriends();
+        if (isProfile) {
+            getFriends();
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
  
@@ -74,6 +76,7 @@ const FriendListWidget = ({ userId }) => {
                         subtitle={friend.occupation}
                         userPicturePath={friend.picturePath}
                         marginAmount={"1rem"}
+                        allowAddRemove={allowAddRemove}
                     />
                 ))}
             </Box>
