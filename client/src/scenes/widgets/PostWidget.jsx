@@ -209,12 +209,14 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             {/* Comment Section*/}
             {isComments && 
             (<Box mt="0.5rem">
-                {comments.map((c) => (
-                    <Comment 
-                        key={`${c.userId}-${postId}-${Math.random()}`}
-                        comment={c} postId={postId} palette={palette} 
-                    />
-                ))}
+                <Box sx={{ maxHeight: "30vh", overflowY: "auto" }}>
+                    {comments.map((c) => (
+                        <Comment 
+                            key={`${c.userId}-${postId}-${Math.random()}`}
+                            comment={c} postId={postId} palette={palette} 
+                        />
+                    ))}
+                </Box>
                 <Divider />
                 <AddComment postId={postId} palette={palette}/>
             </Box>)
