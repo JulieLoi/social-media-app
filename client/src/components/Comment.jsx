@@ -10,6 +10,7 @@ const Comment = ({comment, palette}) => {
     const navigate = useNavigate();
     const token = useSelector((state) => state.token);
 
+    // Commenter Information
     const [commenter, setCommenter] = useState(null);
 
     // GET API Call (Get User)
@@ -38,7 +39,6 @@ const Comment = ({comment, palette}) => {
     }, [])
 
     return (
-        
         <Box >
         <Divider />
         {commenter !== null &&

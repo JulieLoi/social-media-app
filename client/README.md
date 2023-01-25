@@ -9,11 +9,13 @@ Things to do:
 ADD FAKE DATA (data.js in server folder)
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
-UPDATE COMMENTS SO THAT THEY PULL FROM USER DATABASE
--THIS WILL UPDATE THE NAMES AND STUFF
 
 
+Add comment to not show all of them?
+-Scroll when it becomes a certain length?
 
+
+Change profile picture?
 
 
 
@@ -25,7 +27,8 @@ FINISHED FIXING LOCATION (using select instead of autocomplete)
 FINISHED FIXING FRIEND COMPONENT (add/remove friend button update and update friends list )
 ----No more bugs
 FINISHED DIALOG BOX
-
+FINISHED UPDATING COMMENTS SO THAT WHEN NAME CHANGES, IT UPDATES
+-RESTRUCTURED COMMENT ITSELF
 
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
@@ -34,7 +37,8 @@ DONE:D++++++
 -REDO Posts, take info from user calling (using userid)         DONE
 DO ACCOUNT SETTINGS AND UPDATE USER (update frontend and backend...)
 
-
+UPDATE COMMENTS SO THAT THEY PULL FROM USER DATABASE
+-THIS WILL UPDATE THE NAMES AND STUFF
 
 ---------
 

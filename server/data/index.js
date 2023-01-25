@@ -330,33 +330,27 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[0], userName: "Alexis Speilgar",
-                userPicturePath: "p11.jpeg",
+                id: 0, userId: userIds[0], 
                 comment: "Good looking salad!"
             },
             {
-                id: 1, userId: userIds[3], userName: "Liam Trevont",
-                userPicturePath: "p6.jpeg",
+                id: 1, userId: userIds[3], 
                 comment: "orange juice is a great way to start the day"
             },
             {
-                id: 2, userId: userIds[13], userName: "Nima Sarram",
-                userPicturePath: "nima-sarram-VLzg5MwRWXI-unsplash.jpg",
+                id: 2, userId: userIds[13], 
                 comment: "Let's have breakfast together later on"
             },
             {
-                id: 3, userId: userIds[5], userName: "Harvey Dunn",
-                userPicturePath: "p7.jpeg",
+                id: 3, userId: userIds[5], 
                 comment: "Try having a breakfast salad with an egg next time!"
             },
             {
-                id: 4, userId: userIds[3], userName: "Liam Trevont",
-                userPicturePath: "p6.jpeg",
+                id: 4, userId: userIds[3], 
                 comment: "Have a good day!"
             },
             {
-                id: 5, userId: userIds[7], userName: "Jessica Dunn",
-                userPicturePath: "p9.jpeg",
+                id: 5, userId: userIds[7], 
                 comment: "i prefer apple juice"
             },
         ],
@@ -391,28 +385,23 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[4], userName: "Jane Doe",
-                userPicturePath: "p5.jpeg",
+                id: 0, userId: userIds[4],
                 comment: "Utah sure knows how to throw a festival!"
             },
             {
-                id: 1, userId: userIds[2], userName: "Aira Precious",
-                userPicturePath: "p4.jpeg",
+                id: 1, userId: userIds[2], 
                 comment: "What city is this in Jane?"
             },
             {
-                id: 2, userId: userIds[4], userName: "Jane Doe",
-                userPicturePath: "p5.jpeg",
+                id: 2, userId: userIds[4], 
                 comment: "Salt Lake City!"
             },
             {
-                id: 3, userId: userIds[2], userName: "Aira Precious",
-                userPicturePath: "p4.jpeg",
+                id: 3, userId: userIds[2], 
                 comment: "It looks amazing! I would love to put it on my bucket list!"
             },
             {
-                id: 4, userId: userIds[8], userName: "Elijah Pilchard",
-                userPicturePath: "elijah-pilchard-QgJUb7tsvNg-unsplash.jpg",
+                id: 4, userId: userIds[8], 
                 comment: "I want to check this place out!"
             },
         ],

@@ -15,7 +15,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost, deletePost } from "state";
-import Comments from "components/Comments";
+import Comment from "components/Comment";
 import AddComment from "components/AddComment";
 
 /**
@@ -121,7 +121,14 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     // Post Widget
     return (
         <WidgetWrapper mb="2rem">
-            {postOwner &&
+            { postOwner._id === loggedInUser._id ?
+                <Friend
+                    friendId={postUserId}
+                    name={`${loggedInUser.firstName} ${loggedInUser.lastName}`}
+                    subtitle={loggedInUser.location}
+                    userPicturePath={loggedInUser.picturePath}
+                />
+                :
                 <Friend
                     friendId={postUserId}
                     name={`${postOwner.firstName} ${postOwner.lastName}`}
@@ -202,7 +209,12 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             {/* Comment Section*/}
             {isComments && 
             (<Box mt="0.5rem">
-                <Comments comments={comments} postId={postId} palette={palette} />
+                {comments.map((c) => (
+                    <Comment 
+                        key={`${c.userId}-${postId}-${Math.random()}`}
+                        comment={c} postId={postId} palette={palette} 
+                    />
+                ))}
                 <Divider />
                 <AddComment postId={postId} palette={palette}/>
             </Box>)

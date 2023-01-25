@@ -36,7 +36,6 @@ const AddComment = ({ palette, postId }) => {
             const jsonObject = await response.json();
 
             if (response.status === 200) {
-                console.log(jsonObject)
                 dispatch(setPost({ post: jsonObject }));       // Update Frontend State
                 setUserComment("");                             // Resets User Comment
             }
