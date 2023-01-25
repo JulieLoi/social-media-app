@@ -6,17 +6,17 @@ import {
 } from "@mui/icons-material";
 import { 
     Box, Divider, IconButton,
-    Typography, InputBase, useTheme,
+    Typography, useTheme,
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
-import UserImage from "components/UserImage";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost, deletePost } from "state";
+import Comments from "components/Comments";
+import AddComment from "components/AddComment";
 
 /**
  * Post Widget
@@ -25,19 +25,15 @@ import { setPost, deletePost } from "state";
 const PostWidget = ({ postId, postUserId, description, picturePath, likes, comments }) => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     // Post Widget State
-    const [userComment, setUserComment] = useState("");
-    const [isComments, setIsComments] = useState(false);
-    const [share, setShare] = useState(false);
-    const [remainChar, setRemainChar] = useState(100);
+    const [isComments, setIsComments] = useState(false);        // Show Post Comments
+    const [share, setShare] = useState(false);                  // Share Button
 
     // Theme Colors
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
-    const medium = palette.neutral.medium;
 
     // Token, Logged In User (Frontend State)
     const token = useSelector((state) => state.token);
@@ -117,36 +113,6 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
         });
     };
 
-    // PATCH API Call (Add Comment)
-    const addComment = async () => {
-        await fetch(`http://localhost:3001/posts/${postId}/comment`,
-            {
-                method: "PATCH",
-                headers: { 
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ 
-                    userId: loggedInUser._id, 
-                    userName: `${loggedInUser.firstName} ${loggedInUser.lastName}`,
-                    userPicturePath: loggedInUser.picturePath, 
-                    comment: userComment 
-                }),
-            }
-        ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                dispatch(setPost({ post: jsonObject }));       // Update Frontend State
-                setUserComment("");                             // Resets User Comment
-            }
-            else {
-                console.log(jsonObject.message);
-            }
-        });
-    }
-
     useEffect(() => {
         getPostOwner();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,7 +179,6 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         </IconButton>
                         <Typography>{comments.length}</Typography>
                     </FlexBetween>
-
                 </FlexBetween>
 
                 {/* Delete, Share Button */}
@@ -237,76 +202,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             {/* Comment Section*/}
             {isComments && 
             (<Box mt="0.5rem">
-                {comments.map((c) => (
-                    <Box key={`${c.userId}-${postId}-${Math.random()}`}>
-                    <Divider />
-                    <Box p="0.5rem 0">
-                        <Box display="flex" gap="1rem" alignItems="center" ml="1rem">
-                            <UserImage image={c.userPicturePath} size={"30px"} />
-                            <Typography variant="h5"
-                                sx={{
-                                    "&:hover": {
-                                        color: palette.primary.main,
-                                        cursoer: "pointer",
-                                    }
-                                }}
-                                onClick={() => {
-                                    navigate(`/profile/${c.userId}`);
-                                    navigate(0);        // Refresh
-                                }}
-                            >
-                                    {c.userName}
-                            </Typography>
-                            </Box>
-                            
-                            <Box ml="3rem">
-                            <Typography noWrap
-                                sx={{ 
-                                    color: main, m: "0.25rem 0", pl: "1rem",
-                                    whiteSpace: "pre-wrap", wordBreak: "break-word",
-                                }}
-                            >
-                                {c.comment}
-                            </Typography>
-                            </Box>
-                        </Box>
-                    </Box>
-                ))}
-
+                <Comments comments={comments} postId={postId} palette={palette} />
                 <Divider />
-
-                {/* ADD COMMENT */}
-                <FlexBetween mt="1rem">
-                <UserImage image={loggedInUser.picturePath} size={"50px"} />
-                <InputBase placeholder="Type your comment here..."
-                    onChange={(e) => {
-                        const commentLength = e.target.value.length;
-                        if (commentLength <= 100) {
-                            setRemainChar(100 - commentLength);
-                            setUserComment(e.target.value);
-                        }
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === `Enter`) { 
-                            addComment();
-                            setRemainChar(100);
-                        }
-                    }}
-                    value={userComment}
-                    maxLength="100"
-                    sx={{
-                        width: "100%", maxLength: "100",
-                        backgroundColor: palette.neutral.light,
-                        borderRadius: "2rem",
-                        p: "0.5rem 1rem", ml: "0.5rem",
-                    }}
-                />
-                </FlexBetween>
-                <Box ml="4rem" mb="0.25rem" mt="0.25rem">
-                    <Typography color={medium}>
-                        Remaining Character(s): {remainChar} 
-                    </Typography>
-                </Box>
+                <AddComment postId={postId} palette={palette}/>
             </Box>)
             }
         </WidgetWrapper>

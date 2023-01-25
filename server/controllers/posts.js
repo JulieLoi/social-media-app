@@ -85,8 +85,6 @@ export const commentPost = async (req, res) => {
         post.comments.push({ 
             id: commentCount,
             userId: userId,
-            userName: userName,
-            userPicturePath: userPicturePath,
             comment: comment,
         });
 

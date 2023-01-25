@@ -9,6 +9,9 @@ Things to do:
 ADD FAKE DATA (data.js in server folder)
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
+UPDATE COMMENTS SO THAT THEY PULL FROM USER DATABASE
+-THIS WILL UPDATE THE NAMES AND STUFF
+
 
 
 
