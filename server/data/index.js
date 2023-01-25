@@ -408,12 +408,36 @@ export const posts = [
     },
     {
         _id: new mongoose.Types.ObjectId(),
-        userId: userIds[5],
-        description:
-        "This is the last really long random description. This one is longer than the previous one. Man I'm bored. I'm going to keep typing until I run out of things to say.",
+        userId: userIds[13],
+        description: "Fireworks!",
         picturePath: "post4.jpeg",
         likes: getRandomLikes(userIds),
-        comments: [],
+        comments: [
+            {
+                id: 0, userId: userIds[11], 
+                comment: "Its been a good festival season around here!"
+            },
+            {
+                id: 1, userId: userIds[12], 
+                comment: "Wooooo"
+            },
+            {
+                id: 2, userId: userIds[13], 
+                comment: "!!!!!!"
+            },
+            {
+                id: 3, userId: userIds[14], 
+                comment: "Sounds like a good time you're having!"
+            },
+            {
+                id: 4, userId: userIds[10], 
+                comment: "Wow! Any other photos?"
+            },
+            {
+                id: 5, userId: userIds[9], 
+                comment: "Coolio"
+            },
+        ],
     },
     {
         _id: new mongoose.Types.ObjectId(),
@@ -422,19 +446,84 @@ export const posts = [
         "Just a short description. I'm tired of typing. I'm going to play video games now.",
         picturePath: "post5.jpeg",
         likes: getRandomLikes(userIds),
-        comments: [],
+        comments: [
+            {
+                id: 0, userId: userIds[0], 
+                comment: "Let's play sometime! ^-^"
+            },
+            {
+                id: 1, userId: userIds[7], 
+                comment: "Looked like you had a long day"
+            },
+            {
+                id: 2, userId: userIds[3], 
+                comment: "..."
+            },
+            {
+                id: 3, userId: userIds[4], 
+                comment: "Good night"
+            },
+            {
+                id: 4, userId: userIds[5], 
+                comment: "sounds nice ~~~!"
+            },
+            {
+                id: 5, userId: userIds[1], 
+                comment: "Had a fun time!"
+            },
+        ],
     },
     {
         _id: new mongoose.Types.ObjectId(),
-        userId: userIds[7],
+        userId: userIds[6],
         description:
         "For the last time, I'm going to play video games now. I'm tired of typing. I'm going to play video games now.",
         picturePath: "post6.jpeg",
         likes: getRandomLikes(userIds),
-        comments: [],
+        comments: [
+            {
+                id: 0, userId: userIds[2], 
+                comment: "Just get off"
+            },
+        ],
     },
 ];
 
 export const advertisements = [
-
+    {
+        id: 0,
+        name: "MikaCosmetics",
+        website: "mikacosmetics.com",
+        description: "Your pathway to stunning and immaculate beauty and made sure your skin is exfoliating skin and shining like light.",
+    },
+    {
+        id: 1,
+        name: "Popcorn Independent",
+        website: "popcornindependent.com",
+        description: "Popcorn is a delicious snack that can be enjoyed by all. It's a great way to reduce stress and have some fun.",
+    },
+    {
+        id: 2,
+        name: "ParkCity Financials",
+        website: "parkcity.net",
+        description: "ParkCity Financials is a mobile app that helps users manage their finances in a simple and intuitive way.",
+    },
+    {
+        id: 3,
+        name: "Lamp Anonymous",
+        website: "lampanonymous.com",
+        description: "The lamp has a simple and elegant design, with a textured metal finish. The lamp is perfect for any room in the house.",
+    },
+    {
+        id: 4,
+        name: "Luminous Bamboo",
+        website: "luminousbamboo.com",
+        description: "Bamboo furniture is an environmentally friendly choice that is perfect for any space. Our pieces are made from sustainable bamboo and are made to las.",
+    },
+    {
+        id: 5,
+        name: "Renegade Dynamics",
+        website: "renegadedynamics.com",
+        description: "We've designed our highest quality webcam yet - perfect for recording beautiful videos and photos in any environment.",
+    },
 ];

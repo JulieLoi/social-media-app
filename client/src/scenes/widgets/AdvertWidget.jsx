@@ -34,7 +34,7 @@ import { Typography, useTheme } from "@mui/material";
 
             {/* THIRD ROW */}
             <FlexBetween>
-                <Typography color={main}>MikaCosemetics</Typography>
+                <Typography color={main}>MikaCosmetics</Typography>
                 <Typography color={medium}>mikacosmetics.com</Typography>
             </FlexBetween>
 

@@ -58,7 +58,7 @@ const Form = () => {
     const isNonMobile = useMediaQuery("(min-width: 600px)");
 
     // Page State (Login / Register)
-    const [pageType, setPageType] = useState("register");
+    const [pageType, setPageType] = useState("login");
     const isLogin = (pageType === "login");
     const isRegister = (pageType === "register");
     

@@ -18,7 +18,8 @@ import { verifyToken } from "./middleware/auth.js";
 
 import User from "./models/User.js";
 import Post from "./models/Post.js";
-import { users, posts } from "./data/index.js";
+import Advertisement from "./models/Advertisement.js";
+import { users, posts, advertisements } from "./data/index.js";
 
 /*
  * Configurations
@@ -77,6 +78,7 @@ mongoose.connect(process.env.MONGO_URL, {
     //console.log("Load Fake Data")
     //User.insertMany(users);
     //Post.insertMany(posts);
+    //Advertisement.insertMany(advertisements);
 
 
 }).catch((error) => console.error(`${error} did not connect`));

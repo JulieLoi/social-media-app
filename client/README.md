@@ -10,7 +10,10 @@ ADD FAKE DATA (data.js in server folder)
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
-
+FIX ANOTHER USERS PROFILE PAGE.
+-Adding a friend on that friend list is glitchy...
+-Just remove the addFriendsList feature there...
+FIX FRIENDS LIST 
 
 
 Change profile picture?
@@ -101,6 +104,9 @@ nimasarram@gmail.com
 
 ethanhoover@gmail.com
 5Ad%BUK8M6GvLOrdi432X@
+
+remyloz@gmail.com
+h&j2!h*^MOYB^Z@Ip$^%7J%1UC#qMP79q0U#2z
 
 
 # Getting Started with Create React App
