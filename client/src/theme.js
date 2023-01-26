@@ -1,8 +1,8 @@
 // color design tokens export
 export const colorTokens = {
     grey: {
-      0: "#FFFFFF",
-      10: "#F6F6F6",
+      0: "#F5F5F5",
+      10: "#E8E8E8",
       50: "#F0F0F0",
       100: "#E0E0E0",
       200: "#C2C2C2",

@@ -26,11 +26,11 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
     const { palette } = useTheme();
     const primaryLight = palette.primary.light;
     const primaryDark = palette.primary.dark;
-    const main = palette.primary.dark;
     const medium = palette.neutral.medium;
 
     // Check for friendship
     let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
+    
 
     // WHO ADDS WHO (Updates Profile Page of a not-logged-in user)
     let addString = `http://localhost:3001/users/${user._id}/${friendId}`;
@@ -98,7 +98,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
                 <UserImage userId={friendId} image={userPicturePath} size="55px" /> 
                 <Box>
                     <Typography
-                        color={main} variant="h5" fontWeight="500"
+                        color={primaryDark} variant="h5" fontWeight="500"
                         sx={{ "&:hover": { color: palette.primary.main, cursoer: "pointer", } }}
                         onClick={() => {
                             navigate(`/profile/${friendId}`);

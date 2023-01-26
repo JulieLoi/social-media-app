@@ -1,14 +1,13 @@
-import { Box, useMediaQuery, IconButton, useTheme } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ArrowCircleUpRoundedIcon from '@mui/icons-material/ArrowCircleUpRounded';
-
 import Navbar from "scenes/navbar";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import NavigateTop from "components/NavigateTop";
 import { setProfileUser } from "state";
 
 /**
@@ -17,7 +16,6 @@ import { setProfileUser } from "state";
 const ProfilePage = () => {
 
     const dispatch = useDispatch();
-    const { palette } = useTheme();
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
     // Logged In User
@@ -28,7 +26,6 @@ const ProfilePage = () => {
     const { userId } = useParams();                                 // Gets the User ID of the Profile Page
     const profileUser = useSelector((state) => state.profileUser);
     const [userExists, setUserExists] = useState(null);           // Check Profile User Exists
-
 
     // Get User of the Profile Page
     const getUser = async () => {
@@ -91,22 +88,10 @@ const ProfilePage = () => {
                         <Box m="2rem 0" />
                         </>
                     }
-                    
                     <PostsWidget userId={userId} isProfile={true} />
                 </Box>
-
             </Box>
-
-            {/* NAVIGATE TOP ICON */}
-            <IconButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}>
-                <ArrowCircleUpRoundedIcon 
-                    sx={{ 
-                        position: "fixed", bottom: "0.5rem", right: "0.5rem", 
-                        color: palette.primary.light, fontSize: "3rem",
-                        "&:hover": { color: palette.primary.main }
-                    }}
-                />
-            </IconButton>
+            <NavigateTop />
         </Box>
     )
 }

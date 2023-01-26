@@ -4,7 +4,12 @@
 
 Things to do:
 -Redo Login/Register
--Do something for profiles with no posts
+
+
+FIX FRIENDS LSIT (REWORK FRIEND COMPONENT...)
+-ON ANOTHER USERS PROFILE PAGE, THE FRIEND LIST IS SHOWING TO SUBTRACT FRIEND EVEN IF YOU ARE NOT FRIENDS WITH THEM
+-OR IT SHOWS ALL ADD EVEN IF YO UARE FRIENDS...
+-Add/remove friend button in place of the account settings in user widget
 
 
 
@@ -28,6 +33,9 @@ FINISHED UPDATING COMMENTS SO THAT WHEN NAME CHANGES, IT UPDATES (Added scroll b
 -RESTRUCTURED COMMENT ITSELF
 
 Finished the "Create Ad" feature (has error prevention and all)
+Finished solution for "users with no posts"
+
+
 
 
 DONE:D++++++
@@ -58,6 +66,7 @@ FIX FRIENDS LIST
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
+-Do something for profiles with no posts
 
 
 

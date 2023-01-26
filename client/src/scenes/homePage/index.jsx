@@ -7,6 +7,7 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
+import NavigateTop from "components/NavigateTop";
 import { setProfileUser, setAd } from "state";
 import { useEffect } from "react";
 
@@ -84,18 +85,7 @@ const HomePage = () => {
                     </Box>
                 )}
             </Box>
-
-            {/* NAVIGATE TOP ICON */}
-            <IconButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth", })}>
-                <ArrowCircleUpRoundedIcon 
-                    sx={{ 
-                        position: "fixed", bottom: "0.5rem", right: "0.5rem", 
-                        color: palette.primary.light, fontSize: isNonMobileScreens ? "4rem" : "3rem",
-                        "&:hover": { color: palette.primary.main }
-                    }}
-                />
-            </IconButton>
-            
+            <NavigateTop />
         </Box>
     )
 }
