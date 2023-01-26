@@ -41,43 +41,25 @@ const AddRemoveFriend = ({ otherUserId, allowButton=true, marginAmount="0" }) =>
 
             if (response.status === 200) {
 
-                // GET BOTH LOGGED IN USER FRIEND LIST AND OTHER USER FRIEND LIST FROM JSON OBJECT
-                // CODE THIS IN "users.js" (DONE)
-
                 const loggedUserFriends = jsonObject.loggedInUserFriends;
                 const otherUserFriends = jsonObject.otherUserFriends;
-
-                // The other user will not always be a profile page user.
-                // As such, I need to check if the profile page user = otherUser and update that friend list on the profile page...
-
-                console.log(loggedInUser)
-                console.log(profileUser)
 
                 // Updates Logged In User Friends
                 dispatch(setFriends({ friends: loggedUserFriends }));
 
                 // Profile User === Logged In User (Updates Profile User as well)
                 if (loggedInUser._id === profileUser._id) {
-                    console.log("HOME OR MY PROFILE PAGE")
                     dispatch(setProfileUser({ ...profileUser, friends: loggedUserFriends }));
                 }
 
                 // Currently looking at a profile and adding the profile user as a friend
                 if (profileUser._id === profileId) {
-                    console.log("ANOTHER PROFILE PAGE")
                     dispatch(setProfileUser({ ...profileUser, friends: otherUserFriends }));
                 }
-
-
-                console.log("ADD REMOVE FRIEND COMPONENT")
-                console.log(jsonObject)
             }
             else { console.error(jsonObject.message); }
         });
     }
-
-
-
 
     return (
         <>

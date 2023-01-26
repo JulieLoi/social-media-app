@@ -96,9 +96,6 @@ export const authSlice = createSlice({
 
         // Set Profile User
         setProfileUser: (state, action) => {
-            console.log("SETING PROFILE USER")
-            console.log(action.payload)
-            console.log("-------")
             state.profileUser = action.payload;
         },
 

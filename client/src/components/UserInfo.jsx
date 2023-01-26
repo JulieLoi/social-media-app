@@ -23,6 +23,7 @@ const UserInfo = ({ userId, userImage, userName, userLocation=null, userOccupati
                     sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer", } }}
                     onClick={() => {
                         navigate(`/profile/${userId}`);
+                        navigate(0);                        // Refresh
                     }}
                 >
                     {userName.length > 20 ? `${userName.substring(0, 20)}...` : userName}

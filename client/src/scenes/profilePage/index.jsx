@@ -58,6 +58,8 @@ const ProfilePage = () => {
 
     // Profile Page
     return (
+        <>
+        {profileUser != null &&
         <Box>
             <Navbar />
             <Box
@@ -93,6 +95,8 @@ const ProfilePage = () => {
             </Box>
             <NavigateTop />
         </Box>
+        }
+        </>
     )
 }
 

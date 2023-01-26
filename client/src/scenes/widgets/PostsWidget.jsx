@@ -20,7 +20,6 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     // Theme Colors
     const { palette } = useTheme();
     const mediumMain = palette.neutral.mediumMain;
-    const medium = palette.neutral.medium;
 
     // GET API Call (Get All Posts)
     const getPosts = async () => {

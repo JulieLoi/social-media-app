@@ -26,7 +26,6 @@ import Dropzone from "react-dropzone";
 
     // Advertisement
     const ad = useSelector((state) => state.advertisement);
-    let adImage = `http://localhost:3001/assets/${ad.picturePath}`;
 
     // Create New Advertisement
     const [image, setImage] = useState(null);       // Optional image to include in post
@@ -80,9 +79,10 @@ import Dropzone from "react-dropzone";
         });
     }
 
-
     // Advert Widget
     return (
+        <>
+        {ad !== null &&
         <>
         <WidgetWrapper>
 
@@ -100,7 +100,7 @@ import Dropzone from "react-dropzone";
 
             {/* SECOND ROW */}
             <img width="100%" height="auto" alt="advert" 
-                src={adImage}
+                src={`http://localhost:3001/assets/${ad.picturePath}`}
                 style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
             />
 
@@ -116,6 +116,7 @@ import Dropzone from "react-dropzone";
 
         </WidgetWrapper>
 
+        <>
         {/* DIALOG BOX */}
         <Dialog open={dialogBox} onClose={() => setDialogBox(false)} fullWidth>
             <DialogTitle fontSize="1.5rem" sx={{ textDecoration: "underline" }}>
@@ -217,6 +218,9 @@ import Dropzone from "react-dropzone";
                 <Button onClick={() => setDialogBox(false) } sx={{ fontSize: "1rem"}}>Cancel</Button>
             </DialogActions>
         </Dialog>
+        </>
+        </>
+        }
         </>
     )
  }

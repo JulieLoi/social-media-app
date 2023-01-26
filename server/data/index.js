@@ -37,10 +37,15 @@ const getRandomArrayValues = (array) => {
 };
 
 // Get random friends
-const getRandomFriends = () => {
+const getRandomFriends = (removeIdIndex) => {
 
-    const stringFriends = []
-    getRandomArrayValues(userIds).forEach((f) => {
+    // User IDs (without the current user)
+    let userIdsWithoutGivenId = [...userIds];
+    userIdsWithoutGivenId.splice(removeIdIndex, 1);
+
+    // Get Friends
+    const stringFriends = [];
+    getRandomArrayValues(userIdsWithoutGivenId).forEach((f) => {
         stringFriends.push(f.toString())
     })
     return stringFriends;
@@ -66,7 +71,7 @@ export const users = [
         email: "alexisspeilgar@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p11.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(0),
         location: "San Francisco, California, United States",
         occupation: "Software Engineer",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -84,7 +89,7 @@ export const users = [
         email: "steveralph@gmail.com",
         password: "$!FEAS@!O)_IDJda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p3.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(1),
         location: "New York, United States",
         occupation: "Line Cook",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -102,7 +107,7 @@ export const users = [
         email: "airaprecious@gmail.com",
         password: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
         picturePath: "p4.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(2),
         location: "Canada",
         occupation: "Data Scientist Hacker",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -120,7 +125,7 @@ export const users = [
         email: "liamtrevont@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p6.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(3),
         location: "Korea",
         occupation: "Educator",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -138,7 +143,7 @@ export const users = [
         email: "janedoe@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p5.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(4),
         location: "Utah, United States",
         occupation: "Hacker",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -156,7 +161,7 @@ export const users = [
         email: "harveydunn@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p7.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(5),
         location: "Los Angeles, California, United States",
         occupation: "Journalist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -174,7 +179,7 @@ export const users = [
         email: "carlyvowel@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p8.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(6),
         location: "Chicago, Illinois, United States",
         occupation: "Nurse",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -192,7 +197,7 @@ export const users = [
         email: "jessicadunn@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p9.jpeg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(7),
         location: "United Kingdom",
         occupation: "Student",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -210,7 +215,7 @@ export const users = [
         email: "elijahpilchard@gmail.com",
         password: "$2b$10$f4LwT.39mywc5z4SU4lR9.v9Rsw5U5sTtX6tTfVGulpRfr/8TFDJu",
         picturePath: "elijah-pilchard-QgJUb7tsvNg-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(8),
         location: "Woodside East, Delaware, United States",
         occupation: "Veternarian",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -228,7 +233,7 @@ export const users = [
         email: "martinbaron@gmail.com",
         password: "$2b$10$EN38DRCDxRTSOOxrUWA3je5l7/3UnUWbSgEjG9oN8dPcDTBLUAxAi",
         picturePath: "martin-baron-57oFiYVpvIk-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(9),
         location: "San José Province, Costa Rica",
         occupation: "Florist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -246,7 +251,7 @@ export const users = [
         email: "markdoyle@hotmail.com",
         password: "$2b$10$oPFOrr1Br6/OjmHYnDgSrOYT1lD0.o.r68xfPq5RlEdIfwmv7cnn2",
         picturePath: "martin-baron-iB4YWDcN85g-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(10),
         location: "Mexico",
         occupation: "Genealogist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -264,7 +269,7 @@ export const users = [
         email: "alirezarostami@gmail.com",
         password: "$2b$10$d7YfGTlP7B2hjo805uOvuuaNKQH7TM4is8wj8AVWitvUTmCvI7XHS",
         picturePath: "alireza-rostami-yYUi0DcRC9o-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(11),
         location: "Lorraine, Quebec, Canada",
         occupation: "Songwriter",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -282,7 +287,7 @@ export const users = [
         email: "marlamaldonado@gmail.com",
         password: "$2b$10$7x4d0xUVvpBt5RdDCARwDOmVnKTxNrCuB0nns9.1H8OjLjSBhxbTa",
         picturePath: "nitish-goswami-WmFwsO-d-vo-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(12),
         location: "Allier, France",
         occupation: "Manicurist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -300,7 +305,7 @@ export const users = [
         email: "nimasarram@gmail.com",
         password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
         picturePath: "nima-sarram-VLzg5MwRWXI-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(13),
         location: "Greenland",
         occupation: "Snowboard Instructor",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -318,7 +323,7 @@ export const users = [
         email: "ethanhoover@gmail.com",
         password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
         picturePath: "ethan-hoover-0YHIlxeCuhg-unsplash.jpg",
-        friends: getRandomFriends(),
+        friends: getRandomFriends(14),
         location: "Greenland",
         occupation: "Assistant Director",
         viewedProfile: Math.floor(Math.random() * 150000),

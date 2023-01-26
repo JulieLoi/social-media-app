@@ -115,6 +115,8 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     // Post Widget
     return (
+        <>
+        {loggedInUser !== null && postOwner !== null &&
         <WidgetWrapper mb="2rem">
             {postOwner._id === loggedInUser._id ?
                 <NewFriendComponent 
@@ -217,6 +219,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             </Box>)
             }
         </WidgetWrapper>
+        }
+        </>
+        
     )
 };
 
