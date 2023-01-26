@@ -6,7 +6,6 @@ Things to do:
 -Redo Login/Register
 -Do something for profiles with no posts
 
-CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
 Configure all images (rename them)
@@ -27,6 +26,9 @@ FINISHED FIXING FRIEND COMPONENT (add/remove friend button update and update fri
 FINISHED DIALOG BOX
 FINISHED UPDATING COMMENTS SO THAT WHEN NAME CHANGES, IT UPDATES (Added scroll box to limit comment shown)
 -RESTRUCTURED COMMENT ITSELF
+
+Finished the "Create Ad" feature (has error prevention and all)
+
 
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
@@ -53,6 +55,7 @@ FIX ANOTHER USERS PROFILE PAGE.
 FIX FRIENDS LIST 
 
 
+CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
 

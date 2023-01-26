@@ -14,11 +14,9 @@ const Location = ({ setLocation, givenLocation="" }) => {
 
     // Initial State of Country, State, City
     const initialState = {
-        country: "",
-        state: "",
-        stateOptions: [],
-        city: "",
-        cityOptions: [],
+        country: "", 
+        state: "", stateOptions: [],
+        city: "", cityOptions: [],
     }
 
     // Existing Given Location

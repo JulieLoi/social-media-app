@@ -45,9 +45,7 @@ const ProfilePage = () => {
                 dispatch(setProfileUser(jsonObject));   // Update Frontend State (Profile User)
                 setUserExists(true);                    // Updates Profile Page State (User)
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         })
 
     }

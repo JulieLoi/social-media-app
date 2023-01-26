@@ -29,9 +29,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             if (response.status === 200) {
                 dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -49,9 +47,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             if (response.status === 200) {
                 dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 

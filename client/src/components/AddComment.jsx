@@ -5,6 +5,10 @@ import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import { setPost } from "state";
 
+/**
+ * AddComment
+ * Component for adding a comment
+ */
 const AddComment = ({ palette, postId }) => {
 
     const dispatch = useDispatch();
@@ -39,9 +43,7 @@ const AddComment = ({ palette, postId }) => {
                 dispatch(setPost({ post: jsonObject }));       // Update Frontend State
                 setUserComment("");                             // Resets User Comment
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -55,7 +57,6 @@ const AddComment = ({ palette, postId }) => {
                     if (commentLength <= 100) {
                         setRemainChar(100 - commentLength);
                         setUserComment(e.target.value);
-                        
                     }
                 }}
                 onKeyDown={(e) => {

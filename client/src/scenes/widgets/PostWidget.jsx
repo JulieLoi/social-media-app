@@ -60,9 +60,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             if (response.status === 200) {
                 setPostOwner(jsonObject);
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -84,9 +82,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             if (response.status === 200) {
                 dispatch(setPost({ post: jsonObject }));       // Update Frontend State
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -107,9 +103,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             if (response.status === 202) {
                 dispatch(deletePost({ post: jsonObject }));       // Update Frontend State
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     };
 
@@ -166,11 +160,11 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                     {/* Like Button and Like Counter */}
                     <FlexBetween gap="0.3rem">
                         <IconButton onClick={patchLike}>
-                            {isLiked ? (
+                            {isLiked ? 
                                 <FavoriteOutlined sx={{ color: primary }} />
-                            ) : (
+                                : 
                                 <FavoriteBorderOutlined />
-                            )}
+                            }
                         </IconButton>
                         <Typography>{likeCount}</Typography>
                     </FlexBetween>

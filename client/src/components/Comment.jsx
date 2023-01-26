@@ -24,12 +24,8 @@ const Comment = ({comment, palette}) => {
             // Response JSON Object
             const jsonObject = await response.json();
 
-            if (response.status === 200) {
-                setCommenter(jsonObject);
-            }
-            else {
-                console.error(jsonObject.message);
-            }
+            if (response.status === 200) { setCommenter(jsonObject); }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -46,22 +42,17 @@ const Comment = ({comment, palette}) => {
             <Box display="flex" gap="1rem" alignItems="center" ml="1rem">
                 <UserImage image={commenter.picturePath} size={"30px"} />
                 <Typography variant="h5"
-                    sx={{
-                        "&:hover": {
-                            color: palette.primary.main,
-                            cursor: "pointer",
-                        }
-                    }}
+                    sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer", } }}
                     onClick={() => {
                         navigate(`/profile/${comment.userId}`);
                         navigate(0);        // Refresh
                     }}
                 >
-                        {`${commenter.firstName} ${commenter.lastName}`}
+                    {`${commenter.firstName} ${commenter.lastName}`}
                 </Typography>
             </Box>
                 
-                <Box ml="3rem">
+            <Box ml="3rem">
                 <Typography noWrap
                     sx={{ 
                         color: palette.neutral.main, m: "0.25rem 0", pl: "1rem",
@@ -70,7 +61,7 @@ const Comment = ({comment, palette}) => {
                 >
                     {comment.comment}
                 </Typography>
-                </Box>
+            </Box>
             </Box>}
         </Box>
     )

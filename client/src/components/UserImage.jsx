@@ -24,7 +24,6 @@ const UserImage = ({ userId, image, size="60px" }) => {
                     navigate(`/profile/${userId}`);
                     navigate(0);        // Refresh
                 }
-                
             }}
             sx={{ 
                 border: `0.1rem solid ${borderColor}`, borderRadius: "50%",

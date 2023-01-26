@@ -6,11 +6,21 @@ import { setFriends, setProfileUser } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
+/**
+ * Friend Component
+ * Component of a user info (name, picture) and 
+ * the ability to add/remove the user as a friend of the logged in user
+ */
 const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0", allowAddRemove=true }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { userId } = useParams();     // Profile User ID (from params)
+
+    // User ID, Token, and Profile User (Frontend State)
+    const user = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token);
+    const profileUser = useSelector((state) => state.profileUser);
 
     // Theme Colors
     const { palette } = useTheme();
@@ -18,13 +28,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
     const primaryDark = palette.primary.dark;
     const main = palette.primary.dark;
     const medium = palette.neutral.medium;
-
-    // User ID, Token, and User Friends (Frontend State)
-    const user = useSelector((state) => state.user);
-    const token = useSelector((state) => state.token);
-
-    // Profile User
-    const profileUser = useSelector((state) => state.profileUser)
 
     // Check for friendship
     let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
@@ -77,15 +80,12 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
                         };
                         dispatch(setProfileUser({ ...profileUser, friends: [...profileUser.friends, formattedUser] }));
                     }
-
                 }
 
                 // Updates Logged In User's Friends List
                 dispatch(setFriends({ friends: jsonObject }));
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }    
 
@@ -115,8 +115,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
 
             {/* ADD/REMOVE FRIEND, DELETE POST */}
             {(user._id !== friendId) && allowAddRemove &&
-                (
-                <FlexBetween>
+                (<FlexBetween>
                     <IconButton onClick={() => patchFriend()}
                         sx={{ backgroundColor: primaryLight, p: "0.6rem", mr: marginAmount }}
                     >
@@ -126,8 +125,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
                             <PersonAddOutlined sx={{ color: primaryDark }} />
                         }
                     </IconButton>
-                </FlexBetween>
-                )
+                </FlexBetween>)
             }
         </FlexBetween>
     )

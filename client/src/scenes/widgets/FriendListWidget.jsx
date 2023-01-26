@@ -32,9 +32,7 @@ const FriendListWidget = ({ userId, allowAddRemove=true, isProfile=false }) => {
             if (response.status === 200) {
                 dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     // Update Frontend State   
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -51,12 +49,7 @@ const FriendListWidget = ({ userId, allowAddRemove=true, isProfile=false }) => {
         <WidgetWrapper mt="1.5rem">
 
             {/* FRIENDS LIST TITLE */}
-            <Typography 
-                color={palette.neutral.dark}
-                variant="h5"
-                fontWeight="500"
-                sx={{ mb: "0.5rem" }}
-            >
+            <Typography color={palette.neutral.dark} variant="h5" fontWeight="500" sx={{ mb: "0.5rem" }}>
                 Friends List
             </Typography>
 

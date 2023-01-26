@@ -34,7 +34,6 @@ const LoginPage = () => {
                     Welcome to Sociopedia, the Social Media for Sociopaths!
                 </Typography>
                 <Form />
-                
             </Box>
         </Box>
     )

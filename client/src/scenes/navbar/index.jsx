@@ -92,7 +92,6 @@ const Navbar = () => {
 
             </FlexBetween>
 
-
             {/* ICONS / LOG OUT */}
             {isNonMobileScreens ? 
                 (<FlexBetween gap="2rem">

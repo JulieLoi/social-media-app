@@ -37,9 +37,7 @@ const HomePage = () => {
                 let randomIndex = Math.floor(Math.random() * jsonObject.length);
                 dispatch(setAd(jsonObject[randomIndex]));
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         })
     };
 
@@ -97,7 +95,7 @@ const HomePage = () => {
                     }}
                 />
             </IconButton>
-
+            
         </Box>
     )
 }

@@ -159,8 +159,8 @@ const Form = () => {
                     sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}
                 >
                     {/* REGISTER FORM*/}
-                    {isRegister && (
-                        <>
+                    {isRegister && 
+                        (<>
                             <Box
                                 gridColumn="span 4" borderRadius="5px" p="1rem"
                                 border={`1px solid ${palette.neutral.medium}`}
@@ -230,10 +230,9 @@ const Form = () => {
                                 sx={{ gridColumn: "span 4" }}
                             />
                             <Divider sx={{ gridColumn: "span 4" }} />
-
                             
-                        </>
-                    )}
+                        </>)
+                    }
 
                     {/* LOGIN AND REGISTER */}
                     <TextField 
@@ -267,6 +266,7 @@ const Form = () => {
 
                 {/* SUBMIT BUTTON: Login / Register */}
                 <Box>
+                    
                     <Button
                         fullWidth
                         type="submit"

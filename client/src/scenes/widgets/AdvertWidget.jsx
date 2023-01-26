@@ -37,7 +37,7 @@ import Dropzone from "react-dropzone";
 
     // Create Advertisement Dialog Box
     const [dialogBox, setDialogBox] = useState(false);
-    const closeDialog = () => {
+    const createAd = () => {
         
         // Check Values
         const checkAdValues = editNewAd.name !== "" && editNewAd.website !== "" && editNewAd.description !== "";
@@ -47,10 +47,7 @@ import Dropzone from "react-dropzone";
             setDialogBox(false);
             setError(false);
         }
-        else {
-            setError(true);
-        }
-           
+        else { setError(true); }
     }
 
     const handleAd = async () => {
@@ -79,9 +76,7 @@ import Dropzone from "react-dropzone";
                 setImage(null);
                 setEditNewAd({ name: "", website: "", description: "", });
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -218,7 +213,7 @@ import Dropzone from "react-dropzone";
 
             </DialogContent>
             <DialogActions>
-                <Button onClick={closeDialog} sx={{ fontSize: "1rem"}}>Create</Button>
+                <Button onClick={createAd} sx={{ fontSize: "1rem"}}>Create Ad</Button>
                 <Button onClick={() => setDialogBox(false) } sx={{ fontSize: "1rem"}}>Cancel</Button>
             </DialogActions>
         </Dialog>

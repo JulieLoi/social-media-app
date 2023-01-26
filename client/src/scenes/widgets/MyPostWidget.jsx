@@ -78,9 +78,7 @@ const MyPostWidget = ({ picturePath }) => {
                 setIsImage(false);
                 setPost("");
             }
-            else {
-                console.error(jsonObject.message);
-            }
+            else { console.error(jsonObject.message); }
         });
     }
     

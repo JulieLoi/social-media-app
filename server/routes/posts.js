@@ -1,10 +1,7 @@
 import express from "express";
 import {
-    getFeedPosts,
-    getUserPosts,
-    likePost,
-    commentPost,
-    deletePost,
+    getFeedPosts, getUserPosts,
+    likePost, commentPost, deletePost,
 } from "../controllers/posts.js";
 import { verifyToken } from "../middleware/auth.js";
 

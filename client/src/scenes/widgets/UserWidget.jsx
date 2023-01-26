@@ -72,12 +72,8 @@ const UserWidget = ({ userId, picturePath }) => {
             // Response JSON Object
             const jsonObject = await response.json();
 
-            if (response.status === 200) {
-                setUser(jsonObject);
-            }
-            else {
-                console.error(jsonObject.message);
-            }
+            if (response.status === 200) { setUser(jsonObject); }
+            else { console.error(jsonObject.message); }
         });
     }
 
@@ -124,11 +120,9 @@ const UserWidget = ({ userId, picturePath }) => {
 
     // Destructure the User
     const {
-        firstName, lastName,
-        location, occupation,
+        firstName, lastName, location, occupation,
         viewedProfile, impressions,
-        friends,
-        twitterHandle, linkedInHandle
+        friends, twitterHandle, linkedInHandle
     } = user;
     const fullName = `${firstName} ${lastName}`;
     const linkedInHandleTrim = linkedInHandle.length > 15 ? `/${linkedInHandle.substring(0, 15)}...` : `/${linkedInHandle}`;

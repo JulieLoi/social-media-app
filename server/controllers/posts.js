@@ -7,11 +7,8 @@ export const createPost = async (req, res) => {
 
         // Creates New Post
         const newPost = new Post({
-            userId, 
-            description,
-            picturePath,
-            likes: {},
-            comments: []
+            userId, description, picturePath,
+            likes: {}, comments: [],
         });
 
         // Returns newly created post
@@ -28,7 +25,6 @@ export const getFeedPosts = async (req, res) => {
     try {
         const posts = await Post.find();
         res.status(200).json(posts);
-
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
@@ -74,9 +70,8 @@ export const likePost = async (req, res) => {
 
 export const commentPost = async (req, res) => {
     try {
-
-        const { id } = req.params;      // Post ID
-        const { userId, userName, userPicturePath, comment } = req.body;
+        const { id } = req.params;              // Post ID
+        const { userId, comment } = req.body;
 
         // Get Post, Add comment
         const post = await Post.findById(id);
@@ -105,7 +100,6 @@ export const commentPost = async (req, res) => {
 /* DELETE */
 export const deletePost = async (req, res) => {
     try {
-
         const { id } = req.params;                      // Post ID
         const post = await Post.findByIdAndDelete(id);  // Deleted Post
 
