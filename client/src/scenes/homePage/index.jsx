@@ -1,6 +1,5 @@
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import ArrowCircleUpRoundedIcon from '@mui/icons-material/ArrowCircleUpRounded';
 import Navbar from "scenes/navbar";
 import UserWidget from "scenes/widgets/UserWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
@@ -18,7 +17,6 @@ import { useEffect } from "react";
 const HomePage = () => {
 
     const dispatch = useDispatch();
-    const { palette } = useTheme();    
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");    // Mobile/PC
 
     const user = useSelector((state) => state.user);

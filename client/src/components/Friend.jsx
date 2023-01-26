@@ -1,124 +1,52 @@
-import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
-import { IconButton, useTheme } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { setFriends, setProfileUser } from "state";
+
+import { Box, Typography, useTheme } from "@mui/material";
+import { useNavigate } from "react-router";
 import FlexBetween from "./FlexBetween";
-import UserInfo from "./UserInfo";
+import UserImage from "./UserImage";
+import AddRemoveFriend from "./AddRemoveFriend"
 
 /**
  * Friend Component
- * Component of a user info (name, picture) and 
- * the ability to add/remove the user as a friend of the logged in user
+ * Usually used for the friend list
+ * Also used for the top of a post widget
  */
-const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0", allowAddRemove=true }) => {
+const Friend = ({ id, name, location=null, occupation=null, picturePath, marginAmount="0" }) => {
 
-    const dispatch = useDispatch();
-    const { userId } = useParams();     // Profile User ID (from params)
-
-    // User ID, Token, and Profile User (Frontend State)
-    const user = useSelector((state) => state.user);
-    const token = useSelector((state) => state.token);
-    const profileUser = useSelector((state) => state.profileUser);
-
-    // Theme Colors
+    const navigate = useNavigate();
     const { palette } = useTheme();
-    const primaryLight = palette.primary.light;
-    const primaryDark = palette.primary.dark;
 
-    // Check for friendship
-    let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
-
-
-    
-    
-
-    // WHO ADDS WHO (Updates Profile Page of a not-logged-in user)
-    let addString = `http://localhost:3001/users/${user._id}/${friendId}`;
-    if (profileUser._id === userId) {
-        isFriend = (profileUser.friends.find((friend) => friend._id === user._id) ? true : false);
-        addString = `http://localhost:3001/users/${friendId}/${user._id}`;
-    }
-
-    // PATCH API Call (Add/Remove Friend)
-    const patchFriend = async () => {
-        await fetch(addString,
-            {
-                method: "PATCH",
-                headers: { Authorization: `Bearer ${token}`},
-                "Content-Type": "application/json"
-            }
-        ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-            console.log(jsonObject)
-
-            if (response.status === 200) {
-                // Updates Logged In User Profile Page Friend List (on user friend list)
-                if (profileUser._id === user._id) {
-                    dispatch(setProfileUser({ ...profileUser, friends: jsonObject.loggedInUserFriends }));
-                }
-
-                // Adds Logged in user as friend...
-                else {
-                    // Checks if the logged in user is a friend of the profile page user we are looking at.
-                    const check = profileUser.friends.find((f) => f._id === user._id) === undefined ? false : true;
-
-                    // Remove Friend (Logged In User)
-                    if (check) {
-                        const newArray = [...profileUser.friends];
-                        const result = newArray.filter((f) => f._id !== user._id)
-                        dispatch(setProfileUser({ ...profileUser, friends: result }));
-                    }
-                    // Add Friend (Logged In User)
-                    else {
-                        const formattedUser = { 
-                            _id: user._id, 
-                            firstName: user.firstName, 
-                            lastName: user.lastName, 
-                            occupation: user.occupation, 
-                            location: user.location, 
-                            picturePath: user.picturePath 
-                        };
-                        dispatch(setProfileUser({ ...profileUser, friends: [...profileUser.friends, formattedUser] }));
-                    }
-                }
-
-                // Updates Logged In User's Friends List
-                dispatch(setFriends({ friends: jsonObject.loggedInUserFriends }));
-            }
-            else { console.error(jsonObject.message); }
-        });
-    }    
-
-    // Friend Component
     return (
+        <>
         <FlexBetween>
 
-            <UserInfo 
-                userId={friendId}
-                userImage={userPicturePath}
-                userName={name}
-                userLocation={subtitle}
-            
-            />
-
-            {/* ADD/REMOVE FRIEND, DELETE POST */}
-            {(user._id !== friendId) && allowAddRemove &&
-                (<FlexBetween>
-                    <IconButton onClick={() => patchFriend()}
-                        sx={{ backgroundColor: primaryLight, p: "0.6rem", mr: marginAmount }}
+            {/* User Profile Picture, Name, Location */}
+            <FlexBetween gap="1rem">
+                <UserImage userId={id} image={picturePath} size="55px" /> 
+                <Box>
+                    <Typography
+                        color={palette.primary.dark} variant="h5" fontWeight="500"
+                        sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer", } }}
+                        onClick={() => {
+                            navigate(`/profile/${id}`);
+                            navigate(0);                        // Refresh
+                        }}
                     >
-                        {isFriend || userId === user._id ? 
-                            <PersonRemoveOutlined sx={{ color: primaryDark }} /> 
-                            : 
-                            <PersonAddOutlined sx={{ color: primaryDark }} />
-                        }
-                    </IconButton>
-                </FlexBetween>)
-            }
+                        {name.length > 20 ? `${name.substring(0, 20)}...` : name}
+                    </Typography>
+                    <Typography color={palette.neutral.medium} fontSize="0.75rem">
+                        {location === "" ? <i>No Location</i> : location}
+                        {occupation === "" ? <i>No Occupation</i> : occupation}
+                    </Typography>
+                </Box>
+            </FlexBetween>
+
+            <AddRemoveFriend 
+                otherUserId={id}
+                marginAmount={marginAmount}
+            />
         </FlexBetween>
+        </>
     )
-};
+}
 
 export default Friend;

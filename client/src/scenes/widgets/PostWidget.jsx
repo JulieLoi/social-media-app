@@ -16,8 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost, deletePost } from "state";
 import Comment from "components/Comment";
 import AddComment from "components/AddComment";
-
-import NewFriendComponent from "components/NewFriendComponent";
+import Friend from "components/Friend";
 
 /**
  * Post Widget
@@ -119,14 +118,14 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
         {loggedInUser !== null && postOwner !== null &&
         <WidgetWrapper mb="2rem">
             {postOwner._id === loggedInUser._id ?
-                <NewFriendComponent 
+                <Friend 
                     id={postUserId}
                     name={`${loggedInUser.firstName} ${loggedInUser.lastName}`}
                     location={loggedInUser.location}
                     picturePath={loggedInUser.picturePath}
                 />
                 :
-                <NewFriendComponent 
+                <Friend 
                     id={postUserId}
                     name={`${postOwner.firstName} ${postOwner.lastName}`}
                     location={postOwner.location}

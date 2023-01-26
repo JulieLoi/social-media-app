@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFriends, setProfileUser } from "state";
 import FlexBetween from "./FlexBetween";
 
-const AddRemoveFriend = ({ otherUserId, allowButton=true, marginAmount="0" }) => {
+const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
 
     const dispatch = useDispatch();
     const { userId: profileId } = useParams();     // Profile User ID (from params)
@@ -21,11 +21,8 @@ const AddRemoveFriend = ({ otherUserId, allowButton=true, marginAmount="0" }) =>
     // Profile User
     const profileUser = useSelector((state) => state.profileUser);
 
-
-
     // Check Friend Status (Logged in user and otherUserId)
     const checkFriendship = loggedInUser.friends.find((f) => f._id === otherUserId) ? true : false;
-
 
     // PATCH API Call (Add/Remove Friend)
     const patchFriend = async () => {

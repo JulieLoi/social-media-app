@@ -46,7 +46,6 @@ export const authSlice = createSlice({
 
         // Update the Logged In User's Friends List
         setFriends: (state, action) => {
-            console.log(action.payload)
             if(state.user) {
                 state.user.friends = action.payload.friends;
             }

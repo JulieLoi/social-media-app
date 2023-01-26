@@ -1,5 +1,5 @@
 import { Box, Typography, Divider, useTheme } from "@mui/material";
-import NewFriendComponent from "components/NewFriendComponent";
+import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -50,17 +50,9 @@ const FriendListWidget = ({ userId }) => {
     }
 
     useEffect(() => {
-
-        // Profile Page
-        if (profileId === profileUser._id) {
-            getFriends();
-            console.log("FRIENDS LIST UPDATE FRIENDS FOR PROFILE")
-        }
-
-        // Home Page
-        else if (loggedInUser._id === profileUser._id) {
-            getFriends(true);
-        }
+        // Profile, Home
+        if (profileId === profileUser._id) { getFriends(); }
+        else if (loggedInUser._id === profileUser._id) { getFriends(true); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -85,7 +77,7 @@ const FriendListWidget = ({ userId }) => {
                 sx={{ maxHeight: "30vh", overflowY: "auto" }}
             >
                 {profileUser.friends.map((friend) => (
-                    <NewFriendComponent 
+                    <Friend 
                         key={`${friend._id}_${userId}-${Math.random()}`}
                         id={friend._id}
                         name={`${friend.firstName} ${friend.lastName}`}

@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setUserInformation } from "state";
 import Location from "components/Location";
+import AddRemoveFriend from "components/AddRemoveFriend";
 
 /**
  * User Widget
@@ -150,10 +151,14 @@ const UserWidget = ({ userId, picturePath }) => {
                     </Box>
                     
                 </FlexBetween>
-                {userId === loggedInUser._id &&
+                {userId === loggedInUser._id ?
                     <ManageAccountsOutlined 
                         sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
                         onClick={() => setDialogBox(true)}
+                    />
+                    :
+                    <AddRemoveFriend 
+                        otherUserId={userId}
                     />
                 }
             </FlexBetween>
