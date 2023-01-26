@@ -265,7 +265,7 @@ const UserWidget = ({ userId, picturePath }) => {
         </WidgetWrapper>
 
         {/* EDIT USER INFORMATION */}
-        <Dialog open={dialogBox} onClose={handleDialogClose} fullWidth>
+        <Dialog open={dialogBox} onClose={() => setDialogBox(false)} fullWidth>
             <DialogTitle fontSize="1.5rem" sx={{ textDecoration: "underline" }}>
                 Update Account Information
             </DialogTitle>
@@ -355,6 +355,7 @@ const UserWidget = ({ userId, picturePath }) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleDialogClose} sx={{ fontSize: "1rem"}}>Save</Button>
+                <Button onClick={() => setDialogBox(false) } sx={{ fontSize: "1rem"}}>Cancel</Button>
             </DialogActions>
         </Dialog>
         </>

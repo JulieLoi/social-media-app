@@ -6,8 +6,10 @@ import { EditOutlined,  } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Dropzone from "react-dropzone";
+import { setAd } from "state";
+import { useEffect } from "react";
 
  /**
   * AdvertWidget
@@ -15,17 +17,40 @@ import Dropzone from "react-dropzone";
   */
  const AdvertWidget = () => {
 
+    const dispatch = useDispatch();
+
     // Theme Colors
     const { palette } = useTheme();
     const dark = palette.neutral.dark;
     const main = palette.neutral.main;
     const medium = palette.neutral.medium;
 
-    // Token
+    // Token, Advertisement
     const token = useSelector((state) => state.token);
-
-    // Advertisement
     const ad = useSelector((state) => state.advertisement);
+
+    // GET API Call (Get Single Random Ad)
+    const getAdvertisement = async () => {
+        await fetch(`http://localhost:3001/advertisements/`, 
+        {
+            method: "GET",
+        }
+        ).then(async (response) => {
+            // Response JSON Object
+            const jsonObject = await response.json();
+
+            if (response.status === 200) {
+                let randomIndex = Math.floor(Math.random() * jsonObject.length);
+                dispatch(setAd(jsonObject[randomIndex]));
+            }
+            else { console.error(jsonObject.message); }
+        })
+    };
+
+    useEffect(() => {
+        getAdvertisement();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     // Create New Advertisement
     const [image, setImage] = useState(null);       // Optional image to include in post
@@ -88,9 +113,18 @@ import Dropzone from "react-dropzone";
 
             {/* FIRST ROW */}
             <FlexBetween>
-                <Typography color={dark} variant="h5" fontWeight="500">
-                    Sponsored
-                </Typography>
+                <FlexBetween>
+                    <Typography color={dark} variant="h5" fontWeight="500">
+                        Sponsored -
+                    </Typography>
+                    &nbsp;
+                    <Typography color={main} variant="h5"   
+                        sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer", } }}
+                        onClick={() => getAdvertisement()}
+                    >
+                        <u>New Ad</u>
+                    </Typography>
+                </FlexBetween>
                 <Typography color={medium} onClick={ () => setDialogBox(true) }
                     sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer", } }}
                 >

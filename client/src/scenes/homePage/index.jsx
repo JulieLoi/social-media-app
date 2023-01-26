@@ -7,7 +7,7 @@ import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import NavigateTop from "components/NavigateTop";
-import { setProfileUser, setAd } from "state";
+import { setProfileUser } from "state";
 import { useEffect } from "react";
 
 /**
@@ -22,28 +22,9 @@ const HomePage = () => {
     const user = useSelector((state) => state.user);
     const { _id, picturePath } = useSelector((state) => state.user);    // User ID, User Image
 
-    // GET API Call (Get Single Random Ad)
-    const getAdvertisement = async () => {
-        await fetch(`http://localhost:3001/advertisements/`, 
-        {
-            method: "GET",
-        }
-        ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                let randomIndex = Math.floor(Math.random() * jsonObject.length);
-                dispatch(setAd(jsonObject[randomIndex]));
-            }
-            else { console.error(jsonObject.message); }
-        })
-    };
-
     // Update Profile User
     useEffect(() => {
         dispatch(setProfileUser(user)); 
-        getAdvertisement();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
