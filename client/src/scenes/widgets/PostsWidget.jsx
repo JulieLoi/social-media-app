@@ -1,3 +1,5 @@
+import { Typography, useTheme } from "@mui/material";
+import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
@@ -15,6 +17,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     const token = useSelector((state) => state.token);  
     const posts = useSelector((state) => [...state.posts].reverse());
     
+    // Theme Colors
+    const { palette } = useTheme();
+    const mediumMain = palette.neutral.mediumMain;
+    const medium = palette.neutral.medium;
+
     // GET API Call (Get All Posts)
     const getPosts = async () => {
         await fetch(`http://localhost:3001/posts`, 
@@ -80,7 +87,14 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                         comments={comments}
                     />
                 ))
-                }
+            }
+            {posts.length === 0 &&
+                <WidgetWrapper>
+                    <Typography color={mediumMain} mb="1rem">
+                        There are no posts...
+                    </Typography>
+                </WidgetWrapper>
+            }
         </>
     )
 };
