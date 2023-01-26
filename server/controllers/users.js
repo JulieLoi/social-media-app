@@ -54,7 +54,7 @@ export const addRemoveFriend = async (req, res) => {
         // Remove Friend
         if (user.friends.includes(otherId)) {
             user.friends = user.friends.filter((id) => id !== otherId);
-            otherUser.friends = otherUser.friends.filter((id) => id !== id);
+            otherUser.friends = otherUser.friends.filter((friendId) => friendId !== id);
         } 
 
         // Add Friend
