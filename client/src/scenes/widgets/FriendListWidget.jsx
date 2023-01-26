@@ -33,7 +33,7 @@ const FriendListWidget = ({ userId, allowAddRemove=true, isProfile=false }) => {
                 dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     // Update Frontend State   
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }

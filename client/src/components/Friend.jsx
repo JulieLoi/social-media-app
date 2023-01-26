@@ -84,7 +84,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
                 dispatch(setFriends({ friends: jsonObject }));
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }    

@@ -76,7 +76,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 setUser(jsonObject);
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }
@@ -176,7 +176,9 @@ const UserWidget = ({ userId, picturePath }) => {
                 </Box>
                 <Box display="flex" alignItems="center" gap="1rem">
                     <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-                    <Typography color={medium}>{occupation}</Typography>
+                    <Typography color={medium}>
+                        {occupation === "" ? <i>No Occupation</i> : occupation}
+                    </Typography>
                 </Box>
             </Box>
             
@@ -277,14 +279,14 @@ const UserWidget = ({ userId, picturePath }) => {
                 </Typography>
 
                 <FlexBetween gap="1rem">
-                <TextField autoFocus fullWidth id="first-name"                        
+                <TextField fullWidth id="first-name"                        
                     label="First Name" variant="filled"
                     inputProps={{ maxLength: 50 }}
                     onChange={(e) => setEditUserInformation({...editUserInformation, firstName: e.target.value})}
                     value={editUserInformation.firstName}
                 />
                 
-                <TextField autoFocus fullWidth id="last-name"                        
+                <TextField fullWidth id="last-name"                        
                     label="Last Name" variant="filled"
                     inputProps={{ maxLength: 50 }}
                     onChange={(e) => setEditUserInformation({...editUserInformation, lastName: e.target.value})}
@@ -297,7 +299,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 <Box mb="1rem">
                 <Location setLocation={setNewLocation} givenLocation={newLocation} />
                 <Box mb="1rem" />
-                <TextField autoFocus fullWidth id="location" disabled                     
+                <TextField fullWidth id="location" disabled                     
                     label="Location" variant="filled"
                     value={newLocation}
                 />
@@ -310,7 +312,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 </Typography>
 
                 <Box mb="1rem">
-                <TextField autoFocus fullWidth id="occupation"                        
+                <TextField fullWidth id="occupation"                        
                     label="Occupation" variant="filled"
                     inputProps={{ maxLength: 50 }}
                     onChange={(e) => setEditUserInformation({...editUserInformation, occupation: e.target.value})}
@@ -325,7 +327,7 @@ const UserWidget = ({ userId, picturePath }) => {
                     Social Profiles
                 </Typography>
                 <Box mb="1rem">
-                <TextField autoFocus fullWidth id="twitter-handle"                        
+                <TextField fullWidth id="twitter-handle"                        
                     label="Twitter Account Handle" variant="filled"
                     onKeyDown={(keyEvent) => { if (keyEvent.code  === 'Space') keyEvent.preventDefault() }}
                     InputProps={{
@@ -338,7 +340,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 </Box>
 
                 <Box>
-                <TextField autoFocus fullWidth id="linkedin-handle"                        
+                <TextField fullWidth id="linkedin-handle"                        
                     label="LinkedIn Account Handle" variant="filled"
                     onKeyDown={(keyEvent) => { if (keyEvent.code  === 'Space') keyEvent.preventDefault() }}
                     InputProps={{

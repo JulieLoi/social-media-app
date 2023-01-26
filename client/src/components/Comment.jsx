@@ -28,7 +28,7 @@ const Comment = ({comment, palette}) => {
                 setCommenter(jsonObject);
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }
@@ -49,7 +49,7 @@ const Comment = ({comment, palette}) => {
                     sx={{
                         "&:hover": {
                             color: palette.primary.main,
-                            cursoer: "pointer",
+                            cursor: "pointer",
                         }
                     }}
                     onClick={() => {

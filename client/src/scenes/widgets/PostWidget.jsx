@@ -61,7 +61,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 setPostOwner(jsonObject);
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }
@@ -85,7 +85,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 dispatch(setPost({ post: jsonObject }));       // Update Frontend State
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }
@@ -108,7 +108,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 dispatch(deletePost({ post: jsonObject }));       // Update Frontend State
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     };

@@ -9,6 +9,8 @@ Things to do:
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
+Configure all images (rename them)
+-separate user images, post images, and ad images in different folders
 
 
 Change profile picture?

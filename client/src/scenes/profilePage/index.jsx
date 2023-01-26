@@ -46,7 +46,7 @@ const ProfilePage = () => {
                 setUserExists(true);                    // Updates Profile Page State (User)
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         })
 

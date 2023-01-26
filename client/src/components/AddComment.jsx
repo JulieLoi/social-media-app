@@ -40,7 +40,7 @@ const AddComment = ({ palette, postId }) => {
                 setUserComment("");                             // Resets User Comment
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }

@@ -10,7 +10,6 @@ userIds[6]		userIds[7]		userIds[8]
 "Carly Vowel"		"Jessica Dunn"		"Elijah Pilchard"
 "p8.jpeg"		"p9.jpeg"		"elijah-pilchard-QgJUb7tsvNg-unsplash.jpg"
 
-
 userIds[9]					userIds[10]
 "Martin Baron"					"Mark Doyle"
 "martin-baron-57oFiYVpvIk-unsplash.jpg"		"martin-baron-iB4YWDcN85g-unsplash.jpg"

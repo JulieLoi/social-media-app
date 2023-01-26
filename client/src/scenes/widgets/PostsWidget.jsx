@@ -30,7 +30,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                 dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }
@@ -50,7 +50,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                 dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }

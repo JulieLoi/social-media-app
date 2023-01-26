@@ -79,7 +79,7 @@ const MyPostWidget = ({ picturePath }) => {
                 setPost("");
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         });
     }

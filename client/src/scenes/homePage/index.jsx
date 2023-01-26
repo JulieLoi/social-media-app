@@ -35,11 +35,10 @@ const HomePage = () => {
 
             if (response.status === 200) {
                 let randomIndex = Math.floor(Math.random() * jsonObject.length);
-                console.log(randomIndex)
                 dispatch(setAd(jsonObject[randomIndex]));
             }
             else {
-                console.log(jsonObject.message);
+                console.error(jsonObject.message);
             }
         })
     };
