@@ -1,10 +1,10 @@
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { IconButton, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { setFriends, setProfileUser } from "state";
 import FlexBetween from "./FlexBetween";
-import UserImage from "./UserImage";
+import UserInfo from "./UserInfo";
 
 /**
  * Friend Component
@@ -14,7 +14,6 @@ import UserImage from "./UserImage";
 const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0", allowAddRemove=true }) => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { userId } = useParams();     // Profile User ID (from params)
 
     // User ID, Token, and Profile User (Frontend State)
@@ -26,7 +25,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
     const { palette } = useTheme();
     const primaryLight = palette.primary.light;
     const primaryDark = palette.primary.dark;
-    const medium = palette.neutral.medium;
 
     // Check for friendship
     let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
@@ -50,11 +48,12 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();
+            console.log(jsonObject)
 
             if (response.status === 200) {
                 // Updates Logged In User Profile Page Friend List (on user friend list)
                 if (profileUser._id === user._id) {
-                    dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));
+                    dispatch(setProfileUser({ ...profileUser, friends: jsonObject.loggedInUserFriends }));
                 }
 
                 // Adds Logged in user as friend...
@@ -83,7 +82,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
                 }
 
                 // Updates Logged In User's Friends List
-                dispatch(setFriends({ friends: jsonObject }));
+                dispatch(setFriends({ friends: jsonObject.loggedInUserFriends }));
             }
             else { console.error(jsonObject.message); }
         });
@@ -93,25 +92,13 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
     return (
         <FlexBetween>
 
-            {/* User Profile Picture, Name, Location */}
-            <FlexBetween gap="1rem">
-                <UserImage userId={friendId} image={userPicturePath} size="55px" /> 
-                <Box>
-                    <Typography
-                        color={primaryDark} variant="h5" fontWeight="500"
-                        sx={{ "&:hover": { color: palette.primary.main, cursoer: "pointer", } }}
-                        onClick={() => {
-                            navigate(`/profile/${friendId}`);
-                            navigate(0);        // Refresh
-                        }}
-                    >
-                        {name.length > 20 ? `${name.substring(0, 20)}...` : name}
-                    </Typography>
-                    <Typography color={medium} fontSize="0.75rem">
-                        {subtitle === "" ? <i>No Location</i> : subtitle}
-                    </Typography>
-                </Box>
-            </FlexBetween>
+            <UserInfo 
+                userId={friendId}
+                userImage={userPicturePath}
+                userName={name}
+                userLocation={subtitle}
+            
+            />
 
             {/* ADD/REMOVE FRIEND, DELETE POST */}
             {(user._id !== friendId) && allowAddRemove &&

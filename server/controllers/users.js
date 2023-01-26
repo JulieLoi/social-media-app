@@ -39,44 +39,58 @@ export const getUserFriends = async (req, res) => {
 export const addRemoveFriend = async (req, res) => {
 
     try {
-        const { id, friendId } = req.params;
+        const { id, otherId } = req.params;
 
         // Cannot Add Self As Friend
-        if (id === friendId) {
+        if (id === otherId) {
             res.status(405).json({ message: "You cannot add yourself as a friend." });
             return;
         }
 
         // Finds User and Friend
         const user = await User.findById(id);
-        const friend = await User.findById(friendId);
+        const otherUser = await User.findById(otherId);
   
         // Remove Friend
-        if (user.friends.includes(friendId)) {
-            user.friends = user.friends.filter((id) => id !== friendId);
-            friend.friends = friend.friends.filter((id) => id !== id);
+        if (user.friends.includes(otherId)) {
+            user.friends = user.friends.filter((id) => id !== otherId);
+            otherUser.friends = otherUser.friends.filter((id) => id !== id);
         } 
 
         // Add Friend
         else {
-            user.friends.push(friendId);
-            friend.friends.push(id);
+            user.friends.push(otherId);
+            otherUser.friends.push(id);
         }
 
         // Wait for MongoDB to update
         await user.save();
-        await friend.save();
-  
-        // Send updated Friends to frontend
-        const friends = await Promise.all(
+        await otherUser.save();
+
+        // Get 'user's friends list' and the 'friend's friends list'
+        const userFriends = await Promise.all(
             user.friends.map((id) => User.findById(id))
         );
-        const formattedFriends = friends.map(
+        const otherUserFriends = await Promise.all(
+            otherUser.friends.map((id) => User.findById(id))
+        );
+  
+        // Formet both Friends List
+        const formatUserFriends = userFriends.map(
             ({ _id, firstName, lastName, occupation, location, picturePath }) => {
               return { _id, firstName, lastName, occupation, location, picturePath };
             }
         );
-        res.status(200).json(formattedFriends);
+        const formatOtherUserFriends = otherUserFriends.map(
+            ({ _id, firstName, lastName, occupation, location, picturePath }) => {
+              return { _id, firstName, lastName, occupation, location, picturePath };
+            }
+        );
+
+        res.status(200).json({ 
+            loggedInUserFriends: formatUserFriends, 
+            otherUserFriends: formatOtherUserFriends 
+        });
 
     } catch (err) {
         res.status(404).json({ message: err.message });
