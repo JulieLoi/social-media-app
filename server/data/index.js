@@ -36,6 +36,16 @@ const getRandomArrayValues = (array) => {
     return myNewArray;
 };
 
+// Get random friends
+const getRandomFriends = () => {
+
+    const stringFriends = []
+    getRandomArrayValues(userIds).forEach((f) => {
+        stringFriends.push(f.toString())
+    })
+    return stringFriends;
+}
+
 // Gets random likes 
 const getRandomLikes = (array) => {
 
@@ -56,7 +66,7 @@ export const users = [
         email: "alexisspeilgar@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p11.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "San Francisco, California, United States",
         occupation: "Software Engineer",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -74,7 +84,7 @@ export const users = [
         email: "steveralph@gmail.com",
         password: "$!FEAS@!O)_IDJda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p3.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "New York, United States",
         occupation: "Line Cook",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -92,7 +102,7 @@ export const users = [
         email: "airaprecious@gmail.com",
         password: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
         picturePath: "p4.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Canada",
         occupation: "Data Scientist Hacker",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -107,10 +117,10 @@ export const users = [
         _id: userIds[3],
         firstName: "Liam",
         lastName: "Trevont",
-        email: "lieamtrevont@gmail.com",
+        email: "liamtrevont@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p6.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Korea",
         occupation: "Educator",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -128,7 +138,7 @@ export const users = [
         email: "janedoe@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p5.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Utah, United States",
         occupation: "Hacker",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -146,7 +156,7 @@ export const users = [
         email: "harveydunn@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p7.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Los Angeles, California, United States",
         occupation: "Journalist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -164,7 +174,7 @@ export const users = [
         email: "carlyvowel@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p8.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Chicago, Illinois, United States",
         occupation: "Nurse",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -182,7 +192,7 @@ export const users = [
         email: "jessicadunn@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
         picturePath: "p9.jpeg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "United Kingdom",
         occupation: "Student",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -200,7 +210,7 @@ export const users = [
         email: "elijahpilchard@gmail.com",
         password: "$2b$10$f4LwT.39mywc5z4SU4lR9.v9Rsw5U5sTtX6tTfVGulpRfr/8TFDJu",
         picturePath: "elijah-pilchard-QgJUb7tsvNg-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Woodside East, Delaware, United States",
         occupation: "Veternarian",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -218,7 +228,7 @@ export const users = [
         email: "martinbaron@gmail.com",
         password: "$2b$10$EN38DRCDxRTSOOxrUWA3je5l7/3UnUWbSgEjG9oN8dPcDTBLUAxAi",
         picturePath: "martin-baron-57oFiYVpvIk-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "San José Province, Costa Rica",
         occupation: "Florist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -236,7 +246,7 @@ export const users = [
         email: "markdoyle@hotmail.com",
         password: "$2b$10$oPFOrr1Br6/OjmHYnDgSrOYT1lD0.o.r68xfPq5RlEdIfwmv7cnn2",
         picturePath: "martin-baron-iB4YWDcN85g-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Mexico",
         occupation: "Genealogist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -254,7 +264,7 @@ export const users = [
         email: "alirezarostami@gmail.com",
         password: "$2b$10$d7YfGTlP7B2hjo805uOvuuaNKQH7TM4is8wj8AVWitvUTmCvI7XHS",
         picturePath: "alireza-rostami-yYUi0DcRC9o-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Lorraine, Quebec, Canada",
         occupation: "Songwriter",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -272,7 +282,7 @@ export const users = [
         email: "marlamaldonado@gmail.com",
         password: "$2b$10$7x4d0xUVvpBt5RdDCARwDOmVnKTxNrCuB0nns9.1H8OjLjSBhxbTa",
         picturePath: "nitish-goswami-WmFwsO-d-vo-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Allier, France",
         occupation: "Manicurist",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -290,7 +300,7 @@ export const users = [
         email: "nimasarram@gmail.com",
         password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
         picturePath: "nima-sarram-VLzg5MwRWXI-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Greenland",
         occupation: "Snowboard Instructor",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -308,7 +318,7 @@ export const users = [
         email: "ethanhoover@gmail.com",
         password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
         picturePath: "ethan-hoover-0YHIlxeCuhg-unsplash.jpg",
-        friends: getRandomArrayValues(userIds),
+        friends: getRandomFriends(),
         location: "Greenland",
         occupation: "Assistant Director",
         viewedProfile: Math.floor(Math.random() * 150000),
@@ -501,14 +511,14 @@ export const advertisements = [
         id: 1,
         name: "Popcorn Independent",
         website: "popcornindependent.com",
-        picturePath: "popcorn.jpeg",
+        picturePath: "popcorn.jpg",
         description: "Popcorn is a delicious snack that can be enjoyed by all. It's a great way to reduce stress and have some fun.",
     },
     {
         id: 2,
         name: "ParkCity Financials",
         website: "parkcity.net",
-        picturePath: "finance.jpeg",
+        picturePath: "finance.jpg",
         description: "ParkCity Financials is a mobile app that helps users manage their finances in a simple and intuitive way.",
     },
     {
@@ -522,14 +532,14 @@ export const advertisements = [
         id: 4,
         name: "Luminous Bamboo",
         website: "luminousbamboo.com",
-        picturePath: "bamboofurniture.jpeg",
+        picturePath: "bamboofurniture.jpg",
         description: "Bamboo furniture is an environmentally friendly choice that is perfect for any space. Our pieces are made from sustainable bamboo and are made to las.",
     },
     {
         id: 5,
         name: "Renegade Dynamics",
         website: "renegadedynamics.com",
-        picturePath: "webcam.jpeg",
+        picturePath: "webcam.jpg",
         description: "We've designed our highest quality webcam yet - perfect for recording beautiful videos and photos in any environment.",
     },
 ];
