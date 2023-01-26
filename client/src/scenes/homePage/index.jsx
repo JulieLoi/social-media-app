@@ -73,7 +73,7 @@ const HomePage = () => {
                     mt={isNonMobileScreens ? undefined : "2rem"}
                 >
                     <MyPostWidget picturePath={picturePath} />
-                    <PostsWidget userId={_id} />
+                    {/*<PostsWidget userId={_id} />*/}
                 </Box>
 
                 {/* ADVERT && FRIENDS LIST (DESKTOP ONLY) */}

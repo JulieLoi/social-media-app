@@ -1,48 +1,19 @@
 import { Box, Typography, Divider, useTheme } from "@mui/material";
-import Friend from "components/Friend";
+import NewFriendComponent from "components/NewFriendComponent";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setProfileUser } from "state";
+import { useSelector } from "react-redux";
 
 /**
  * Friends List Widget
  * The widget that contains the list of the user's friends
  */
-const FriendListWidget = ({ userId, allowAddRemove=true, isProfile=false }) => {
+const FriendListWidget = ({ userId }) => {
 
-    const dispatch = useDispatch();
     const { palette } = useTheme();
 
-    // Token, Logged In User ID, Friends (Frontend State)
-    const token = useSelector((state) => state.token);
+    // Profile User (Frontend State)
     const profileUser = useSelector((state) => state.profileUser);
     
-    // GET API Call (Get All User Friends)
-    const getFriends = async () => {
-        await fetch(`http://localhost:3001/users/${userId}/friends`,
-            {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`},
-            }
-        ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     // Update Frontend State   
-            }
-            else { console.error(jsonObject.message); }
-        });
-    }
-
-    // Gets Friends List Data
-    useEffect(() => {
-        if (isProfile) {
-            getFriends();
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
  
     // Friend List Widget
     return (
@@ -62,14 +33,13 @@ const FriendListWidget = ({ userId, allowAddRemove=true, isProfile=false }) => {
                 sx={{ maxHeight: "30vh", overflowY: "auto" }}
             >
                 {profileUser.friends.map((friend) => (
-                    <Friend 
+                    <NewFriendComponent 
                         key={`${friend._id}_${userId}-${Math.random()}`}
-                        friendId={friend._id}
+                        id={friend._id}
                         name={`${friend.firstName} ${friend.lastName}`}
-                        subtitle={friend.occupation}
-                        userPicturePath={friend.picturePath}
+                        occupation={friend.occupation}
+                        picturePath={friend.picturePath}
                         marginAmount={"1rem"}
-                        allowAddRemove={allowAddRemove}
                     />
                 ))}
             </Box>

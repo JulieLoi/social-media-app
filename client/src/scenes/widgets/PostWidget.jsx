@@ -10,13 +10,14 @@ import {
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlexBetween from "components/FlexBetween";
-import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost, deletePost } from "state";
 import Comment from "components/Comment";
 import AddComment from "components/AddComment";
+
+import NewFriendComponent from "components/NewFriendComponent";
 
 /**
  * Post Widget
@@ -115,19 +116,19 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     // Post Widget
     return (
         <WidgetWrapper mb="2rem">
-            { postOwner._id === loggedInUser._id ?
-                <Friend
-                    friendId={postUserId}
+            {postOwner._id === loggedInUser._id ?
+                <NewFriendComponent 
+                    id={postUserId}
                     name={`${loggedInUser.firstName} ${loggedInUser.lastName}`}
-                    subtitle={loggedInUser.location}
-                    userPicturePath={loggedInUser.picturePath}
+                    location={loggedInUser.location}
+                    picturePath={loggedInUser.picturePath}
                 />
                 :
-                <Friend
-                    friendId={postUserId}
+                <NewFriendComponent 
+                    id={postUserId}
                     name={`${postOwner.firstName} ${postOwner.lastName}`}
-                    subtitle={postOwner.location}
-                    userPicturePath={postOwner.picturePath}
+                    location={postOwner.location}
+                    picturePath={postOwner.picturePath}
                 />
             }
 

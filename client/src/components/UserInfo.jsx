@@ -5,9 +5,9 @@ import UserImage from "./UserImage";
 
 /**
  * UserInfo Component
- * Component consists of a user's image, name, and location
+ * Component consists of a user's image, name, and location/Occupation
  */
-const UserInfo = ({ userId, userImage, userName, userLocation }) => {
+const UserInfo = ({ userId, userImage, userName, userLocation=null, userOccupation=null }) => {
 
     const navigate = useNavigate();
     const { palette } = useTheme();
@@ -29,6 +29,7 @@ const UserInfo = ({ userId, userImage, userName, userLocation }) => {
                 </Typography>
                 <Typography color={palette.neutral.medium} fontSize="0.75rem">
                     {userLocation === "" ? <i>No Location</i> : userLocation}
+                    {userOccupation === "" ? <i>No Occupation</i> : userOccupation}
                 </Typography>
             </Box>
         </FlexBetween>

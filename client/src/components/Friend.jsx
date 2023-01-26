@@ -28,6 +28,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, marginAmount = "0",
 
     // Check for friendship
     let isFriend = (user.friends.find((friend) => friend._id === friendId) ? true : false);
+
+
+    
     
 
     // WHO ADDS WHO (Updates Profile Page of a not-logged-in user)
