@@ -1,6 +1,7 @@
 import { Typography, useTheme } from "@mui/material";
  import FlexBetween from "components/FlexBetween";
  import WidgetWrapper from "components/WidgetWrapper";
+import { useSelector } from "react-redux";
 
  /**
   * AdvertWidget
@@ -13,6 +14,13 @@ import { Typography, useTheme } from "@mui/material";
     const dark = palette.neutral.dark;
     const main = palette.neutral.main;
     const medium = palette.neutral.medium;
+
+    // Advertisement
+    const ad = useSelector((state) => state.advertisement);
+    let adImage = `http://localhost:3001/assets/${ad.picturePath}`;
+
+    console.log(ad)
+    console.log(ad.picturePath)
 
     // Advert Widget
     return (
@@ -28,19 +36,18 @@ import { Typography, useTheme } from "@mui/material";
 
             {/* SECOND ROW */}
             <img width="100%" height="auto" alt="advert" 
-                src="http://localhost:3001/assets/info4.jpeg"
+                src={adImage}
                 style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
             />
 
             {/* THIRD ROW */}
             <FlexBetween>
-                <Typography color={main}>MikaCosmetics</Typography>
-                <Typography color={medium}>mikacosmetics.com</Typography>
+                <Typography color={main}>{ad.name}</Typography>
+                <Typography color={medium}>{ad.website}</Typography>
             </FlexBetween>
 
             <Typography color={medium} m="0.5rem 0">
-                Your pathway to stunning and immaculate beauty and made sure your skin
-                is exfoliating skin and shining like light.
+                {ad.description}
             </Typography>
 
         </WidgetWrapper>

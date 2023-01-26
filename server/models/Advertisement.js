@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const AdSchema = mongoose.Schema(
+const advertisementSchema = mongoose.Schema(
     {
         name: {
             type: String,
@@ -10,6 +10,10 @@ const AdSchema = mongoose.Schema(
             type: String, 
             required: true,
         },
+        picturePath: {
+            type: String,
+            required: true,
+        },
         description: {
             type: String,
             required: true,
@@ -17,6 +21,6 @@ const AdSchema = mongoose.Schema(
     }
 );
 
-const Advertisement = mongoose.model("Advertisement", AdSchema);
+const Advertisement = mongoose.model("Advertisement", advertisementSchema);
 
 export default Advertisement;

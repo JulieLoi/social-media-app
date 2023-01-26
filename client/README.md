@@ -6,14 +6,9 @@ Things to do:
 -Redo Login/Register
 -Do something for profiles with no posts
 
-ADD FAKE DATA (data.js in server folder)
 CREATE FAKE ADS other than mika cosmetics (randomize choose)
 
 
-FIX ANOTHER USERS PROFILE PAGE.
--Adding a friend on that friend list is glitchy...
--Just remove the addFriendsList feature there...
-FIX FRIENDS LIST 
 
 
 Change profile picture?
@@ -38,12 +33,29 @@ DONE:D++++++
 -REDO Posts, take info from user calling (using userid)         DONE
 DO ACCOUNT SETTINGS AND UPDATE USER (update frontend and backend...)
 
+ADD FAKE DATA (data.js in server folder)
+
+
+
 UPDATE COMMENTS SO THAT THEY PULL FROM USER DATABASE
 -THIS WILL UPDATE THE NAMES AND STUFF
 
 
 Add comment to not show all of them?
 -Scroll when it becomes a certain length?
+
+
+FIX ANOTHER USERS PROFILE PAGE.
+-Adding a friend on that friend list is glitchy...
+-Just remove the addFriendsList feature there...
+FIX FRIENDS LIST 
+
+
+
+
+
+
+
 
 ---------
 

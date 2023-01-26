@@ -10,6 +10,7 @@ const initialState = {
     token: null,
     posts: [],
     profileUser: null,
+    advertisement: null,
 }
 
 /**
@@ -38,7 +39,9 @@ export const authSlice = createSlice({
         // Logout - Set User/Token back to null
         setLogout: (state) => {
             state.user = null;
+            state.profileUser = null;
             state.token = null;
+            state.advertisement = null;
         },
 
         // Update the Logged In User's Friends List
@@ -94,8 +97,13 @@ export const authSlice = createSlice({
         setProfileUser: (state, action) => {
             state.profileUser = action.payload;
         },
+
+        // Set Single Ad
+        setAd: (state, action) => {
+            state.advertisement = action.payload;
+        },
     }
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, deletePost, setProfileUser } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, deletePost, setProfileUser, setAd } = authSlice.actions;
 export default authSlice.reducer;

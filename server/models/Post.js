@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema(
-  {
-    userId: {
-      type: String,
-      required: true,
+    {
+        userId: {
+            type: String,
+            required: true,
+        },
+            description: String,
+            picturePath: String,
+        likes: {
+            type: Map,
+            of: Boolean,
+        },
+        comments: {
+            type: Array,
+            default: [],
+        },
     },
-    description: String,
-    picturePath: String,
-    likes: {
-      type: Map,
-      of: Boolean,
-    },
-    comments: {
-      type: Array,
-      default: [],
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 );
 
 const Post = mongoose.model("Post", postSchema);
