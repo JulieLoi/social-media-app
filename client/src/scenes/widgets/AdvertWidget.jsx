@@ -89,7 +89,6 @@ import { v4 as uuidv4 } from 'uuid';
         formData.append("picturePath", adImagePath);                // Rename Advert Image
         formData.append("picture", image);
         
-
         // Create Adver in MongoDB
         await fetch(`http://localhost:3001/advertisements`, 
             {

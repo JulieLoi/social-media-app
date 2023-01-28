@@ -11,6 +11,7 @@ const initialState = {
     posts: [],
     profileUser: null,
     advertisement: null,
+    allUsers: [],
 }
 
 /**
@@ -102,8 +103,14 @@ export const authSlice = createSlice({
         setAd: (state, action) => {
             state.advertisement = action.payload;
         },
+
+        // Set All Users (for search bar)
+        setAllUsers: (state, action) => {
+            state.allUsers = action.payload;
+        },
     }
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, deletePost, setProfileUser, setAd } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, 
+    deletePost, setProfileUser, setAd, setAllUsers } = authSlice.actions;
 export default authSlice.reducer;

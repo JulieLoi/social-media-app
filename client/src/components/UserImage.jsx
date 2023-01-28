@@ -5,13 +5,12 @@ import { useNavigate } from "react-router-dom";
  * UserImage
  * Profile Image
  */
-const UserImage = ({ userId, image, size="60px" }) => {
+const UserImage = ({ userId, image, size="60px", allowLink=true }) => {
 
     const navigate = useNavigate();
 
     // Palette Theme
     const { palette } = useTheme();
-    const primary = palette.primary.main;
     const borderColor = palette.primary.light;
     const background = palette.background.alt;
     
@@ -20,7 +19,7 @@ const UserImage = ({ userId, image, size="60px" }) => {
         <Box
             width={size} height={size}
             onClick={() => {
-                if(window.location.pathname !== `/profile/${userId}`) {
+                if(window.location.pathname !== `/profile/${userId}` && allowLink) {
                     navigate(`/profile/${userId}`);
                     navigate(0);        // Refresh
                 }
@@ -29,11 +28,7 @@ const UserImage = ({ userId, image, size="60px" }) => {
                 border: `0.1rem solid ${borderColor}`, borderRadius: "50%",
                 backgroundColor: background,
                 transition: "1s",
-                "&:hover": { 
-                    cursor: "pointer", color: primary,
-                    transform: "scale(1.1)",
-                    transition: "1s",
-                } 
+                cursor: "pointer"
             }} 
         >
             <img 

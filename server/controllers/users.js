@@ -35,6 +35,28 @@ export const getUserFriends = async (req, res) => {
     }
 }
 
+export const getAllUsers = async (req, res) => {
+    try {
+        const allUsers = await User.find();
+
+        const formattedUsers = allUsers.map(
+            ({ _id, firstName, lastName, picturePath }) => {
+                return { 
+                    _id: _id,
+                    name: `${firstName} ${lastName}`,
+                    picturePath: picturePath,
+                };
+            }
+        )
+        
+        // Returns All Users Object
+        res.status(200).json(formattedUsers);
+
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+}
+
 /* UPDATE */
 export const addRemoveFriend = async (req, res) => {
 

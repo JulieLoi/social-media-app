@@ -6,10 +6,7 @@ Things to do:
 -Redo Login/Register
 
 
-
-
-
-Change profile picture?
+search bar...
 
 
 
