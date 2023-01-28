@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";  
-import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from 'uuid';
 import { setUserInformation, setUserProfileImage } from "state";
 
 import { 
     ManageAccountsOutlined, LocationOnOutlined, WorkOutlineOutlined,
-    EditOutlined, CloseOutlined
 } from "@mui/icons-material";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-
 import {
     Box, Typography, Divider, TextField, Button, InputAdornment, useTheme,
     Dialog, DialogActions, DialogContent, DialogTitle
@@ -21,6 +18,7 @@ import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
 import Location from "components/Location";
 import AddRemoveFriend from "components/AddRemoveFriend";
+import ImageDropzone from "components/ImageDropzone";
 
 /**
  * User Widget
@@ -88,7 +86,7 @@ const UserWidget = ({ userId, picturePath }) => {
         // Update User Profile Image
         if (image) {
             const ext = image.path.split('.').pop();
-            const userImagePath = `advert${uuidv4().replaceAll('-', '')}.${ext}`;
+            const userImagePath = `user${uuidv4().replaceAll('-', '')}.${ext}`;
 
             // Form Data (to upload image)
             const formData = new FormData();
@@ -316,37 +314,7 @@ const UserWidget = ({ userId, picturePath }) => {
                 <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
                     User Profile Image
                 </Typography>
-                <Box 
-                    mt="1rem" p="1rem" borderRadius="5px" 
-                    border={`1px solid ${medium}`} 
-                >
-                    <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false}
-                        onDrop={ (acceptedFiles) =>  setImage(acceptedFiles[0]) }
-                    >
-                        {({ getRootProps, getInputProps }) => (
-                        <Box
-                            {...getRootProps()}
-                            border={`2px dashed ${primary}`}
-                            p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}
-                        >
-                            <input {...getInputProps()} />
-                            {!image ? 
-                                <div>Add Image Here</div>
-                                : 
-                                <FlexBetween>
-                                <Typography>{image.name}</Typography>
-                                <FlexBetween>
-                                    <EditOutlined sx={{ "&:hover": { color: primary, cursor: "pointer" } }} />
-                                    <CloseOutlined onClick={() => setImage(null)}
-                                            sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
-                                    />
-                                </FlexBetween>
-                                </FlexBetween>
-                            }
-                        </Box>
-                        )}
-                    </Dropzone>
-                </Box>
+                <ImageDropzone image={image} setImage={setImage} />
                 </Box>
 
                 {/* Full Name */}

@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Dropzone from "react-dropzone";
 import { v4 as uuidv4 } from 'uuid';
 import { setPosts } from "state";
 
 import {
-    EditOutlined, CloseOutlined, AttachFileOutlined,
+    AttachFileOutlined,
     GifBoxOutlined, ImageOutlined, MicOutlined, MoreHorizOutlined,
   } from "@mui/icons-material";
 import {
-    Box, Divider, Typography, InputBase, Button, 
+    Divider, Typography, InputBase, Button, 
     Menu, MenuItem, useTheme, useMediaQuery,
 } from "@mui/material";
 import WidgetWrapper from "components/WidgetWrapper";
 import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
+import ImageDropzone from "components/ImageDropzone";
 
 /**
  * MyPostWidget
@@ -34,6 +34,7 @@ const MyPostWidget = ({ picturePath }) => {
     const { palette } = useTheme();
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
+    const main = palette.primary.main;
 
     // User ID, Token, Posts (Frontend State)
     const { _id } = useSelector((state) => state.user);
@@ -49,15 +50,16 @@ const MyPostWidget = ({ picturePath }) => {
     // POST API Call (Create Post)
     const handlePost = async () => {
 
-        const ext = image.path.split('.').pop();
-        const postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
-
         // Form Data: [userId, description, post image, post image path] (image is optional)
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
         formData.append("serverPath", "/posts");                // Multer Disk Storage (Path)
+
         if (image) {
+            const ext = image.path.split('.').pop();
+            const postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
+    
             formData.append("picturePath", postImagePath);      // Rename Post Image
             formData.append("picture", image);
         }
@@ -107,34 +109,7 @@ const MyPostWidget = ({ picturePath }) => {
 
             {/* IMAGE DROPZONE */}
             {isImage && (
-                <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
-                    <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false}
-                        onDrop={ (acceptedFiles) => setImage(acceptedFiles[0]) }
-                    >
-                        {({ getRootProps, getInputProps }) => (
-                        <Box
-                            {...getRootProps()}
-                            border={`2px dashed ${palette.primary.main}`}
-                            p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}
-                        >
-                            <input {...getInputProps()} />
-                            {!image ? 
-                                <div>Add Image Here</div>
-                                : 
-                                <FlexBetween>
-                                    <Typography>{image.name}</Typography>
-                                    <FlexBetween>
-                                        <EditOutlined sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }} />
-                                        <CloseOutlined onClick={() => setImage(null)}
-                                            sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }}
-                                        />
-                                    </FlexBetween>
-                                </FlexBetween>
-                            }
-                        </Box>
-                        )}
-                    </Dropzone>
-                </Box>
+                <ImageDropzone image={image} setImage={setImage} />
             )}
 
             <Divider sx={{ margin: "1.25rem 0" }} />
@@ -142,7 +117,7 @@ const MyPostWidget = ({ picturePath }) => {
             {/* ICONS: Image, Clip, Attachment, Audio */}
             <FlexBetween>
                 <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-                    <ImageOutlined sx={{ color: isImage ? palette.primary.main : mediumMain }} />
+                    <ImageOutlined sx={{ color: isImage ? main : mediumMain }} />
                     <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
                         Image
                     </Typography>
@@ -175,7 +150,7 @@ const MyPostWidget = ({ picturePath }) => {
                                 aria-expanded={open ? 'true' : undefined}
                                 onClick={handleClick}
                             >
-                                <MoreHorizOutlined sx={{ color: open ? palette.primary.main : mediumMain }} />
+                                <MoreHorizOutlined sx={{ color: open ? main : mediumMain }} />
                             </Button>
                         </FlexBetween>
                     </>)
@@ -185,7 +160,7 @@ const MyPostWidget = ({ picturePath }) => {
                 <Button disabled={!post} onClick={handlePost}
                     sx={{ 
                         color: palette.background.alt, 
-                        backgroundColor: palette.primary.main,
+                        backgroundColor: main,
                         borderRadius: "3rem"
                     }}
                 >

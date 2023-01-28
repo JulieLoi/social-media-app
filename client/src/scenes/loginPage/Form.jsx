@@ -5,7 +5,6 @@ import Dropzone from "react-dropzone";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { v4 as uuidv4 } from 'uuid';
-
 import { setLogin } from "state";
 
 import { Box, Button, TextField, useMediaQuery, Typography, Divider, useTheme } from "@mui/material";
@@ -57,8 +56,11 @@ const Form = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { palette } = useTheme();
     const isNonMobile = useMediaQuery("(min-width: 600px)");
+
+    // Theme Colors
+    const { palette } = useTheme();
+    const main = palette.primary.main;
 
     // Page State (Login / Register)
     const [pageType, setPageType] = useState("login");
@@ -181,7 +183,7 @@ const Form = () => {
                                     {({ getRootProps, getInputProps }) => (
                                     <Box
                                         {...getRootProps()} p="1rem"
-                                        border={`2px dashed ${palette.primary.main}`}
+                                        border={`2px dashed ${main}`}
                                         sx={{ "&:hover": { cursor: "pointer" } }}
                                     >
                                         <input {...getInputProps()} />
@@ -190,7 +192,7 @@ const Form = () => {
                                         ) : (
                                             <FlexBetween>
                                                 <Typography>{values.picture.name}</Typography>
-                                                <EditOutlined sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }} />
+                                                <EditOutlined sx={{ "&:hover": { color: main, cursor: "pointer" } }} />
                                             </FlexBetween>
                                         )}
                                     </Box>
@@ -279,9 +281,9 @@ const Form = () => {
                         type="submit"
                         sx={{
                             m: "2rem 0", p: "1 rem",
-                            backgroundColor: palette.primary.main,
+                            backgroundColor: main,
                             color: palette.background.alt,
-                            "&:hover": { color: palette.primary.main }
+                            "&:hover": { color: main }
                         }}
                     >
                         {isLogin ? "LOGIN" : "REGISTER"}
@@ -297,7 +299,7 @@ const Form = () => {
                         }}
                         sx={{
                             textDecoration: "underline",
-                            color: palette.primary.main,
+                            color: main,
                             "&:hover": {
                                 cursor: "pointer",
                                 color: palette.primary.light,
