@@ -77,14 +77,18 @@ import { v4 as uuidv4 } from 'uuid';
 
     const handleAd = async () => {
 
+        const ext = image.path.split('.').pop();
+        const adImagePath = `advert${uuidv4().replaceAll('-', '')}.${ext}`;
+        
         // Form Data (to upload image)
         const formData = new FormData();
         formData.append("name", editNewAd.name);
         formData.append("website", editNewAd.website);
         formData.append("description", editNewAd.description);
         formData.append("serverPath", "/advertisements");           // Multer Disk Storage (Path)
+        formData.append("picturePath", adImagePath);                // Rename Advert Image
         formData.append("picture", image);
-        formData.append("picturePath", `advert-${uuidv4()}`);       // Rename Advert Image
+        
 
         // Create Adver in MongoDB
         await fetch(`http://localhost:3001/advertisements`, 
@@ -136,8 +140,9 @@ import { v4 as uuidv4 } from 'uuid';
 
             {/* SECOND ROW */}
             <img width="100%" height="auto" alt="advert" 
-                src={`http://localhost:3001/assets/advertisements/${ad.picturePath}`}
                 style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
+                src={`http://localhost:3001/assets/advertisements/${ad.picturePath}`}
+                
             />
 
             {/* THIRD ROW */}

@@ -50,18 +50,18 @@ const MyPostWidget = ({ picturePath }) => {
     // POST API Call (Create Post)
     const handlePost = async () => {
 
+        const ext = image.path.split('.').pop();
+        const postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
+
         // Form Data: [userId, description, post image, post image path] (image is optional)
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
-        formData.append("serverPath", "/posts");             // Multer Disk Storage (Path)
+        formData.append("serverPath", "/posts");                // Multer Disk Storage (Path)
         if (image) {
+            formData.append("picturePath", postImagePath);      // Rename Post Image
             formData.append("picture", image);
-            formData.append("picturePath", `post-${uuidv4()}`);       // Rename Post Image
         }
-
-        console.log(image)
-        console.log(image.path)
 
         // Create Post in MongoDB
         await fetch(`http://localhost:3001/posts`, 

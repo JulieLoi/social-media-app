@@ -70,15 +70,18 @@ const Form = () => {
     // Register Function
     const register = async (values, onSubmitProps) => {
 
+        const ext = values.picture.name.split('.').pop();
+        const userImagePath = `user${uuidv4().replaceAll('-', '')}.${ext}`;
+
         // Form Data
         const formData = new FormData();
-        formData.append("serverPath", "/users");                // Multer Disk Storage (Path)
+        formData.append('location', location);
+        formData.append('picturePath', userImagePath);      // Rename User Profile Image
+        formData.append("serverPath", "/users");            // Multer Disk Storage (Path)
         for (let value in values) {
             formData.append(value, values[value]);
         }
-        formData.append('location', location);
-        formData.append('picturePath', `user-${uuidv4()}`);    // Rename User Profile Image
-
+        
         // POST API call (sends form data)
         await fetch("http://localhost:3001/auth/register", 
             {

@@ -6,8 +6,7 @@ Things to do:
 -Redo Login/Register
 
 
-Configure all images (rename them)
--separate user images, post images, and ad images in different folders
+
 
 
 Change profile picture?
@@ -30,7 +29,7 @@ Finished solution for "users with no posts"
 FINSIEHD FRIEND STUFF AGAIN 9COMPLETELY DONE THIS TIME! (FIXED FRIENDS GETTING DELETED)
 
 FINISHED GET NEW AD - MOVED AD CODE TO ADVERT WIDGET
-
+FINISHED RESTRUCTURING IMAGE UPLOAD AND RANDOMIZE IMAGE FILE NAME UPLOAD
 
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
@@ -67,6 +66,10 @@ FIX FRIENDS LSIT (REWORK FRIEND COMPONENT...)
 -OR IT SHOWS ALL ADD EVEN IF YO UARE FRIENDS...
 -Add/remove friend button in place of the account settings in user widget
 
+
+
+Configure all images (rename them)
+-separate user images, post images, and ad images in different folders
 
 
 ---------
