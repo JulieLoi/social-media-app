@@ -9,20 +9,24 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 
+// Routes
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import advertisementRoutes from "./routes/advertisements.js"
+
+// Controller Functions (Middleware, Upload IMage)
+import { verifyToken } from "./middleware/auth.js";
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { createAd } from "./controllers/advertisements.js";
-import { verifyToken } from "./middleware/auth.js";
+import { updateProfileImage } from "./controllers/users.js";
 
+// Fake Data Imports
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import Advertisement from "./models/Advertisement.js";
 import { users, posts, advertisements } from "./data/index.js";
-import { updateProfileImage } from "./controllers/users.js";
 
 /*
  * Configurations

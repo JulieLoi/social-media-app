@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-
 /* REGISTER USER (CREATE) */
 export const register = async(req, res) => {
     try {
@@ -35,7 +34,6 @@ export const register = async(req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
-
 
 /* LOGGING IN USER (READ) */
 export const login = async (req, res) => {

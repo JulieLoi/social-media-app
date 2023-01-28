@@ -45,6 +45,16 @@ export const authSlice = createSlice({
             state.advertisement = null;
         },
 
+        // Set All Users (for search bar)
+        setAllUsers: (state, action) => {
+            state.allUsers = action.payload;
+        },
+
+        // Sets the User (used for profile image only)
+        setUserProfileImage: (state, action) => {
+            state.user.picturePath = action.payload.picturePath;
+        },
+
         // Update the Logged In User's Friends List
         setFriends: (state, action) => {
             if(state.user) {
@@ -65,6 +75,11 @@ export const authSlice = createSlice({
                 state.user.twitterHandle = action.payload.twitterHandle;
                 state.user.linkedInHandle = action.payload.linkedInHandle;
             }
+        },
+
+        // Set Profile User
+        setProfileUser: (state, action) => {
+            state.profileUser = action.payload;
         },
 
         // Update the posts (all posts) in the frontend state
@@ -94,25 +109,11 @@ export const authSlice = createSlice({
             state.posts = state.posts.filter((post) => post._id !== action.payload.post._id);
         },
 
-        // Set Profile User
-        setProfileUser: (state, action) => {
-            state.profileUser = action.payload;
-        },
-
         // Set Single Ad
         setAd: (state, action) => {
             state.advertisement = action.payload;
         },
 
-        // Set All Users (for search bar)
-        setAllUsers: (state, action) => {
-            state.allUsers = action.payload;
-        },
-
-        // Sets the User (used for profile image only)
-        setUserProfileImage: (state, action) => {
-            state.user.picturePath = action.payload.picturePath;
-        }
     }
 });
 

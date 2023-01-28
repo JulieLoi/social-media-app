@@ -151,13 +151,10 @@ export const updateUserInformation = async (req, res) => {
 
 export const updateProfileImage = async (req, res) => {
     try {
-
         const { id } = req.params;
         const { picturePath } = req.body;
 
-        console.log("UPDATE PROFILE IMAGE")
-        console.log(req.body)
-
+        // Update User Profile Image
         const updatedUser = await User.findByIdAndUpdate(
             id,
             { 
