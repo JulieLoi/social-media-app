@@ -6,7 +6,7 @@ export const createAd = async (req, res) => {
         const { name, website, picturePath, description } = req.body;
         const newAd = new Advertisement({ name, website, picturePath, description });
         await newAd.save();
-        res.status(201);
+        res.status(201).json({ message: "Successfully created an advert!" });
     } catch (err) {
         res.status(409).json({ message: err.message });
     }

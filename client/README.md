@@ -6,14 +6,6 @@ Things to do:
 -Redo Login/Register
 
 
-
-Plans:
--Make the add/remove friend button its own component...
--Make the image/name/location its own component...
---UPDATE "users.js" in "controller" where I return the friend list of both the user and the friend...
-
-
-
 Configure all images (rename them)
 -separate user images, post images, and ad images in different folders
 
@@ -35,8 +27,9 @@ FINISHED UPDATING COMMENTS SO THAT WHEN NAME CHANGES, IT UPDATES (Added scroll b
 
 Finished the "Create Ad" feature (has error prevention and all)
 Finished solution for "users with no posts"
-FINSIEHD FRIEND STUFF AGAIN 9COMPLETELY DONE THIS TIME!
+FINSIEHD FRIEND STUFF AGAIN 9COMPLETELY DONE THIS TIME! (FIXED FRIENDS GETTING DELETED)
 
+FINISHED GET NEW AD - MOVED AD CODE TO ADVERT WIDGET
 
 
 DONE:D++++++

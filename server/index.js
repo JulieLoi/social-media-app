@@ -42,10 +42,14 @@ app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
 /**
  * File Storage Configurations
+ * Stores image based on whether it is for a user profile image, 
+ * a post image, or an advertisement image
  */
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, "public/assets");
+        console.log(req.body)
+        const { serverPath } = req.body ? req.body : "";
+        cb(null, `public/assets` + serverPath);
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname);
@@ -55,6 +59,7 @@ const upload = multer({ storage });
 
 /**
  * Routes with File 
+ * Routes that needs to upload an image to the server for storage
  */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);

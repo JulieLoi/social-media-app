@@ -54,10 +54,14 @@ const MyPostWidget = ({ picturePath }) => {
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
+        formData.append("serverPath", "/posts");             // Multer Disk Storage (Path)
         if (image) {
             formData.append("picture", image);
             formData.append("picturePath", image.path);
         }
+
+        console.log(image)
+        console.log(image.path)
 
         // Create Post in MongoDB
         await fetch(`http://localhost:3001/posts`, 

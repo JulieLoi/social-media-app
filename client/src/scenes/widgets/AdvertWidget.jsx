@@ -81,10 +81,11 @@ import { useEffect } from "react";
         formData.append("name", editNewAd.name);
         formData.append("website", editNewAd.website);
         formData.append("description", editNewAd.description);
+        formData.append("serverPath", "/advertisements");                    // Multer Disk Storage (Path)
         formData.append("picture", image);
         formData.append("picturePath", image.path);
 
-        // Create Post in MongoDB
+        // Create Adver in MongoDB
         await fetch(`http://localhost:3001/advertisements`, 
             {
                 method: "POST",

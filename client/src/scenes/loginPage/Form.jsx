@@ -71,10 +71,12 @@ const Form = () => {
 
         // Form Data
         const formData = new FormData();
+        formData.append("serverPath", "/users");                // Multer Disk Storage (Path)
         for (let value in values) {
             formData.append(value, values[value]);
         }
         formData.append('location', location);
+        
         formData.append('picturePath', values.picture.name);
 
         // POST API call (sends form data)
