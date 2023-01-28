@@ -22,6 +22,7 @@ import User from "./models/User.js";
 import Post from "./models/Post.js";
 import Advertisement from "./models/Advertisement.js";
 import { users, posts, advertisements } from "./data/index.js";
+import { updateProfileImage } from "./controllers/users.js";
 
 /*
  * Configurations
@@ -64,6 +65,7 @@ const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.post("/advertisements", verifyToken, upload.single("picture"), createAd);
+app.post("/users/:id", verifyToken, upload.single("picture"), updateProfileImage);
 
 /**
  * Routes

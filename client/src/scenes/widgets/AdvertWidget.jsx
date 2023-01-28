@@ -238,7 +238,7 @@ import { v4 as uuidv4 } from 'uuid';
                                 : 
                                 <FlexBetween>
                                     <Typography>{image.name}</Typography>
-                                    <EditOutlined />
+                                    <EditOutlined sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }} />
                                 </FlexBetween>
                             }
                         </Box>

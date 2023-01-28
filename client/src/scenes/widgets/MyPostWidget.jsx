@@ -1,5 +1,6 @@
 import {
-    EditOutlined, AttachFileOutlined,
+    EditOutlined, CloseOutlined, 
+    AttachFileOutlined,
     GifBoxOutlined, ImageOutlined,
     MicOutlined, MoreHorizOutlined,
   } from "@mui/icons-material";
@@ -124,7 +125,12 @@ const MyPostWidget = ({ picturePath }) => {
                                 : 
                                 <FlexBetween>
                                     <Typography>{image.name}</Typography>
-                                    <EditOutlined />
+                                    <FlexBetween>
+                                        <EditOutlined sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }} />
+                                        <CloseOutlined onClick={() => setImage(null)}
+                                            sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }}
+                                        />
+                                    </FlexBetween>
                                 </FlexBetween>
                             }
                         </Box>

@@ -108,9 +108,14 @@ export const authSlice = createSlice({
         setAllUsers: (state, action) => {
             state.allUsers = action.payload;
         },
+
+        // Sets the User (used for profile image only)
+        setUserProfileImage: (state, action) => {
+            state.user.picturePath = action.payload.picturePath;
+        }
     }
 });
 
 export const { setMode, setLogin, setLogout, setFriends, setUserInformation, setPosts, setPost, 
-    deletePost, setProfileUser, setAd, setAllUsers } = authSlice.actions;
+    deletePost, setProfileUser, setAd, setAllUsers, setUserProfileImage } = authSlice.actions;
 export default authSlice.reducer;

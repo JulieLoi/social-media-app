@@ -188,7 +188,7 @@ const Form = () => {
                                         ) : (
                                             <FlexBetween>
                                                 <Typography>{values.picture.name}</Typography>
-                                                <EditOutlined />
+                                                <EditOutlined sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer" } }} />
                                             </FlexBetween>
                                         )}
                                     </Box>

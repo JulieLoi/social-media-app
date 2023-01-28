@@ -1,22 +1,21 @@
-import { 
-    ManageAccountsOutlined, 
-    LocationOnOutlined, 
-    WorkOutlineOutlined,
-} from "@mui/icons-material";
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";  
+import Dropzone from "react-dropzone";
+import { v4 as uuidv4 } from 'uuid';
+import { setUserInformation, setUserProfileImage } from "state";
 
+import { 
+    ManageAccountsOutlined, LocationOnOutlined, WorkOutlineOutlined,
+    EditOutlined,CloseOutlined, TwitterIcon, LinkedInIcon
+} from "@mui/icons-material";
 import {
     Box, Typography, Divider, TextField, Button, InputAdornment, useTheme,
     Dialog, DialogActions, DialogContent, DialogTitle
 } from "@mui/material";
-import UserImage from "components/UserImage";
-import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useDispatch, useSelector } from "react-redux";  
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { setUserInformation } from "state";
+import FlexBetween from "components/FlexBetween";
+import UserImage from "components/UserImage";
 import Location from "components/Location";
 import AddRemoveFriend from "components/AddRemoveFriend";
 
@@ -45,6 +44,10 @@ const UserWidget = ({ userId, picturePath }) => {
         twitterHandle: loggedInUser.twitterHandle,
         linkedInHandle: loggedInUser.linkedInHandle,
     };
+
+    // New Profile Image
+    const [image, setImage] = useState(null);       // Optional image to include in post
+    
     const [editUserInformation, setEditUserInformation] = useState(initialUserValues);
     const [dialogBox, setDialogBox] = useState(false);
     const handleDialogClose = () => {
@@ -80,6 +83,42 @@ const UserWidget = ({ userId, picturePath }) => {
 
     // PATCH API CALL (Edit User - Twitter/LinkedIn Handle)
     const updateUserInformation = async () => {
+
+        // Update User Profile Image
+        if (image) {
+            const ext = image.path.split('.').pop();
+            const userImagePath = `advert${uuidv4().replaceAll('-', '')}.${ext}`;
+
+            // Form Data (to upload image)
+            const formData = new FormData();
+            formData.append("serverPath", "/users");            // Multer Disk Storage (Path)
+            formData.append("picturePath", userImagePath);                // Rename Advert Image
+            formData.append("picture", image);
+
+            console.log(userImagePath)
+
+            await fetch(`http://localhost:3001/users/${loggedInUser._id}`, 
+                {
+                    method: "POST",
+                    headers: { Authorization: `Bearer ${token}` },
+                    body: formData,
+                },
+            ).then(async (response) => {
+                // Response JSON Object
+                const jsonObject = await response.json();
+
+                if (response.status === 200) {
+                    setUser(jsonObject);
+                    dispatch(setUserProfileImage(jsonObject));
+                    setImage(null);
+                }
+                else {
+                    console.log(jsonObject.message)
+                }
+            })
+        }
+
+        // Update User Information
         await fetch(`http://localhost:3001/users/${loggedInUser._id}`,
             {
                 method: "PATCH",
@@ -270,6 +309,44 @@ const UserWidget = ({ userId, picturePath }) => {
                 Update Account Information
             </DialogTitle>
             <DialogContent>
+
+                {/* Profile Image */}
+                <Box mb="1rem">
+                <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
+                    User Profile Image
+                </Typography>
+                <Box 
+                    mt="1rem" p="1rem" borderRadius="5px" 
+                    border={`1px solid ${medium}`} 
+                >
+                    <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false}
+                        onDrop={ (acceptedFiles) =>  setImage(acceptedFiles[0]) }
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                        <Box
+                            {...getRootProps()}
+                            border={`2px dashed ${palette.primary.main}`}
+                            p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}
+                        >
+                            <input {...getInputProps()} />
+                            {!image ? 
+                                <div>Add Image Here</div>
+                                : 
+                                <FlexBetween>
+                                    <Typography>{image.name}</Typography>
+                                    <FlexBetween>
+                                        <EditOutlined sx={{ "&:hover": { color: primary, cursor: "pointer" } }} />
+                                        <CloseOutlined onClick={() => setImage(null)}
+                                            sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
+                                        />
+                                    </FlexBetween>
+                                </FlexBetween>
+                            }
+                        </Box>
+                        )}
+                    </Dropzone>
+                </Box>
+                </Box>
 
                 {/* Full Name */}
                 <Box mb="1rem">

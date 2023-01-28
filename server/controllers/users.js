@@ -129,8 +129,6 @@ export const updateUserInformation = async (req, res) => {
         
         } = req.body;
 
-        console.log(req.body)
-
         const updatedUser = await User.findByIdAndUpdate(
             id,
             { 
@@ -150,4 +148,27 @@ export const updateUserInformation = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
+
+export const updateProfileImage = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const { picturePath } = req.body;
+
+        console.log("UPDATE PROFILE IMAGE")
+        console.log(req.body)
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { 
+                picturePath: picturePath,
+            },
+            { new: true } // returns the new document
+        );
+
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+}
   
