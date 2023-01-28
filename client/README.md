@@ -4,9 +4,8 @@
 
 Things to do:
 -Redo Login/Register
-
-
-search bar...
+-Clip, Attachment, Audio
+-change profile picture
 
 
 
@@ -27,6 +26,8 @@ FINSIEHD FRIEND STUFF AGAIN 9COMPLETELY DONE THIS TIME! (FIXED FRIENDS GETTING D
 
 FINISHED GET NEW AD - MOVED AD CODE TO ADVERT WIDGET
 FINISHED RESTRUCTURING IMAGE UPLOAD AND RANDOMIZE IMAGE FILE NAME UPLOAD
+FINISHED WORKING SEARCH BAR
+
 
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
@@ -67,6 +68,8 @@ FIX FRIENDS LSIT (REWORK FRIEND COMPONENT...)
 
 Configure all images (rename them)
 -separate user images, post images, and ad images in different folders
+
+search bar...
 
 
 ---------

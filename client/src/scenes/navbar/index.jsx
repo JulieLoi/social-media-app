@@ -2,11 +2,11 @@ import { useState } from "react";
 import { 
     Box, IconButton, InputBase,
     Typography, Select, MenuItem,
-    FormControl, Divider,
+    FormControl,
     useTheme, useMediaQuery,
 } from "@mui/material";
 import {
-    Search, Message,
+    Message,
     DarkMode, LightMode,
     Notifications, Help,
     Menu, Close
@@ -15,11 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
-import { setAllUsers } from "state";
-import { useEffect } from "react";
-import WidgetWrapper from "components/WidgetWrapper";
-import UserImage from "components/UserImage";
-
+import SearchBar from "components/SearchBar";
 /**
  * Navbar
  * The navigation bar 
@@ -47,68 +43,6 @@ const Navbar = () => {
     const combinedName = `${user.firstName} ${user.lastName}`;
     const fullName = combinedName.length > 20 ? `${combinedName.substring(0, 20)}...` : combinedName;
 
-    // Search Bar
-    const allUsers = useSelector((state) => state.allUsers);
-    const [searchUsers, setSearchUsers] = useState(useSelector((state) => state.allUsers));
-    const [editSearch, setEditSearch] = useState("");
-    const [isSearching, setIsSearching] = useState(false);
-    const [timeOutId, setTimeOutId] = useState(null);
-
-    // Handles Search Bar Blur (fixes issue with search bar popup)
-    const onBlurHandler = () => {
-        setTimeOutId(setTimeout(() => {
-            setIsSearching(false)
-        }, 250))
-    }
-
-    // If a child receives focus, do not close the popover.
-    const onFocusHandler = () => {
-        clearTimeout(timeOutId);
-    }
-
-    // Search Bar Updates Search Results
-    useEffect(() => {
-        // Boolean Array (User name starts with search bar input)
-        const checkUsers = allUsers.map((user) => {
-            let result = (user.name.toLowerCase()).startsWith(editSearch.toLowerCase(), 0);
-            return result;
-        })
-
-        const searchedUsers = [];
-        for (let i = 0; i < checkUsers.length; i++) {
-            if (checkUsers[i]) {
-                searchedUsers.push(allUsers[i])
-            }
-        }
-        setSearchUsers(searchedUsers)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editSearch]);
-
-
-    // GET API Call (Get All Users)
-    const getAllUsers = async () => {
-        await fetch(`http://localhost:3001/users/`,
-            {
-                method: "GET",
-            }
-        ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) { 
-                dispatch(setAllUsers(jsonObject)); 
-            }
-            else { console.error(jsonObject.message); }
-        });
-    }
-
-    useEffect(() => {
-        getAllUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-
     /**
      * Desktop View: Shows everything
      * Mobile View: Shows logo only, everything else is in a dropdown icon
@@ -134,59 +68,9 @@ const Navbar = () => {
                 </Typography>
 
                 {/* SEARCH BAR */}
-                {isNonMobileScreens && (
-                    <Box
-                        onFocus={onFocusHandler}
-                        onBlur={onBlurHandler}
-                    >
-                    <FlexBetween 
-                        backgroundColor={neutralLight} 
-                        borderRadius="9px" gap="3rem" 
-                        padding="0.1rem 1.5rem"
-                        position={"relative"}
-                    >
-                        <InputBase placeholder="Search..." 
-                            onClick={() => setIsSearching(true)}
-                            value={editSearch}
-                            onChange={(e) => setEditSearch(e.target.value)}
-                        />
-
-                        <IconButton>
-                            <Search />
-                        </IconButton>
-                        {isSearching &&
-                        <WidgetWrapper position={"absolute"} top={"40px"} left={0}
-                            border={`1px solid ${background}`} width={"100%"} 
-                            sx={{ maxHeight: "30vh", overflowY: "auto" }}
-                        > 
-                            {searchUsers.map((u) => (
-                                
-                                <Box key={u._id}>
-                                <Divider />
-                                <Box margin="1rem 0rem" 
-                                    display={"flex"} alignItems={"center"}
-                                    onClick={() => {
-                                        navigate(`/profile/${u._id}`);
-                                        navigate(0);                            // Refresh
-                                    }}
-                                    sx={{ cursor: "pointer" }}
-                                >
-                                    <UserImage 
-                                        userId={u._id} image={u.picturePath} 
-                                        size={"40px"} allowLink={false} 
-                                    />
-                                    <Typography variant="h5" fontWeight="500" marginLeft={"10px"}>
-                                        {u.name.length > 20 ? `${u.name.substring(0, 20)}...` : u.name}
-                                    </Typography>
-                                </Box>
-                                </Box>
-                            ))}
-                        </WidgetWrapper>
-                        }
-                    </FlexBetween>
-                    
-                    </Box>
-                )}
+                {isNonMobileScreens && 
+                    <SearchBar />
+                }
 
             </FlexBetween>
 
