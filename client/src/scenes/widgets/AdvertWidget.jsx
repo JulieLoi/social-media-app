@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Dropzone from "react-dropzone";
 import { setAd } from "state";
 import { useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
  /**
   * AdvertWidget
@@ -81,9 +82,9 @@ import { useEffect } from "react";
         formData.append("name", editNewAd.name);
         formData.append("website", editNewAd.website);
         formData.append("description", editNewAd.description);
-        formData.append("serverPath", "/advertisements");                    // Multer Disk Storage (Path)
+        formData.append("serverPath", "/advertisements");           // Multer Disk Storage (Path)
         formData.append("picture", image);
-        formData.append("picturePath", image.path);
+        formData.append("picturePath", `advert-${uuidv4()}`);       // Rename Advert Image
 
         // Create Adver in MongoDB
         await fetch(`http://localhost:3001/advertisements`, 
@@ -135,7 +136,7 @@ import { useEffect } from "react";
 
             {/* SECOND ROW */}
             <img width="100%" height="auto" alt="advert" 
-                src={`http://localhost:3001/assets/${ad.picturePath}`}
+                src={`http://localhost:3001/assets/advertisements/${ad.picturePath}`}
                 style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
             />
 

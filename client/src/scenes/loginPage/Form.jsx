@@ -9,6 +9,7 @@ import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 import Location from "components/Location";
+import { v4 as uuidv4 } from 'uuid';
 
 // Register Schema and Initial Values
 const registerSchema = yup.object().shape({
@@ -76,8 +77,7 @@ const Form = () => {
             formData.append(value, values[value]);
         }
         formData.append('location', location);
-        
-        formData.append('picturePath', values.picture.name);
+        formData.append('picturePath', `user-${uuidv4()}`);    // Rename User Profile Image
 
         // POST API call (sends form data)
         await fetch("http://localhost:3001/auth/register", 

@@ -149,7 +149,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 <img 
                     width="100%" height="auto" alt="post"
                     style={{ borderRadius: "0.75rem", marginBottom: "0.75rem" }}
-                    src={`http://localhost:3001/assets/${picturePath}`}
+                    src={`http://localhost:3001/assets/posts/${picturePath}`}
                 />
             )}
 

@@ -91,7 +91,8 @@ npm i country-state-city
 
 https://www.youtube.com/watch?v=K8YELRmUb5o
 
-
+Generate Random UUID (for image naming) -in frontend (client)
+npm install uuid
 
 
 

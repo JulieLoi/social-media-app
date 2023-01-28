@@ -15,7 +15,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "state";
-
+  import { v4 as uuidv4 } from 'uuid';
 
 /**
  * MyPostWidget
@@ -57,7 +57,7 @@ const MyPostWidget = ({ picturePath }) => {
         formData.append("serverPath", "/posts");             // Multer Disk Storage (Path)
         if (image) {
             formData.append("picture", image);
-            formData.append("picturePath", image.path);
+            formData.append("picturePath", `post-${uuidv4()}`);       // Rename Post Image
         }
 
         console.log(image)

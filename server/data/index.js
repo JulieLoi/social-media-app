@@ -70,7 +70,7 @@ export const users = [
         lastName: "Speilgar",
         email: "alexisspeilgar@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p11.jpeg",
+        picturePath: "user-395bb177-4ebd-439c-973a-83b83147f64c.jpeg",
         friends: getRandomFriends(0),
         location: "San Francisco, California, United States",
         occupation: "Software Engineer",
@@ -88,7 +88,7 @@ export const users = [
         lastName: "Ralph",
         email: "steveralph@gmail.com",
         password: "$!FEAS@!O)_IDJda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p3.jpeg",
+        picturePath: "user-a27bb7b4-5657-42a6-b5f9-970e87fa80a9.jpeg",
         friends: getRandomFriends(1),
         location: "New York, United States",
         occupation: "Line Cook",
@@ -106,7 +106,7 @@ export const users = [
         lastName: "Precious",
         email: "airaprecious@gmail.com",
         password: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-        picturePath: "p4.jpeg",
+        picturePath: "user-56f084f1-97d5-460c-8fd4-ad40568efce3.jpeg",
         friends: getRandomFriends(2),
         location: "Canada",
         occupation: "Data Scientist Hacker",
@@ -124,7 +124,7 @@ export const users = [
         lastName: "Trevont",
         email: "liamtrevont@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p6.jpeg",
+        picturePath: "user-bfa9f582-bafa-445e-ac72-bf2899c576db.jpeg",
         friends: getRandomFriends(3),
         location: "Korea",
         occupation: "Educator",
@@ -142,7 +142,7 @@ export const users = [
         lastName: "Doe",
         email: "janedoe@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p5.jpeg",
+        picturePath: "user-8db3fbff-b868-49d9-b8b1-1c691c3501e3.jpeg",
         friends: getRandomFriends(4),
         location: "Utah, United States",
         occupation: "Hacker",
@@ -160,7 +160,7 @@ export const users = [
         lastName: "Dunn",
         email: "harveydunn@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p7.jpeg",
+        picturePath: "user-21093bc7-0601-49c3-aa60-6a5a59480842.jpeg",
         friends: getRandomFriends(5),
         location: "Los Angeles, California, United States",
         occupation: "Journalist",
@@ -178,7 +178,7 @@ export const users = [
         lastName: "Vowel",
         email: "carlyvowel@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p8.jpeg",
+        picturePath: "user-78f13b95-0bf5-4f1e-8b3f-2f30470cff5a.jpeg",
         friends: getRandomFriends(6),
         location: "Chicago, Illinois, United States",
         occupation: "Nurse",
@@ -196,7 +196,7 @@ export const users = [
         lastName: "Dunn",
         email: "jessicadunn@gmail.com",
         password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
-        picturePath: "p9.jpeg",
+        picturePath: "user-79016e68-712d-429a-94f5-653f9b7a48ba.jpeg",
         friends: getRandomFriends(7),
         location: "United Kingdom",
         occupation: "Student",
@@ -214,7 +214,7 @@ export const users = [
         lastName: "Pilchard",
         email: "elijahpilchard@gmail.com",
         password: "$2b$10$f4LwT.39mywc5z4SU4lR9.v9Rsw5U5sTtX6tTfVGulpRfr/8TFDJu",
-        picturePath: "elijah-pilchard-QgJUb7tsvNg-unsplash.jpg",
+        picturePath: "user-b5d53f21-31b6-4074-94b4-61fd521dbb9d.jpg",
         friends: getRandomFriends(8),
         location: "Woodside East, Delaware, United States",
         occupation: "Veternarian",
@@ -232,7 +232,7 @@ export const users = [
         lastName: "Baron",
         email: "martinbaron@gmail.com",
         password: "$2b$10$EN38DRCDxRTSOOxrUWA3je5l7/3UnUWbSgEjG9oN8dPcDTBLUAxAi",
-        picturePath: "martin-baron-57oFiYVpvIk-unsplash.jpg",
+        picturePath: "user-ec5da2e1-d6b3-488d-9849-e6d675ba34a6.jpg",
         friends: getRandomFriends(9),
         location: "San José Province, Costa Rica",
         occupation: "Florist",
@@ -250,7 +250,7 @@ export const users = [
         lastName: "Doyle",
         email: "markdoyle@hotmail.com",
         password: "$2b$10$oPFOrr1Br6/OjmHYnDgSrOYT1lD0.o.r68xfPq5RlEdIfwmv7cnn2",
-        picturePath: "martin-baron-iB4YWDcN85g-unsplash.jpg",
+        picturePath: "user-74d51713-30f9-429a-968e-7dac5212b0ad.jpg",
         friends: getRandomFriends(10),
         location: "Mexico",
         occupation: "Genealogist",
@@ -268,7 +268,7 @@ export const users = [
         lastName: "Rostami",
         email: "alirezarostami@gmail.com",
         password: "$2b$10$d7YfGTlP7B2hjo805uOvuuaNKQH7TM4is8wj8AVWitvUTmCvI7XHS",
-        picturePath: "alireza-rostami-yYUi0DcRC9o-unsplash.jpg",
+        picturePath: "user-9ef6ef04-323d-4ab7-baee-b9424ddcf603.jpg",
         friends: getRandomFriends(11),
         location: "Lorraine, Quebec, Canada",
         occupation: "Songwriter",
@@ -286,7 +286,7 @@ export const users = [
         lastName: "Maldonado",
         email: "marlamaldonado@gmail.com",
         password: "$2b$10$7x4d0xUVvpBt5RdDCARwDOmVnKTxNrCuB0nns9.1H8OjLjSBhxbTa",
-        picturePath: "nitish-goswami-WmFwsO-d-vo-unsplash.jpg",
+        picturePath: "user-2057bd8d-1ddf-47a2-816c-50a3fb6b324f.jpg",
         friends: getRandomFriends(12),
         location: "Allier, France",
         occupation: "Manicurist",
@@ -304,7 +304,7 @@ export const users = [
         lastName: "Sarram",
         email: "nimasarram@gmail.com",
         password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
-        picturePath: "nima-sarram-VLzg5MwRWXI-unsplash.jpg",
+        picturePath: "user-f1434f3c-a1df-450d-b7cc-f6f4a03e21e6.jpg",
         friends: getRandomFriends(13),
         location: "Greenland",
         occupation: "Snowboard Instructor",
@@ -322,7 +322,7 @@ export const users = [
         lastName: "Hoover",
         email: "ethanhoover@gmail.com",
         password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
-        picturePath: "ethan-hoover-0YHIlxeCuhg-unsplash.jpg",
+        picturePath: "user-1f8cd347-b8b0-4778-9d12-29753e88f12f.jpg",
         friends: getRandomFriends(14),
         location: "Greenland",
         occupation: "Assistant Director",
@@ -341,7 +341,7 @@ export const posts = [
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[1],
         description: "A good breakfast to start the day!",
-        picturePath: "post1.jpeg",
+        picturePath: "post-ea585252-dfad-4e80-9ccf-c1dbb9d9cc8f.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
@@ -370,13 +370,26 @@ export const posts = [
             },
         ],
     },
-
+    {
+        _id: new mongoose.Types.ObjectId(),
+        userId: userIds[14],
+        description:
+        "Went to a wedding the other day",
+        picturePath: "post-acea873b-2781-4aa3-90ca-0c9daacf3e6d.jpeg",
+        likes: getRandomLikes(userIds),
+        comments: [
+            {
+                id: 0, userId: userIds[14], 
+                comment: "Congratulations to Mikayla and Adrian!"
+            },
+        ],
+    },
     {
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[3],
         description:
         "what do you all think of this breakfast?",
-        picturePath: "post2.jpeg",
+        picturePath: "post-e7a13bc2-9e8c-4560-995e-37f8d2fe49ed.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
@@ -396,7 +409,7 @@ export const posts = [
         userId: userIds[4],
         description:
         "Jane Doe here having a blast at the local festival!",
-        picturePath: "post3.jpeg",
+        picturePath: "post-43b3bd81-6d46-4c84-a5ab-56f417fe3cf2.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
@@ -425,7 +438,7 @@ export const posts = [
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[13],
         description: "Fireworks!",
-        picturePath: "post4.jpeg",
+        picturePath: "post-772e3088-ce5d-4268-b979-9fc0f1c9cc56.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
@@ -459,7 +472,7 @@ export const posts = [
         userId: userIds[6],
         description:
         "Just a short description. I'm tired of typing. I'm going to play video games now.",
-        picturePath: "post5.jpeg",
+        picturePath: "post-71748663-2261-4bf6-81c2-bf9a1da89c28.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
@@ -493,12 +506,42 @@ export const posts = [
         userId: userIds[6],
         description:
         "For the last time, I'm going to play video games now. I'm tired of typing. I'm going to play video games now.",
-        picturePath: "post6.jpeg",
+        picturePath: "post-003d5fb1-df7b-4392-b606-fb01e754c166.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
                 id: 0, userId: userIds[2], 
                 comment: "Just get off"
+            },
+        ],
+    },
+    {
+        _id: new mongoose.Types.ObjectId(),
+        userId: userIds[10],
+        description:
+        "Wedding Picture!!!",
+        picturePath: "post-07445596-811a-4881-a1f2-a002636e74c9.jpeg",
+        likes: getRandomLikes(userIds),
+        comments: [
+            {
+                id: 0, userId: userIds[7], 
+                comment: "I wish you both well!"
+            },
+            {
+                id: 1, userId: userIds[9], 
+                comment: "O.O"
+            },
+            {
+                id: 2, userId: userIds[4], 
+                comment: "Congrats!"
+            },
+            {
+                id: 3, userId: userIds[11], 
+                comment: "Wooo!"
+            },
+            {
+                id: 4, userId: userIds[0], 
+                comment: "Have a good honeymoon!"
             },
         ],
     },
@@ -509,42 +552,42 @@ export const advertisements = [
         id: 0,
         name: "MikaCosmetics",
         website: "mikacosmetics.com",
-        picturePath: "info4.jpeg",
+        picturePath: "advert-6aa27871-7ffc-4d28-9fa6-bdd75a636eb0.jpeg",
         description: "Your pathway to stunning and immaculate beauty and made sure your skin is exfoliating skin and shining like light.",
     },
     {
         id: 1,
         name: "Popcorn Independent",
         website: "popcornindependent.com",
-        picturePath: "popcorn.jpg",
+        picturePath: "advert-6911a647-db77-4c32-8e61-96b295b230c7.jpg",
         description: "Popcorn is a delicious snack that can be enjoyed by all. It's a great way to reduce stress and have some fun.",
     },
     {
         id: 2,
         name: "ParkCity Financials",
         website: "parkcity.net",
-        picturePath: "finance.jpg",
+        picturePath: "advert-18027e36-736f-4ba8-830f-84764c16c9dd.jpg",
         description: "ParkCity Financials is a mobile app that helps users manage their finances in a simple and intuitive way.",
     },
     {
         id: 3,
         name: "Lamp Anonymous",
         website: "lampanonymous.com",
-        picturePath: "lamps.jpg",
+        picturePath: "advert-51834f8b-bccd-4d3f-9fef-b6b8acc123dd.jpg",
         description: "The lamp has a simple and elegant design, with a textured metal finish. The lamp is perfect for any room in the house.",
     },
     {
         id: 4,
         name: "Luminous Bamboo",
         website: "luminousbamboo.com",
-        picturePath: "bamboofurniture.jpg",
+        picturePath: "advert-8f2d2723-1415-43a5-b1f7-9f398beeefdf.jpg",
         description: "Bamboo furniture is an environmentally friendly choice that is perfect for any space. Our pieces are made from sustainable bamboo and are made to las.",
     },
     {
         id: 5,
         name: "Renegade Dynamics",
         website: "renegadedynamics.com",
-        picturePath: "webcam.jpg",
+        picturePath: "advert-2e8652a2-7921-42c7-aab3-8e06d9376c20.jpg",
         description: "We've designed our highest quality webcam yet - perfect for recording beautiful videos and photos in any environment.",
     },
 ];
