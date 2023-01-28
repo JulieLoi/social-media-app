@@ -1,8 +1,9 @@
-import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
-import { IconButton, useTheme } from "@mui/material";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends, setProfileUser } from "state";
+
+import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
+import { IconButton, useTheme } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 
 const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
@@ -14,11 +15,9 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
     const { palette } = useTheme();
     const primaryDark = palette.primary.dark;
 
-    // Logged In User
+    // Logged In User, Token, Profile User
     const loggedInUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
-
-    // Profile User
     const profileUser = useSelector((state) => state.profileUser);
 
     // Check Friend Status (Logged in user and otherUserId)

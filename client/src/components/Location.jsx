@@ -1,7 +1,8 @@
 
-import { Select, InputLabel, MenuItem, Box } from '@mui/material';
-import { Country, State, City }  from 'country-state-city';
 import { useEffect, useState } from 'react';
+import { Country, State, City }  from 'country-state-city';
+
+import { Select, InputLabel, MenuItem, Box } from '@mui/material';
 
 /**
  * Location Component

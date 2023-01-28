@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { Box, Button, TextField, useMediaQuery, Typography, Divider, useTheme } from "@mui/material";
-import EditOutlined from "@mui/icons-material/EditOutlined";
-import { Formik } from "formik";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "state";
 import Dropzone from "react-dropzone";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { v4 as uuidv4 } from 'uuid';
+
+import { setLogin } from "state";
+
+import { Box, Button, TextField, useMediaQuery, Typography, Divider, useTheme } from "@mui/material";
+import EditOutlined from "@mui/icons-material/EditOutlined";
 import FlexBetween from "components/FlexBetween";
 import Location from "components/Location";
-import { v4 as uuidv4 } from 'uuid';
 
 // Register Schema and Initial Values
 const registerSchema = yup.object().shape({

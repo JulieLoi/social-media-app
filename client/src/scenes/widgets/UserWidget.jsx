@@ -7,8 +7,11 @@ import { setUserInformation, setUserProfileImage } from "state";
 
 import { 
     ManageAccountsOutlined, LocationOnOutlined, WorkOutlineOutlined,
-    EditOutlined,CloseOutlined, TwitterIcon, LinkedInIcon
+    EditOutlined, CloseOutlined
 } from "@mui/icons-material";
+import TwitterIcon from '@mui/icons-material/Twitter';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
 import {
     Box, Typography, Divider, TextField, Button, InputAdornment, useTheme,
     Dialog, DialogActions, DialogContent, DialogTitle
@@ -32,7 +35,7 @@ const UserWidget = ({ userId, picturePath }) => {
     const loggedInUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 
-    // User Widget - User
+    // User Widget - User Shown
     const [user, setUser] = useState(null);
 
     // User Account Information Dialog Box
@@ -43,11 +46,7 @@ const UserWidget = ({ userId, picturePath }) => {
         occupation: loggedInUser.occupation,
         twitterHandle: loggedInUser.twitterHandle,
         linkedInHandle: loggedInUser.linkedInHandle,
-    };
-
-    // New Profile Image
-    const [image, setImage] = useState(null);       // Optional image to include in post
-    
+    };    
     const [editUserInformation, setEditUserInformation] = useState(initialUserValues);
     const [dialogBox, setDialogBox] = useState(false);
     const handleDialogClose = () => {
@@ -55,12 +54,14 @@ const UserWidget = ({ userId, picturePath }) => {
         setDialogBox(false);
     }
 
+    // New Profile Image
+    const [image, setImage] = useState(null);       // Optional image to include in post
+
     // Location
     const [newLocation, setNewLocation] = useState(loggedInUser.location)
 
     // Palette Theme
     const { palette } = useTheme();
-    const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
     const primary = palette.primary.main;
@@ -178,7 +179,7 @@ const UserWidget = ({ userId, picturePath }) => {
                     <UserImage userId={userId} image={picturePath} />
                     <Box>
                         <Typography
-                            variant="h4" color={dark} fontWeight="500"
+                            variant="h4" color={palette.neutral.dark} fontWeight="500"
                             sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
                             onClick={() => navigate(`/profile/${userId}`)}
                         >
@@ -325,7 +326,7 @@ const UserWidget = ({ userId, picturePath }) => {
                         {({ getRootProps, getInputProps }) => (
                         <Box
                             {...getRootProps()}
-                            border={`2px dashed ${palette.primary.main}`}
+                            border={`2px dashed ${primary}`}
                             p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}
                         >
                             <input {...getInputProps()} />
@@ -333,13 +334,13 @@ const UserWidget = ({ userId, picturePath }) => {
                                 <div>Add Image Here</div>
                                 : 
                                 <FlexBetween>
-                                    <Typography>{image.name}</Typography>
-                                    <FlexBetween>
-                                        <EditOutlined sx={{ "&:hover": { color: primary, cursor: "pointer" } }} />
-                                        <CloseOutlined onClick={() => setImage(null)}
+                                <Typography>{image.name}</Typography>
+                                <FlexBetween>
+                                    <EditOutlined sx={{ "&:hover": { color: primary, cursor: "pointer" } }} />
+                                    <CloseOutlined onClick={() => setImage(null)}
                                             sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
-                                        />
-                                    </FlexBetween>
+                                    />
+                                </FlexBetween>
                                 </FlexBetween>
                             }
                         </Box>

@@ -1,8 +1,9 @@
-import { Typography, useTheme } from "@mui/material";
-import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+
+import { Typography, useTheme } from "@mui/material";
+import WidgetWrapper from "components/WidgetWrapper";
 import PostWidget from "./PostWidget";
 
 /**

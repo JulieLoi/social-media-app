@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setPost } from "state";
+
 import { InputBase, Box, Typography } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
-import { setPost } from "state";
 
 /**
  * AddComment
@@ -76,9 +77,9 @@ const AddComment = ({ palette, postId }) => {
             />
         </FlexBetween>
         <Box ml="4rem" mb="0.25rem" mt="0.25rem">
-            <Typography color={palette.neutral.medium}>
-                Remaining Character(s): {remainChar} 
-            </Typography>
+        <Typography color={palette.neutral.medium}>
+            Remaining Character(s): {remainChar} 
+        </Typography>
         </Box>
     </>)
 }

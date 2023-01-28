@@ -1,22 +1,18 @@
-import { 
-    ChatBubbleOutlineOutlined,
-    FavoriteBorderOutlined,
-    FavoriteOutlined,
-    ShareOutlined,
-} from "@mui/icons-material";
-import { 
-    Box, Divider, IconButton,
-    Typography, useTheme,
-} from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import FlexBetween from "components/FlexBetween";
-import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";  
 import { setPost, deletePost } from "state";
+
+import { 
+    ChatBubbleOutlineOutlined, FavoriteBorderOutlined,
+    FavoriteOutlined, ShareOutlined,
+} from "@mui/icons-material";
+import { Box, Divider, IconButton, Typography, useTheme, } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import WidgetWrapper from "components/WidgetWrapper";
+import FlexBetween from "components/FlexBetween";
+import Friend from "components/Friend";
 import Comment from "components/Comment";
 import AddComment from "components/AddComment";
-import Friend from "components/Friend";
 
 /**
  * Post Widget

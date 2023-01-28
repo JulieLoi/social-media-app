@@ -1,14 +1,15 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setProfileUser } from "state";
+
+import { Box, useMediaQuery } from "@mui/material";
 import Navbar from "scenes/navbar";
+import NavigateTop from "components/NavigateTop";
 import UserWidget from "scenes/widgets/UserWidget";
 import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
-import NavigateTop from "components/NavigateTop";
-import { setProfileUser } from "state";
-import { useEffect } from "react";
 
 /**
  * Home Page
@@ -42,10 +43,7 @@ const HomePage = () => {
             >
                 {/* USER WIDGET */}
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-                    <UserWidget 
-                        userId={_id}
-                        picturePath={picturePath}
-                    />
+                    <UserWidget userId={_id} picturePath={picturePath} />
                 </Box>
 
                 {/* POST WIDGET */}

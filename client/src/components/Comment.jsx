@@ -1,14 +1,14 @@
-import { Box, Divider, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";  
+
+import { Box, Divider, Typography } from "@mui/material";
 import UserImage from "./UserImage"
-import { useEffect } from "react";
 
 const Comment = ({comment, palette}) => {
 
     const navigate = useNavigate();
-    const token = useSelector((state) => state.token);
+    const token = useSelector((state) => state.token);      // Token
 
     // Commenter Information
     const [commenter, setCommenter] = useState(null);
@@ -39,6 +39,7 @@ const Comment = ({comment, palette}) => {
         <Divider />
         {commenter !== null &&
         <Box p="0.5rem 0">
+            {/* Commenter Profile Image and Name */}
             <Box display="flex" gap="1rem" alignItems="center" ml="1rem">
                 <UserImage image={commenter.picturePath} size={"30px"} />
                 <Typography variant="h5"
@@ -52,6 +53,7 @@ const Comment = ({comment, palette}) => {
                 </Typography>
             </Box>
                 
+            {/* Comment */}
             <Box ml="3rem">
                 <Typography noWrap
                     sx={{ 

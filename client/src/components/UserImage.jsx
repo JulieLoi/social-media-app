@@ -1,5 +1,5 @@
-import { Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Box, useTheme } from "@mui/material";
 
 /**
  * UserImage

@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setAllUsers } from "state";
+
 import { 
     Box, IconButton, InputBase,
     Typography, Divider, useTheme
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
-import { setAllUsers } from "state";
-import { useEffect } from "react";
 import WidgetWrapper from "components/WidgetWrapper";
 import UserImage from "components/UserImage";
 
@@ -99,6 +99,7 @@ const SearchBar = () => {
             padding="0.1rem 1.5rem"
             position={"relative"}
         >
+            {/* Search Input Bar */}
             <InputBase placeholder="Search..." 
                 onClick={() => setIsSearching(true)}
                 value={editSearch}
@@ -108,6 +109,8 @@ const SearchBar = () => {
             <IconButton>
                 <Search />
             </IconButton>
+
+            {/* Search Popup */}
             {isSearching &&
             <WidgetWrapper position={"absolute"} top={"40px"} left={0}
                 border={`1px solid ${background}`} width={"100%"} 
@@ -138,7 +141,6 @@ const SearchBar = () => {
             </WidgetWrapper>
             }
         </FlexBetween>
-        
         </Box>
         </>
     )

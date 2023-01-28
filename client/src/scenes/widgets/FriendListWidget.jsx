@@ -1,10 +1,10 @@
-import { Box, Typography, Divider, useTheme } from "@mui/material";
-import Friend from "components/Friend";
-import WidgetWrapper from "components/WidgetWrapper";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setProfileUser, setFriends } from "state";
-import { useEffect } from "react";
+import { Box, Typography, Divider, useTheme } from "@mui/material";
+import Friend from "components/Friend";
+import WidgetWrapper from "components/WidgetWrapper";
 
 /**
  * Friends List Widget

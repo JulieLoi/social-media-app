@@ -1,22 +1,20 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Dropzone from "react-dropzone";
+import { v4 as uuidv4 } from 'uuid';
+import { setPosts } from "state";
+
 import {
-    EditOutlined, CloseOutlined, 
-    AttachFileOutlined,
-    GifBoxOutlined, ImageOutlined,
-    MicOutlined, MoreHorizOutlined,
+    EditOutlined, CloseOutlined, AttachFileOutlined,
+    GifBoxOutlined, ImageOutlined, MicOutlined, MoreHorizOutlined,
   } from "@mui/icons-material";
-  import {
-    Box, Divider, Typography,
-    InputBase, Button, Menu, MenuItem,
-    useTheme, useMediaQuery,
-  } from "@mui/material";
-  import FlexBetween from "components/FlexBetween";
-  import Dropzone from "react-dropzone";
-  import UserImage from "components/UserImage";
-  import WidgetWrapper from "components/WidgetWrapper";
-  import { useState } from "react";
-  import { useDispatch, useSelector } from "react-redux";
-  import { setPosts } from "state";
-  import { v4 as uuidv4 } from 'uuid';
+import {
+    Box, Divider, Typography, InputBase, Button, 
+    Menu, MenuItem, useTheme, useMediaQuery,
+} from "@mui/material";
+import WidgetWrapper from "components/WidgetWrapper";
+import FlexBetween from "components/FlexBetween";
+import UserImage from "components/UserImage";
 
 /**
  * MyPostWidget
