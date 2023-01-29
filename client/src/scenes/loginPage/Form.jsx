@@ -62,6 +62,9 @@ const Form = () => {
     const { palette } = useTheme();
     const main = palette.primary.main;
 
+    // Dropzone
+    const maxSize = 1048576*10; // 10MB
+
     // Page State (Login / Register)
     const [pageType, setPageType] = useState("login");
     const isLogin = (pageType === "login");
@@ -175,10 +178,15 @@ const Form = () => {
                                 border={`1px solid ${palette.neutral.medium}`}
                             >
                                 <Dropzone
-                                    acceptedFiles=".jpg,.jpeg,.png" multiple={false}
-                                    onDrop={(acceptedFiles) =>
+                                    acceptedFiles=".jpeg,.png" multiple={false}
+                                    onDrop={(acceptedFiles, rejectedFiles) => {
+                                        //console.log("accepted files", acceptedFiles)
+                                        //console.log("rejected files", rejectedFiles)
                                         setFieldValue("picture", acceptedFiles[0])
-                                    }
+                                    }}
+                                    accept={{ 'image/*': ['.jpeg', '.jpg', '.png'] }}
+                                    minSize={0}
+                                    maxSize={maxSize}
                                 >
                                     {({ getRootProps, getInputProps }) => (
                                     <Box
@@ -188,7 +196,7 @@ const Form = () => {
                                     >
                                         <input {...getInputProps()} />
                                         {!values.picture ? (
-                                            <div>Add Profile Picture Here</div>
+                                            <div>Add Image Here (.jpg, .jpeg, .png) - 10MB</div>
                                         ) : (
                                             <FlexBetween>
                                                 <Typography>{values.picture.name}</Typography>

@@ -14,11 +14,22 @@ const ImageDropzone = ({ image, setImage }) => {
     const medium = palette.neutral.medium;
     const main = palette.primary.main;
 
+    // Dropzone
+    const maxSize = 1048576*10; // 10MB
+
+
     return (
         <>
         <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
-            <Dropzone acceptedFiles=".jpg,.jpeg,.png" multiple={false}
-                onDrop={ (acceptedFiles) => setImage(acceptedFiles[0]) }
+            <Dropzone acceptedFiles=".jpeg,.png" multiple={false}
+                onDrop={ (acceptedFiles, rejectedFiles) => {
+                    //console.log("accepted files", acceptedFiles)
+                    //console.log("rejected files", rejectedFiles)
+                    setImage(acceptedFiles[0]);
+                }}
+                accept={{ 'image/*': ['.jpeg', '.jpg', '.png'] }}
+                minSize={0}
+                maxSize={maxSize}
             >
                 {({ getRootProps, getInputProps }) => (
                 <Box
@@ -28,7 +39,7 @@ const ImageDropzone = ({ image, setImage }) => {
                 >
                     <input {...getInputProps()} />
                     {!image ? 
-                        <div>Add Image Here</div>
+                        <div>Add Image Here (.jpg, .jpeg, .png) - 10MB</div>
                         : 
                         <FlexBetween>
                             <Typography>{image.name}</Typography>

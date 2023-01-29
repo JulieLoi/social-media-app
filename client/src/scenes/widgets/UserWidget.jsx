@@ -94,8 +94,6 @@ const UserWidget = ({ userId, picturePath }) => {
             formData.append("picturePath", userImagePath);                // Rename Advert Image
             formData.append("picture", image);
 
-            console.log(userImagePath)
-
             await fetch(`http://localhost:3001/users/${loggedInUser._id}`, 
                 {
                     method: "POST",

@@ -28,6 +28,9 @@ FINISHED RESTRUCTURING IMAGE UPLOAD AND RANDOMIZE IMAGE FILE NAME UPLOAD
 FINISHED WORKING SEARCH BAR
 FINISHED CHANGING PROFILLE IMAGE IN USER ACCOUTN SETTINGS
 
+search bar, image dropzone made into separate components
+
+
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
 ----First Name, Last Name, Location, etc.
