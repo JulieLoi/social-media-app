@@ -7,7 +7,7 @@ import FlexBetween from "components/FlexBetween";
  * Image Dropzone Component
  * Drop image here
  */
-const ImageDropzone = ({ image, setImage }) => {
+const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
 
     // Theme Colors
     const { palette } = useTheme();
@@ -27,7 +27,11 @@ const ImageDropzone = ({ image, setImage }) => {
                     //console.log("rejected files", rejectedFiles)
                     setImage(acceptedFiles[0]);
                 }}
-                accept={{ 'image/*': ['.jpeg', '.jpg', '.png'] }}
+                accept={ staticImagesOnly ? 
+                    { 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] } 
+                    : 
+                    { 'image/gif': ['.gif'] } 
+                } 
                 minSize={0}
                 maxSize={maxSize}
             >
@@ -39,7 +43,12 @@ const ImageDropzone = ({ image, setImage }) => {
                 >
                     <input {...getInputProps()} />
                     {!image ? 
-                        <div>Add Image Here (.jpg, .jpeg, .png) - 10MB</div>
+                        <div>{ staticImagesOnly ? 
+                            "Add Image Here - 10MB"
+                            :
+                            "Add Gif Here - 10MB"
+                        }
+                        </div>
                         : 
                         <FlexBetween>
                             <Typography>{image.name}</Typography>

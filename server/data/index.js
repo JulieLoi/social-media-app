@@ -543,6 +543,44 @@ export const posts = [
             },
         ],
     },
+    {
+        _id: new mongoose.Types.ObjectId(),
+        userId: userIds[2],
+        description:
+        "Piano Cat",
+        picturePath: "post16863ad4afc14ef4853e2188303e07a0.gif",
+        likes: getRandomLikes(userIds),
+        comments: [
+            {
+                id: 0, userId: userIds[4], 
+                comment: "(•‿•)"
+            },
+            {
+                id: 1, userId: userIds[0], 
+                comment: "(๑´• .̫ •ू`๑)"
+            },
+            {
+                id: 2, userId: userIds[3], 
+                comment: "⸂⸂⸜(രᴗര๑)⸝⸃⸃"
+            },
+            {
+                id: 3, userId: userIds[9], 
+                comment: "(◐ω◑ )"
+            },
+            {
+                id: 4, userId: userIds[12], 
+                comment: "꒰ღ˘‿˘ற꒱❤⃛"
+            },
+            {
+                id: 5, userId: userIds[11], 
+                comment: "◝(๑꒪່౪̮꒪່๑)◜"
+            },
+            {
+                id: 6, userId: userIds[13], 
+                comment: "Ⴚტ◕‿◕ტჂ"
+            },
+        ],
+    },
 ];
 
 export const advertisements = [

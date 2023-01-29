@@ -25,11 +25,6 @@ const MyPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch();
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
-    // My Post Widget States
-    const [isImage, setIsImage] = useState(false);  // Will show image dropbox
-    const [image, setImage] = useState(null);       // Optional image to include in post
-    const [post, setPost] = useState("");           // Post Content
-    
     // Theme Colors
     const { palette } = useTheme();
     const mediumMain = palette.neutral.mediumMain;
@@ -41,11 +36,39 @@ const MyPostWidget = ({ picturePath }) => {
     const token = useSelector((state) => state.token);
     const posts = useSelector((state) => state.posts);
 
-    // Dropdown Menu
+
+    // My Post Widget States
+    const [post, setPost] = useState("");           // Post Content
+    const [isImage, setIsImage] = useState(false);  // Will show image dropbox
+    const [isClip, setIsClip] = useState(false);    // Will show clip dropbox (same as image dropbox)
+    const [image, setImage] = useState(null);       // Optional image to include in post
+    
+    // Dropdown Menu (Mobile Screen)
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => { setAnchorEl(event.currentTarget); };
     const handleClose = () => { setAnchorEl(null); };
+
+    // Handle Image Click
+    const handleImage = () => {
+
+        // Reset isClip
+        if (isClip) {
+            setIsClip(false);
+            setImage(null);
+        }
+        setIsImage(!isImage);
+    }
+
+    // Handle Gif Click
+    const handleGif = () => {
+        // Reset isImage
+        if (isImage) {
+            setIsImage(false);
+            setImage(null);
+        }
+        setIsClip(!isClip);
+    }
 
     // POST API Call (Create Post)
     const handlePost = async () => {
@@ -108,34 +131,43 @@ const MyPostWidget = ({ picturePath }) => {
             </FlexBetween>
 
             {/* IMAGE DROPZONE */}
-            {isImage && (
-                <ImageDropzone image={image} setImage={setImage} />
+            {(isImage || isClip) && (
+                <ImageDropzone image={image} setImage={setImage} staticImagesOnly={!isClip} />
             )}
 
             <Divider sx={{ margin: "1.25rem 0" }} />
 
             {/* ICONS: Image, Clip, Attachment, Audio */}
             <FlexBetween>
-                <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-                    <ImageOutlined sx={{ color: isImage ? main : mediumMain }} />
-                    <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
-                        Image
-                    </Typography>
-                </FlexBetween>
 
                 {/* ICONS: Desktop Only */}
                 {isNonMobileScreens ? 
                     (<>
-                        <FlexBetween gap="0.25rem">
-                            <GifBoxOutlined sx={{ color: mediumMain }} />
-                            <Typography color={mediumMain}>Clip</Typography>
+                        {/* IMAGE UPLOAD*/}
+                        <FlexBetween gap="0.25rem" onClick={handleImage}
+                        >
+                            <ImageOutlined sx={{ color: isImage ? main : mediumMain }} />
+                            <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
+                                Image
+                            </Typography>
                         </FlexBetween>
 
+                        {/* GIF UPLOAD*/}
+                        <FlexBetween gap="0.25rem" onClick={handleGif}
+                        >
+                            <GifBoxOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
+                                Gif
+                            </Typography>
+                        </FlexBetween>
+
+                        {/* ATTACHMENT UPLOAD*/}
                         <FlexBetween gap="0.25rem">
                             <AttachFileOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Attachment</Typography>
                         </FlexBetween>
 
+                        {/* AUDIO UPLOAD*/}
                         <FlexBetween gap="0.25rem">
                             <MicOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Audio</Typography>
@@ -143,6 +175,7 @@ const MyPostWidget = ({ picturePath }) => {
                     </>)
                     :
                     (<>
+                        {/* MOBILE SCREEN */}
                         <FlexBetween gap="0.25rem">
                             <Button id="expand-mobile-menu-button"
                                 aria-controls={open ? 'expand-mobile-menu' : undefined}
@@ -177,9 +210,15 @@ const MyPostWidget = ({ picturePath }) => {
             MenuListProps={{ 'aria-labelledby': 'expand-mobile-menu-button', }}
         >
             <MenuItem onClick={handleClose}>
-                <FlexBetween gap="0.25rem">
+                <FlexBetween gap="0.25rem" onClick={handleImage}>
+                    <ImageOutlined sx={{ color: mediumMain }} />
+                    <Typography color={mediumMain}>Image</Typography>
+                </FlexBetween>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+                <FlexBetween gap="0.25rem" onClick={handleGif}>
                     <GifBoxOutlined sx={{ color: mediumMain }} />
-                    <Typography color={mediumMain}>Clip</Typography>
+                    <Typography color={mediumMain}>Gif</Typography>
                 </FlexBetween>
             </MenuItem>
             <MenuItem onClick={handleClose}>

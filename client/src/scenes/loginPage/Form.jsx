@@ -184,7 +184,7 @@ const Form = () => {
                                         //console.log("rejected files", rejectedFiles)
                                         setFieldValue("picture", acceptedFiles[0])
                                     }}
-                                    accept={{ 'image/*': ['.jpeg', '.jpg', '.png'] }}
+                                    accept={{ 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] }}
                                     minSize={0}
                                     maxSize={maxSize}
                                 >
