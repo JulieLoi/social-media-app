@@ -38,12 +38,8 @@ const initialValuesRegister = {
 
 // Login Register Schema and Initial Values
 const loginSchema = yup.object().shape({
-    email: yup.string().email("Invalid Email").required("Please Enter your email"),
-    password: yup.string().required('Please Enter your password')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    )
-    ,
+    email: yup.string().email("Invalid Email").required("Email Required"),
+    password: yup.string().required("Password Required").length(8, "Password must be at least 8 characters"),
 });
 
 const initialValuesLogin = {
@@ -70,9 +66,8 @@ const Form = () => {
     const isLogin = (pageType === "login");
     const isRegister = (pageType === "register");
     
-    // States
-    const [location, setLocation] = useState("");            // Location Value
-    const [errorMessage, setErrorMessage] = useState("");       // Error Message
+    // Location (Optional)
+    const [location, setLocation] = useState("")
 
     // Register Function
     const register = async (values, onSubmitProps) => {
@@ -104,7 +99,7 @@ const Form = () => {
                 onSubmitProps.resetForm();     // Reset Form
                 setPageType("login");
             }
-            else { setErrorMessage(jsonObject.message); }
+            else { console.log(jsonObject.message); }
         });
     }
 
@@ -133,13 +128,12 @@ const Form = () => {
                 );
                 navigate("/home");
             }
-            else { setErrorMessage(jsonObject.message); }
+            else { console.log(jsonObject.message); }
         });
     }
 
     // Handle Form Submit
     const handleFormSubmit = async(values, onSubmitProps) => {
-        console.log("HANDLE FORM SUBMIT")
         if (isLogin) await login(values);
         if (isRegister) await register(values, onSubmitProps);
     };
@@ -160,6 +154,7 @@ const Form = () => {
             onSubmit={handleFormSubmit} 
             initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
             validationSchema={isLogin ? loginSchema : registerSchema}
+            validateOnChange={false} validateOnBlur={false}
         >
             {({
                 values, errors, touched,
@@ -258,8 +253,8 @@ const Form = () => {
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.email}
                         inputProps={{ maxLength: 254 }}
-                        error={(Boolean(touched.email) && Boolean(errors.email) && isRegister) || errorMessage !== ""}
-                        helperText={isRegister ? (touched.email && errors.email) : ""}
+                        error={(Boolean(touched.email) && Boolean(errors.email))}
+                        helperText={(touched.email && errors.email)}
                         sx={{ gridColumn: "span 4" }}
                     />
                     <TextField 
@@ -268,13 +263,8 @@ const Form = () => {
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.password}
                         inputProps={{ maxLength: 128 }}
-                        error={(Boolean(touched.password) && Boolean(errors.password) && isRegister) || errorMessage !== ""}
-                        helperText={isRegister ? 
-                            (touched.password && errors.password) 
-                            : 
-                            `${errorMessage === "" ? "" : errorMessage } 
-                                Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character` 
-                        }
+                        error={(Boolean(touched.password) && Boolean(errors.password))}
+                        helperText={(touched.password && errors.password)}
                         sx={{ gridColumn: "span 4" }}
                     />
                 </Box>
@@ -298,7 +288,7 @@ const Form = () => {
                     <Typography
                         onClick={() => {
                             setPageType(isLogin ? "register" : "login");
-                            setErrorMessage(""); resetForm();
+                            resetForm();
                         }}
                         sx={{
                             textDecoration: "underline",

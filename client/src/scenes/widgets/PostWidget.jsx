@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; 
 import AudioPlayer from 'react-h5-audio-player';
+import { RHAP_UI } from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
 import Axios from "axios";
 import fileDownload from 'js-file-download';
@@ -8,9 +9,10 @@ import { setPost, deletePost } from "state";
 
 import { 
     ChatBubbleOutlineOutlined, FavoriteBorderOutlined,
-    FavoriteOutlined, ShareOutlined, FileDownload
+    FavoriteOutlined, ShareOutlined, FileDownload,
+    PlayCircleFilledOutlined, PlayCircleFilled
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme, } from "@mui/material";
+import { Box, Button, Divider, IconButton, Typography, useTheme, } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import WidgetWrapper from "components/WidgetWrapper";
 import FlexBetween from "components/FlexBetween";
@@ -188,7 +190,21 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         </FlexBetween>
                     </Box>
                     :
-                    <AudioPlayer src={`http://localhost:3001/assets/posts/${picturePath}`} />
+                    <Box>
+                        <AudioPlayer src={`http://localhost:3001/assets/posts/${picturePath}`} 
+                            sx={{ background: "red"}}
+                            customIcons={{
+                                play: <PlayCircleFilled fontSize="1rem" sx={{ color: "red" }} />
+                            }}
+                            customAdditionalControls={
+                                [
+                                  RHAP_UI.LOOP,
+                                  <button p="0"><FileDownload /></button>,
+                                  <FileDownload>d</FileDownload>
+                                ]
+                            }
+                        />
+                    </Box>
                 )
             )}
 

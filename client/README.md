@@ -3,7 +3,7 @@
 # Possible Features to add
 
 Things to do:
--Redo Login/Register
+-Redo Login/Register (done)
 
 
 
