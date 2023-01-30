@@ -139,6 +139,7 @@ const Form = () => {
 
     // Handle Form Submit
     const handleFormSubmit = async(values, onSubmitProps) => {
+        console.log("HANDLE FORM SUBMIT")
         if (isLogin) await login(values);
         if (isRegister) await register(values, onSubmitProps);
     };
@@ -191,7 +192,7 @@ const Form = () => {
                                     {({ getRootProps, getInputProps }) => (
                                     <Box
                                         {...getRootProps()} p="1rem"
-                                        border={`2px dashed ${main}`}
+                                        border={`2px dashed ${Boolean(errors.picture) ? "red" : main}`}
                                         sx={{ "&:hover": { cursor: "pointer" } }}
                                     >
                                         <input {...getInputProps()} />
@@ -257,7 +258,7 @@ const Form = () => {
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.email}
                         inputProps={{ maxLength: 254 }}
-                        error={(Boolean(touched.email) && Boolean(errors.email)) || errorMessage !== ""}
+                        error={(Boolean(touched.email) && Boolean(errors.email) && isRegister) || errorMessage !== ""}
                         helperText={isRegister ? (touched.email && errors.email) : ""}
                         sx={{ gridColumn: "span 4" }}
                     />
@@ -267,26 +268,20 @@ const Form = () => {
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.password}
                         inputProps={{ maxLength: 128 }}
-                        error={(Boolean(touched.password) && Boolean(errors.password)) || errorMessage !== ""}
-                        helperText={isRegister ? (touched.password && errors.password) : ""}
+                        error={(Boolean(touched.password) && Boolean(errors.password) && isRegister) || errorMessage !== ""}
+                        helperText={isRegister ? 
+                            (touched.password && errors.password) 
+                            : 
+                            `${errorMessage === "" ? "" : errorMessage } 
+                                Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character` 
+                        }
                         sx={{ gridColumn: "span 4" }}
                     />
-                    {isLogin && errorMessage !== "" &&
-                        <Typography 
-                            color="red" sx={{ gridColumn: "span 4" }} 
-                            margin="-25px 0px"
-                        >
-                            {errorMessage}
-                        </Typography>
-                    }
                 </Box>
 
                 {/* SUBMIT BUTTON: Login / Register */}
                 <Box>
-                    
-                    <Button
-                        fullWidth
-                        type="submit"
+                    <Button fullWidth type="submit"
                         sx={{
                             m: "2rem 0", p: "1 rem",
                             backgroundColor: main,
@@ -294,16 +289,16 @@ const Form = () => {
                             "&:hover": { color: main }
                         }}
                     >
-                        {isLogin ? "LOGIN" : "REGISTER"}
-
+                        <Typography fontWeight="700" variant="h5">
+                            {isLogin ? "LOGIN" : "REGISTER"}
+                        </Typography>
                     </Button>
 
                     {/* CHANGE BETWEEN LOGIN / REGISTER */}
                     <Typography
                         onClick={() => {
                             setPageType(isLogin ? "register" : "login");
-                            setErrorMessage("");
-                            resetForm();
+                            setErrorMessage(""); resetForm();
                         }}
                         sx={{
                             textDecoration: "underline",
@@ -319,7 +314,7 @@ const Form = () => {
                             : "Already have an account? Login here!"
                         }
                     </Typography>
-                    
+
                 </Box>
                 </form>
             )}

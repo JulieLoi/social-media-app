@@ -49,6 +49,7 @@ const LoginPage = () => {
                 </Typography>
                 <Form />
             </Box>
+            <br />
         </Box>
     )
 }
