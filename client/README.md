@@ -117,6 +117,8 @@ https://github.com/axios/axios
 https://www.npmjs.com/package/js-file-download
 
 
+RANDOM TEXT GENERATOR (More random posts and comments)
+https://www.npmjs.com/package/txtgen
 
 Favicon Icon
 <a href="https://www.flaticon.com/free-icons/share" title="share icons">Share icons created by Vectors Market - Flaticon</a>

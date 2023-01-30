@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { sentence } from 'txtgen';
 
 const userIds = [
     new mongoose.Types.ObjectId(),
@@ -59,6 +60,59 @@ const getRandomLikes = (array) => {
     }, {});
 
     return likeObject;
+}
+
+// Get random user id 
+const getRandomUserId = () => {
+    return userIds[Math.floor((Math.random() * userIds.length))];
+}
+
+// Generate 10 - 25 posts (no files)
+const generatePosts = () => {
+    const randomAmount = Math.floor(Math.random() * 15)  + 10;  // 10 - 25
+    const randomPosts = [];
+    
+    for(let i = 0; i < randomAmount; i++) {
+
+        // Create Comments
+        const randomCommentAmount = Math.floor(Math.random() * 20);     // 0 - 20
+        const randomComments = [];
+        
+        for(let i = 0; i < randomCommentAmount; i++) {
+            randomComments.push(
+                {
+                    id: i, userId: getRandomUserId(), 
+                    comment: sentence()
+                }
+            )
+        }
+
+        // Create New Post
+        const newPost = {
+            _id: new mongoose.Types.ObjectId(),
+            userId: getRandomUserId(),
+            description: sentence(),
+            picturePath: "",
+            likes: getRandomLikes(userIds),
+            comments: randomComments,
+        }
+
+        randomPosts.push(newPost);
+    }
+
+    return randomPosts;
+}
+
+// Shuffle Posts Array
+const shuffleArray = (array) => {
+
+    let myArray = [...array]
+
+    for (let i = myArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [myArray[i], myArray[j]] = [myArray[j], myArray[i]];
+    }
+    return myArray;
 }
 
 export const users = [
@@ -334,100 +388,98 @@ export const users = [
     },
 ];
 
-export const posts = [
+const postsWithFiles = [
     {
         _id: new mongoose.Types.ObjectId(),
-        userId: userIds[1],
+        userId: getRandomUserId(),
         description: "A good breakfast to start the day!",
         picturePath: "postea585252dfad4e809ccfc1dbb9d9cc8f.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[0], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "Good looking salad!"
             },
             {
-                id: 1, userId: userIds[3], 
+                id: 1, userId: getRandomUserId(), 
                 comment: "orange juice is a great way to start the day"
             },
             {
-                id: 2, userId: userIds[13], 
+                id: 2, userId: getRandomUserId(), 
                 comment: "Let's have breakfast together later on"
             },
             {
-                id: 3, userId: userIds[5], 
+                id: 3, userId: getRandomUserId(), 
                 comment: "Try having a breakfast salad with an egg next time!"
             },
             {
-                id: 4, userId: userIds[3], 
+                id: 4, userId: getRandomUserId(), 
                 comment: "Have a good day!"
             },
             {
-                id: 5, userId: userIds[7], 
+                id: 5, userId: getRandomUserId(), 
                 comment: "i prefer apple juice"
             },
         ],
     },
     {
         _id: new mongoose.Types.ObjectId(),
-        userId: userIds[14],
+        userId: getRandomUserId(),
         description:
         "Went to a wedding the other day",
         picturePath: "postacea873b27814aa390ca0c9daacf3e6d.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[14], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "Congratulations to Mikayla and Adrian!"
             },
         ],
     },
     {
         _id: new mongoose.Types.ObjectId(),
-        userId: userIds[3],
+        userId: getRandomUserId(),
         description:
         "what do you all think of this breakfast?",
         picturePath: "poste7a13bc29e8c4560995e37f8d2fe49ed.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[1], userName: "Steve Ralph",
-                userPicturePath: "p3.jpeg",
+                id: 0, userId: getRandomUserId(),
                 comment: "i hope you had more than that"
             },
             {
-                id: 0, userId: userIds[11], userName: "Alireza Rostami",
-                userPicturePath: "alirezarostamiyYUi0DcRC9ounsplash.jpg",
+                id: 0, userId: getRandomUserId(), 
                 comment: "Looks really good!"
             },
         ],
     },
     {
         _id: new mongoose.Types.ObjectId(),
-        userId: userIds[4],
+        userId: getRandomUserId(),
         description:
         "Jane Doe here having a blast at the local festival!",
         picturePath: "post43b3bd816d464c84a5ab56f417fe3cf2.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[4],
+                id: 0, userId: getRandomUserId(),
                 comment: "Utah sure knows how to throw a festival!"
             },
             {
-                id: 1, userId: userIds[2], 
+                id: 1, userId: getRandomUserId(), 
                 comment: "What city is this in Jane?"
             },
             {
-                id: 2, userId: userIds[4], 
+                id: 2, userId: getRandomUserId(), 
                 comment: "Salt Lake City!"
             },
             {
-                id: 3, userId: userIds[2], 
+                id: 3, userId: getRandomUserId(), 
                 comment: "It looks amazing! I would love to put it on my bucket list!"
             },
             {
-                id: 4, userId: userIds[8], 
+                id: 4, userId: getRandomUserId(), 
                 comment: "I want to check this place out!"
             },
         ],
@@ -440,27 +492,27 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[11], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "Its been a good festival season around here!"
             },
             {
-                id: 1, userId: userIds[12], 
+                id: 1, userId: getRandomUserId(), 
                 comment: "Wooooo"
             },
             {
-                id: 2, userId: userIds[13], 
+                id: 2, userId: getRandomUserId(), 
                 comment: "!!!!!!"
             },
             {
-                id: 3, userId: userIds[14], 
+                id: 3, userId: getRandomUserId(), 
                 comment: "Sounds like a good time you're having!"
             },
             {
-                id: 4, userId: userIds[10], 
+                id: 4, userId: getRandomUserId(), 
                 comment: "Wow! Any other photos?"
             },
             {
-                id: 5, userId: userIds[9], 
+                id: 5, userId: getRandomUserId(), 
                 comment: "Coolio"
             },
         ],
@@ -474,27 +526,27 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[0], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "Let's play sometime! ^^"
             },
             {
-                id: 1, userId: userIds[7], 
+                id: 1, userId: getRandomUserId(), 
                 comment: "Looked like you had a long day"
             },
             {
-                id: 2, userId: userIds[3], 
+                id: 2, userId: getRandomUserId(), 
                 comment: "..."
             },
             {
-                id: 3, userId: userIds[4], 
+                id: 3, userId: getRandomUserId(), 
                 comment: "Good night"
             },
             {
-                id: 4, userId: userIds[5], 
+                id: 4, userId: getRandomUserId(), 
                 comment: "sounds nice ~~~!"
             },
             {
-                id: 5, userId: userIds[1], 
+                id: 5, userId: getRandomUserId(), 
                 comment: "Had a fun time!"
             },
         ],
@@ -508,7 +560,7 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[2], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "Just get off"
             },
         ],
@@ -521,23 +573,23 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[7], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "I wish you both well!"
             },
             {
-                id: 1, userId: userIds[9], 
+                id: 1, userId: getRandomUserId(), 
                 comment: "O.O"
             },
             {
-                id: 2, userId: userIds[4], 
+                id: 2, userId: getRandomUserId(), 
                 comment: "Congrats!"
             },
             {
-                id: 3, userId: userIds[11], 
+                id: 3, userId: getRandomUserId(), 
                 comment: "Wooo!"
             },
             {
-                id: 4, userId: userIds[0], 
+                id: 4, userId:getRandomUserId(), 
                 comment: "Have a good honeymoon!"
             },
         ],
@@ -550,31 +602,31 @@ export const posts = [
         likes: getRandomLikes(userIds),
         comments: [
             {
-                id: 0, userId: userIds[4], 
+                id: 0, userId: getRandomUserId(), 
                 comment: "(•‿•)"
             },
             {
-                id: 1, userId: userIds[0], 
+                id: 1, userId: getRandomUserId(), 
                 comment: "(๑´• .̫ •ू`๑)"
             },
             {
-                id: 2, userId: userIds[3], 
+                id: 2, userId: getRandomUserId(), 
                 comment: "⸂⸂⸜(രᴗര๑)⸝⸃⸃"
             },
             {
-                id: 3, userId: userIds[9], 
+                id: 3, userId: getRandomUserId(), 
                 comment: "(◐ω◑ )"
             },
             {
-                id: 4, userId: userIds[12], 
+                id: 4, userId: getRandomUserId(), 
                 comment: "꒰ღ˘‿˘ற꒱❤⃛"
             },
             {
-                id: 5, userId: userIds[11], 
+                id: 5, userId: getRandomUserId(), 
                 comment: "◝(๑꒪່౪̮꒪່๑)◜"
             },
             {
-                id: 6, userId: userIds[13], 
+                id: 6, userId: getRandomUserId(), 
                 comment: "Ⴚტ◕‿◕ტჂ"
             },
         ],
@@ -582,10 +634,19 @@ export const posts = [
     {
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[14],
-        description: "Nice Cricket Noises.",
+        description: "Crickets I recorded last night",
         picturePath: "postaea0b54bfeee471c942a7257bd15da4ecricket_sounds.wav",
         likes: getRandomLikes(userIds),
-        comments: [],
+        comments: [
+            {
+                id: 0, userId: getRandomUserId(), 
+                comment: "Those crickets must have been loud."
+            },
+            {
+                id: 1, userId: getRandomUserId(), 
+                comment: "Downloaded it!"
+            },
+        ],
     },
     {
         _id: new mongoose.Types.ObjectId(),
@@ -593,9 +654,22 @@ export const posts = [
         description: "Dummy PDF",
         picturePath: "post65cb3cd33b3c42f4864e1097c0e126fdDummyPDF.pdf",
         likes: getRandomLikes(userIds),
-        comments: [],
+        comments: [
+            {
+                id: 0, userId: getRandomUserId(), 
+                comment: "Dummy comment"
+            },
+            {
+                id: 1, userId: getRandomUserId(), 
+                comment: "Downloaded it!"
+            },
+        ],
     },
 ];
+
+const postsWithoutFiles = generatePosts();
+const mergedPosts = [...postsWithFiles, ...postsWithoutFiles];
+export const posts = shuffleArray(mergedPosts);
 
 export const advertisements = [
     {

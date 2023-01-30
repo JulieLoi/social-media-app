@@ -43,13 +43,13 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
                 // Updates Logged In User Friends
                 dispatch(setFriends({ friends: loggedUserFriends }));
 
-                // Profile User === Logged In User (Updates Profile User as well)
+                // Logged In User Profile Page: Update Friends List (Remove Friends)
                 if (loggedInUser._id === profileUser._id) {
                     dispatch(setProfileUser({ ...profileUser, friends: loggedUserFriends }));
                 }
 
-                // Currently looking at a profile and adding the profile user as a friend
-                if (profileUser._id === profileId) {
+                // Profile Page: Update Friends List (Add/Remove Logged In User) 
+                if ((profileUser._id === profileId) && (profileId === otherUserId)) {
                     dispatch(setProfileUser({ ...profileUser, friends: otherUserFriends }));
                 }
             }

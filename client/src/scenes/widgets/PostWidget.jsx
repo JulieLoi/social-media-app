@@ -13,7 +13,7 @@ import {
     PlayCircleFilled, PauseCircleFilled,
     FastForward, FastRewind, Repeat, VolumeUp, VolumeMute,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme, Button } from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import WidgetWrapper from "components/WidgetWrapper";
 import FlexBetween from "components/FlexBetween";
