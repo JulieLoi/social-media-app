@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; 
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css';
+import "../../audioMode.scss";
 import Axios from "axios";
 import fileDownload from 'js-file-download';
 import { setPost, deletePost } from "state";
@@ -19,8 +20,6 @@ import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import Comment from "components/Comment";
 import AddComment from "components/AddComment";
-
-import "../../postwidget.scss"
 
 /**
  * Post Widget
@@ -40,9 +39,10 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const primary = palette.primary.main;
     const primaryMainLight = palette.primary.mainLight;
 
-    // Token, Logged In User (Frontend State)
+    // Token, Logged In User, Light/Dark Mode (Frontend State)
     const token = useSelector((state) => state.token);
     const loggedInUser = useSelector((state) => state.user);
+    const mode = useSelector((state) => state.mode);
 
     // Post Owner (User)
     const [postOwner, setPostOwner] = useState("");
@@ -185,9 +185,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         </FlexBetween>
                     </Box>
                     :
-                    <Box>
+                    <Box data-theme={mode === "light" ? "light" : "dark"}>
+                        <Divider />
                         <AudioPlayer src={`http://localhost:3001/assets/posts/${picturePath}`} 
-                            sx={{ background: "red"}}
                             customIcons={{
                                 play:       <PlayCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
                                 pause:      <PauseCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
