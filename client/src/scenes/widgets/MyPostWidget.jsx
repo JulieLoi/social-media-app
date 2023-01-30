@@ -107,8 +107,8 @@ const MyPostWidget = ({ picturePath }) => {
             const ext = image.path.split('.').pop();
             let postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
 
-            // Keep original file name for attachment
-            if (isAttachment) {
+            // Keep original file name for attachment/audio
+            if (isAttachment || isAudio) {
                 postImagePath = `post${uuidv4().replaceAll('-', '')}${image.path}`;
             }
     

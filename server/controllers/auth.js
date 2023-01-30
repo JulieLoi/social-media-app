@@ -39,13 +39,18 @@ export const register = async(req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        const badMessage = "Invalid Credentials - Wrong Email or Password";
 
         // Finds user (email unique) and checks password
         const user = await User.findOne({ email: email });
-        if (!user) { return res.status(400).json({ message: "Invalid Credentials - "}); }
+        if (!user) { 
+            return res.status(400).json({ message: badMessage }); 
+        }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) { return res.status(400).json({ message: "Invalid Credentials - " }); }
+        if (!isMatch) { 
+            return res.status(400).json({ message: badMessage }); 
+        }
 
         // Creates a token and sends the token and user (minus password) back
         const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET);

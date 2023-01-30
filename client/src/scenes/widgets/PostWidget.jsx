@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; 
-import AudioPlayer from 'react-h5-audio-player';
-import { RHAP_UI } from "react-h5-audio-player";
+import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css';
 import Axios from "axios";
 import fileDownload from 'js-file-download';
@@ -10,15 +9,18 @@ import { setPost, deletePost } from "state";
 import { 
     ChatBubbleOutlineOutlined, FavoriteBorderOutlined,
     FavoriteOutlined, ShareOutlined, FileDownload,
-    PlayCircleFilledOutlined, PlayCircleFilled
+    PlayCircleFilled, PauseCircleFilled,
+    FastForward, FastRewind, Repeat, VolumeUp, VolumeMute,
 } from "@mui/icons-material";
-import { Box, Button, Divider, IconButton, Typography, useTheme, } from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme, Button } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import WidgetWrapper from "components/WidgetWrapper";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import Comment from "components/Comment";
 import AddComment from "components/AddComment";
+
+import "../../postwidget.scss"
 
 /**
  * Post Widget
@@ -36,6 +38,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
+    const primaryMainLight = palette.primary.mainLight;
 
     // Token, Logged In User (Frontend State)
     const token = useSelector((state) => state.token);
@@ -112,22 +115,13 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
         });
     };
 
-    //
-    const downloadPDF = async () => {
+    // Download audio clip or pdf
+    const downloadAttachment = async () => {
         Axios.get(`http://localhost:3001/assets/posts/${picturePath}`, {
             responseType: 'blob',
         }).then(res => {
             fileDownload(res.data, picturePath.substring(36));
         })
-        /*
-        function download(url: string, filename: string) {
-            Axios.get(url, {
-              responseType: 'blob',
-            }).then(res => {
-              fileDownload(res.data, filename);
-            });
-          }
-        */
     }
 
     // Update Post
@@ -141,6 +135,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
         <>
         {loggedInUser !== null && postOwner !== null &&
         <WidgetWrapper mb="2rem">
+
             {postOwner._id === loggedInUser._id ?
                 <Friend 
                     id={postUserId}
@@ -179,7 +174,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 ((ext === "pdf") ?
                     <Box mt="1rem" p="1rem"
                         borderRadius="5px" border={`1px solid ${main}`}
-                        onClick={() => downloadPDF()}
+                        onClick={() => downloadAttachment()}
                         sx={{ "&:hover": { cursor: "pointer", color: primary } }}
                     >
                         <FlexBetween>
@@ -194,13 +189,20 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         <AudioPlayer src={`http://localhost:3001/assets/posts/${picturePath}`} 
                             sx={{ background: "red"}}
                             customIcons={{
-                                play: <PlayCircleFilled fontSize="1rem" sx={{ color: "red" }} />
+                                play:       <PlayCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
+                                pause:      <PauseCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
+                                forward:    <FastForward fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
+                                rewind:     <FastRewind fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
+                                loop:       <Repeat fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
+                                volume:     <VolumeUp fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
+                                volumeMute: <VolumeMute fontSize="1rem" sx={{ "&:hover": { color: primaryMainLight }  }} />,        
                             }}
                             customAdditionalControls={
                                 [
-                                  RHAP_UI.LOOP,
-                                  <button p="0"><FileDownload /></button>,
-                                  <FileDownload>d</FileDownload>
+                                    RHAP_UI.LOOP,
+                                    <Button onClick={() => downloadAttachment()}>
+                                        <FileDownload />
+                                    </Button>,
                                 ]
                             }
                         />

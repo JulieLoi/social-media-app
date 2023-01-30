@@ -40,6 +40,7 @@ export const colorTokens = {
               primary: {
                 dark: colorTokens.primary[200],
                 main: colorTokens.primary[500],
+                mainLight: colorTokens.primary[700],
                 light: colorTokens.primary[800],
               },
               neutral: {
@@ -59,6 +60,7 @@ export const colorTokens = {
               primary: {
                 dark: colorTokens.primary[700],
                 main: colorTokens.primary[500],
+                mainLight: colorTokens.primary[700],
                 light: colorTokens.primary[50],
               },
               neutral: {

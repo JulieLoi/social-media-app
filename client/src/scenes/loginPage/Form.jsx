@@ -39,7 +39,7 @@ const initialValuesRegister = {
 // Login Register Schema and Initial Values
 const loginSchema = yup.object().shape({
     email: yup.string().email("Invalid Email").required("Email Required"),
-    password: yup.string().required("Password Required").length(8, "Password must be at least 8 characters"),
+    password: yup.string().required("Password Required").min(8, "Password must be at least 8 characters"),
 });
 
 const initialValuesLogin = {
@@ -67,7 +67,10 @@ const Form = () => {
     const isRegister = (pageType === "register");
     
     // Location (Optional)
-    const [location, setLocation] = useState("")
+    const [location, setLocation] = useState("");
+
+    // Wrong Email or Password
+    const [error, setError] = useState("");
 
     // Register Function
     const register = async (values, onSubmitProps) => {
@@ -99,7 +102,7 @@ const Form = () => {
                 onSubmitProps.resetForm();     // Reset Form
                 setPageType("login");
             }
-            else { console.log(jsonObject.message); }
+            else { setError(jsonObject.message); }
         });
     }
 
@@ -128,7 +131,7 @@ const Form = () => {
                 );
                 navigate("/home");
             }
-            else { console.log(jsonObject.message); }
+            else { setError(jsonObject.message); }
         });
     }
 
@@ -253,7 +256,7 @@ const Form = () => {
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.email}
                         inputProps={{ maxLength: 254 }}
-                        error={(Boolean(touched.email) && Boolean(errors.email))}
+                        error={ (Boolean(touched.email) && Boolean(errors.email)) || (error !== "") }
                         helperText={(touched.email && errors.email)}
                         sx={{ gridColumn: "span 4" }}
                     />
@@ -263,8 +266,8 @@ const Form = () => {
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.password}
                         inputProps={{ maxLength: 128 }}
-                        error={(Boolean(touched.password) && Boolean(errors.password))}
-                        helperText={(touched.password && errors.password)}
+                        error={ (Boolean(touched.password) && Boolean(errors.password)) || (error !== "") }
+                        helperText={error === "" ? (errors.password) : error}
                         sx={{ gridColumn: "span 4" }}
                     />
                 </Box>
