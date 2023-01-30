@@ -9,7 +9,7 @@ import { setPost, deletePost } from "state";
 
 import { 
     ChatBubbleOutlineOutlined, FavoriteBorderOutlined,
-    FavoriteOutlined, ShareOutlined, FileDownload,
+    FavoriteOutlined, ShareOutlined, FileDownload, PictureAsPdf,
     PlayCircleFilled, PauseCircleFilled,
     FastForward, FastRewind, Repeat, VolumeUp, VolumeMute,
 } from "@mui/icons-material";
@@ -178,10 +178,13 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         sx={{ "&:hover": { cursor: "pointer", color: primary } }}
                     >
                         <FlexBetween>
-                        <Typography fontWeight="500">
-                            {picturePath.substring(36)}
-                        </Typography>
-                        <FileDownload />
+                            <FlexBetween>
+                                <PictureAsPdf sx={{ marginRight: "10px" }} />
+                                <Typography fontWeight="500">
+                                    {picturePath.substring(36)}
+                                </Typography>
+                            </FlexBetween>
+                            <FileDownload />
                         </FlexBetween>
                     </Box>
                     :
@@ -189,20 +192,20 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         <Divider />
                         <AudioPlayer src={`http://localhost:3001/assets/posts/${picturePath}`} 
                             customIcons={{
-                                play:       <PlayCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
-                                pause:      <PauseCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
-                                forward:    <FastForward fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
-                                rewind:     <FastRewind fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
-                                loop:       <Repeat fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
-                                volume:     <VolumeUp fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight }  }} />,
-                                volumeMute: <VolumeMute fontSize="1rem" sx={{ "&:hover": { color: primaryMainLight }  }} />,        
+                                play:       <PlayCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight } }} />,
+                                pause:      <PauseCircleFilled fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight } }} />,
+                                forward:    <FastForward fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight } }} />,
+                                rewind:     <FastRewind fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight } }} />,
+                                loop:       <Repeat fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight } }} />,
+                                volume:     <VolumeUp fontSize="1rem" sx={{ color: primary, "&:hover": { color: primaryMainLight } }} />,
+                                volumeMute: <VolumeMute fontSize="1rem" sx={{ "&:hover": { color: primaryMainLight } }} />,        
                             }}
                             customAdditionalControls={
                                 [
                                     RHAP_UI.LOOP,
-                                    <Button onClick={() => downloadAttachment()}>
-                                        <FileDownload />
-                                    </Button>,
+                                    <FlexBetween onClick={() => downloadAttachment()}>
+                                        <FileDownload sx={{ fontSize: "27px", "&:hover": { color: primary } }} />, 
+                                    </FlexBetween>
                                 ]
                             }
                         />
