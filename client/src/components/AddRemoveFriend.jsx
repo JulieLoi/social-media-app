@@ -62,7 +62,11 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
         <FlexBetween>
         {loggedInUser._id !== otherUserId && 
             <IconButton onClick={patchFriend}
-                sx={{ backgroundColor: palette.primary.light, p: "0.6rem", mr: marginAmount }}
+                sx={{ 
+                    p: "0.6rem", mr: marginAmount,
+                    backgroundColor: palette.primary.light, 
+                    border: `1px solid ${primaryDark}`
+                }}
             >
                 {checkFriendship ? 
                     <PersonRemoveOutlined sx={{ color: primaryDark }} /> 

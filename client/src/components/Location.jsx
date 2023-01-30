@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { Country, State, City }  from 'country-state-city';
 
 import { Select, InputLabel, MenuItem, Box } from '@mui/material';
+import FlexBetween from './FlexBetween';
 
 /**
  * Location Component
  * Select a country, state, city
  */
-const Location = ({ setLocation, givenLocation="" }) => {
+const Location = ({ setLocation, givenLocation="", isRegister=true }) => {
 
     // Country Options
     const countryOptions = (Country.getAllCountries()).map((country) => ({label: country.name, id: country.isoCode}));
@@ -90,12 +91,64 @@ const Location = ({ setLocation, givenLocation="" }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [countrySelect, stateSelect, citySelect])
 
+    const statecitySelect = (
+        <>
+        {/* STATE SELECT */}
+        <Box width={isRegister ? "100%" : "49%"}>
+            <InputLabel id="state-label">State</InputLabel>
+            <Select fullWidth disabled={stateOptions.length === 0}
+                labelId="state-label" id="state-select"
+                label="State" value={stateSelect}
+                onChange={(e) => {
+                    
+                    // Select a State
+                    const value = e.target.value;
+                    if (value !== stateSelect) {
+                        setStateSelect(e.target.value);
+                        setCitySelect("");                  // Reset City
+
+                        // Reset City Options
+                        if (value !== "") {
+                            const state = stateOptions[value];
+                            const cities = (City.getCitiesOfState(state.countryCode, state.id)).map((city) => ({
+                                countryCode: city.countryCode, stateCode: city.stateCode, id: city.isoCode, label: city.name
+                            }));
+                            setCityOptions(cities)
+                        }
+                        else { setCityOptions([]); }
+                    }
+                }}
+            >
+                <MenuItem value=""><i>None</i></MenuItem>
+                {stateOptions.map((state, index) => (
+                    <MenuItem key={`${state.countryCode}-${state.id}`} value={index}>{state.label}</MenuItem>
+                ))}
+            </Select>
+        </Box>
+            
+        {/* City SELECT */}
+        <Box width={isRegister ? "100%" : "49%"}>
+            <InputLabel id="city-label">City</InputLabel>
+            <Select fullWidth disabled={cityOptions.length === 0}
+                labelId="city-label" id="city-select"
+                label="City" value={citySelect} 
+                onChange={(e) => setCitySelect(e.target.value) }
+            >
+                <MenuItem value=""><i>None</i></MenuItem>
+                {cityOptions.map((city, index) => (
+                    <MenuItem key={`${city.countryCode}-${city.stateCode}-${city.label}`} value={index}>{city.label}</MenuItem>
+                ))}
+            </Select>
+        </Box>
+        </>
+    )
+
     // Location
     return (
         <>
 
             {/* COUTNRY SELECT */}
-            <Box fullwidth="true" sx={{ gridColumn: "span 2" }}>
+            <Box fullwidth="true" mb="5px" sx={{ gridColumn: "span 2" }}>
             <InputLabel id="country-label">Country</InputLabel>
             <Select fullWidth disabled={countryOptions.length === 0}
                 labelId="country-label" id="country-select"
@@ -129,54 +182,13 @@ const Location = ({ setLocation, givenLocation="" }) => {
             </Select>
             </Box>
 
-            {/* STATE SELECT */}
-            <Box fullwidth="true">
-            <InputLabel id="state-label">State</InputLabel>
-            <Select fullWidth disabled={stateOptions.length === 0}
-                labelId="state-label" id="state-select"
-                label="State" value={stateSelect}
-                onChange={(e) => {
-                    
-                    // Select a State
-                    const value = e.target.value;
-                    if (value !== stateSelect) {
-                        setStateSelect(e.target.value);
-                        setCitySelect("");                  // Reset City
-
-                        // Reset City Options
-                        if (value !== "") {
-                            const state = stateOptions[value];
-                            const cities = (City.getCitiesOfState(state.countryCode, state.id)).map((city) => ({
-                                countryCode: city.countryCode, stateCode: city.stateCode, id: city.isoCode, label: city.name
-                            }));
-                            setCityOptions(cities)
-                        }
-                        else { setCityOptions([]); }
-                    }
-                }}
-            >
-                <MenuItem value=""><i>None</i></MenuItem>
-                {stateOptions.map((state, index) => (
-                    <MenuItem key={`${state.countryCode}-${state.id}`} value={index}>{state.label}</MenuItem>
-                ))}
-            </Select>
-            </Box>
+            {/* Positioning the State and City Select (Register / User Account Settings) */}
+            {isRegister ?
+                <>{statecitySelect}</>
+                :
+                <FlexBetween>{statecitySelect}</FlexBetween>
+            }
             
-            {/* City SELECT */}
-            <Box fullwidth="true">
-            <InputLabel id="city-label">City</InputLabel>
-            <Select fullWidth disabled={cityOptions.length === 0}
-                labelId="city-label" id="city-select"
-                label="City" value={citySelect}
-                onChange={(e) => setCitySelect(e.target.value) }
-            >
-                <MenuItem value=""><i>None</i></MenuItem>
-                {cityOptions.map((city, index) => (
-                    <MenuItem key={`${city.countryCode}-${city.stateCode}-${city.label}`} value={index}>{city.label}</MenuItem>
-                ))}
-            </Select>
-            </Box>
-
         </>
     )
 }

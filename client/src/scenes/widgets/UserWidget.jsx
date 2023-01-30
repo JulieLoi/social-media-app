@@ -302,14 +302,14 @@ const UserWidget = ({ userId, picturePath }) => {
 
         {/* EDIT USER INFORMATION */}
         <Dialog open={dialogBox} onClose={() => setDialogBox(false)} fullWidth>
-            <DialogTitle fontSize="1.5rem" sx={{ textDecoration: "underline" }}>
+            <DialogTitle fontSize="1rem" sx={{ textDecoration: "underline" }}>
                 Update Account Information
             </DialogTitle>
             <DialogContent>
 
                 {/* Profile Image */}
                 <Box mb="1rem">
-                <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
+                <Typography sx={{ fontWeight: "500", fontSize: "1rem" }}>
                     User Profile Image
                 </Typography>
                 <ImageDropzone image={image} setImage={setImage} />
@@ -317,10 +317,6 @@ const UserWidget = ({ userId, picturePath }) => {
 
                 {/* Full Name */}
                 <Box mb="1rem">
-                <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
-                    Full Name
-                </Typography>
-
                 <FlexBetween gap="1rem">
                 <TextField fullWidth id="first-name"                        
                     label="First Name" variant="filled"
@@ -340,7 +336,13 @@ const UserWidget = ({ userId, picturePath }) => {
 
                 {/* Location */}
                 <Box mb="1rem">
-                <Location setLocation={setNewLocation} givenLocation={newLocation} />
+                <Typography sx={{ fontWeight: "500", fontSize: "1rem" }}>
+                    Location / Occupation
+                </Typography>
+                <Location isRegister={false} 
+                    setLocation={setNewLocation} 
+                    givenLocation={newLocation} 
+                />
                 <Box mb="1rem" />
                 <TextField fullWidth id="location" disabled                     
                     label="Location" variant="filled"
@@ -350,11 +352,6 @@ const UserWidget = ({ userId, picturePath }) => {
                 
                 {/* Occupation */}
                 <Box mb="1rem">
-                <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
-                    Occupation
-                </Typography>
-
-                <Box mb="1rem">
                 <TextField fullWidth id="occupation"                        
                     label="Occupation" variant="filled"
                     inputProps={{ maxLength: 50 }}
@@ -362,11 +359,10 @@ const UserWidget = ({ userId, picturePath }) => {
                     value={editUserInformation.occupation}
                 />
                 </Box>
-                </Box>
 
                 {/* Social Profiles */}
                 <Box>
-                <Typography sx={{ fontWeight: "500", fontSize: "1.2rem", textDecoration: "underline" }}>
+                <Typography sx={{ fontWeight: "500", fontSize: "1rem" }}>
                     Social Profiles
                 </Typography>
                 <Box mb="1rem">
