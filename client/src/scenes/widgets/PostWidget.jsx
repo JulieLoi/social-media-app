@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; 
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import Axios from "axios";
+import fileDownload from 'js-file-download';
 import { setPost, deletePost } from "state";
 
 import { 
     ChatBubbleOutlineOutlined, FavoriteBorderOutlined,
-    FavoriteOutlined, ShareOutlined,
+    FavoriteOutlined, ShareOutlined, FileDownload
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme, } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -108,25 +110,29 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
         });
     };
 
+    //
+    const downloadPDF = async () => {
+        Axios.get(`http://localhost:3001/assets/posts/${picturePath}`, {
+            responseType: 'blob',
+        }).then(res => {
+            fileDownload(res.data, picturePath.substring(36));
+        })
+        /*
+        function download(url: string, filename: string) {
+            Axios.get(url, {
+              responseType: 'blob',
+            }).then(res => {
+              fileDownload(res.data, filename);
+            });
+          }
+        */
+    }
+
+    // Update Post
     useEffect(() => {
         getPostOwner();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
 
     // Post Widget
     return (
@@ -163,16 +169,27 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             {/* Post Picture/Audio (if exists) */}
             {picturePath && (
                 (ext === "jpg" || ext === "jpeg" || ext === "png" || ext === "gif") ?
-                <img 
+                <img src={`http://localhost:3001/assets/posts/${picturePath}`}
                     width="100%" height="auto" alt="post"
                     style={{ borderRadius: "0.75rem", marginBottom: "0.75rem" }}
-                    src={`http://localhost:3001/assets/posts/${picturePath}`}
                 />
                 :
-                <AudioPlayer
-                    src={`http://localhost:3001/assets/posts/${picturePath}`}
-                />
-
+                ((ext === "pdf") ?
+                    <Box mt="1rem" p="1rem"
+                        borderRadius="5px" border={`1px solid ${main}`}
+                        onClick={() => downloadPDF()}
+                        sx={{ "&:hover": { cursor: "pointer", color: primary } }}
+                    >
+                        <FlexBetween>
+                        <Typography fontWeight="500">
+                            {picturePath.substring(36)}
+                        </Typography>
+                        <FileDownload />
+                        </FlexBetween>
+                    </Box>
+                    :
+                    <AudioPlayer src={`http://localhost:3001/assets/posts/${picturePath}`} />
+                )
             )}
 
             <Divider />

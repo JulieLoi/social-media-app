@@ -5,7 +5,7 @@ import FlexBetween from "components/FlexBetween";
 
 /**
  * Audio Dropzone Component
- * Drop image here
+ * Drop audio file here
  */
 const AudioDropzone = ({ audio, setAudio }) => {
 

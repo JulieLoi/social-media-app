@@ -4,10 +4,10 @@ import { EditOutlined, CloseOutlined, } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 
 /**
- * Image Dropzone Component
- * Drop image/gif here
+ * Audio Dropzone Component
+ * Drop attachment file here
  */
-const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
+const AttachementDropzone = ({ attachment, setAttachment }) => {
 
     // Theme Colors
     const { palette } = useTheme();
@@ -15,22 +15,18 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
     const main = palette.primary.main;
 
     // Dropzone
-    const maxSize = 1048576*2; // 2MB
+    const maxSize = 1048576*3; // 3MB
 
     return (
         <>
         <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
-            <Dropzone acceptedFiles=".jpg, jpeg, .png, .gif" multiple={false}
+            <Dropzone acceptedFiles=".jpeg,.png" multiple={false}
                 onDrop={ (acceptedFiles, rejectedFiles) => {
                     //console.log("accepted files", acceptedFiles)
                     //console.log("rejected files", rejectedFiles)
-                    setImage(acceptedFiles[0]);
+                    setAttachment(acceptedFiles[0]);
                 }}
-                accept={ staticImagesOnly ? 
-                    { 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] } 
-                    : 
-                    { 'image/gif': ['.gif'] } 
-                } 
+                accept={{ 'application/pdf': ['.pdf'] }} 
                 minSize={0}
                 maxSize={maxSize}
             >
@@ -41,19 +37,15 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
                     p="1rem" sx={{ "&:hover": { cursor: "pointer" } }}
                 >
                     <input {...getInputProps()} />
-                    {!image ? 
-                        <div>{staticImagesOnly ? 
-                            "Add Image Here (jpg, jpeg, png) - 2MB"
-                            :
-                            "Add Gif Here (gif) - 2MB"
-                        }
+                    {!attachment ? 
+                        <div>Add Attachment Here (pdf) - 3MB
                         </div>
                         : 
                         <FlexBetween>
-                            <Typography>{image.name}</Typography>
+                            <Typography>{attachment.name}</Typography>
                             <FlexBetween>
                                 <EditOutlined sx={{ "&:hover": { color: main, cursor: "pointer" } }} />
-                                <CloseOutlined onClick={() => setImage(null)}
+                                <CloseOutlined onClick={() => setAttachment(null)}
                                     sx={{ "&:hover": { color: main, cursor: "pointer" } }}
                                 />
                             </FlexBetween>
@@ -67,4 +59,4 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
     )
 }
 
-export default ImageDropzone;
+export default AttachementDropzone;

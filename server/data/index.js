@@ -319,7 +319,7 @@ export const users = [
         firstName: "Ethan",
         lastName: "Hoover",
         email: "ethanhoover@gmail.com",
-        password: "$2b$10$HF6PgHML0O.J9g9.2SaCXOAwf1CHWh6FLGj0VxsNVn1DBLe.xkH/S",
+        password: "$2b$10$f4T8ofxhQdaoLPgEFqXfE.wDNNWjla/qZ.5ZBiNYkARSSClw9u61u",
         picturePath: "user1f8cd347b8b047789d1229753e88f12f.jpg",
         friends: getRandomFriends(14),
         location: "Greenland",
@@ -516,8 +516,7 @@ export const posts = [
     {
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[10],
-        description:
-        "Wedding Picture!!!",
+        description: "Wedding Picture!!!",
         picturePath: "post07445596811a4881a1f2a002636e74c9.jpeg",
         likes: getRandomLikes(userIds),
         comments: [
@@ -546,8 +545,7 @@ export const posts = [
     {
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[2],
-        description:
-        "Piano Cat",
+        description: "Piano Cat",
         picturePath: "post16863ad4afc14ef4853e2188303e07a0.gif",
         likes: getRandomLikes(userIds),
         comments: [
@@ -584,9 +582,16 @@ export const posts = [
     {
         _id: new mongoose.Types.ObjectId(),
         userId: userIds[14],
-        description:
-        "Nice Cricket Noises.",
+        description: "Nice Cricket Noises.",
         picturePath: "postaea0b54bfeee471c942a7257bd15da4e.wav",
+        likes: getRandomLikes(userIds),
+        comments: [],
+    },
+    {
+        _id: new mongoose.Types.ObjectId(),
+        userId: userIds[5],
+        description: "Dummy PDF",
+        picturePath: "post65cb3cd33b3c42f4864e1097c0e126fdDummyPDF.pdf",
         likes: getRandomLikes(userIds),
         comments: [],
     },

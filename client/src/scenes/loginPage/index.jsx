@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
 
@@ -7,12 +10,23 @@ import Form from "./Form";
  */
 const LoginPage = () => {
 
+    const navigate = useNavigate();
+
     // Theme Colors
     const { palette } = useTheme();
     const alt = palette.background.alt;
+    const token = useSelector((state) => state.token);
 
     // Mobile/PC
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+
+    // Go to Home Page (Token exists)
+    useEffect(() => {
+        if (token !== null) {
+            navigate(`/home`)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     // Login Page
     return (

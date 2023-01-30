@@ -16,6 +16,7 @@ import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
 import ImageDropzone from "components/ImageDropzone";
 import AudioDropzone from "components/AudioDropzone";
+import AttachementDropzone from "components/AttachmentDropzone";
 
 /**
  * MyPostWidget
@@ -38,12 +39,12 @@ const MyPostWidget = ({ picturePath }) => {
     const posts = useSelector((state) => state.posts);
 
     // My Post Widget States
-    const [post, setPost] = useState("");               // Post Content
-    const [isImage, setIsImage] = useState(false);      // Will show image dropbox
-    const [isGif, setIsGif] = useState(false);          // Will show clip dropbox (same as image dropbox)
-    const [isAudio, setIsAudio] = useState(false);
-
-    const [image, setImage] = useState(null);           // Optional image to include in post
+    const [post, setPost] = useState("");                           // Post Content
+    const [isImage, setIsImage] = useState(false);                  // Will show image dropbox
+    const [isGif, setIsGif] = useState(false);                      // Will show gif dropbox (same as image dropbox)
+    const [isAudio, setIsAudio] = useState(false);                  // Will show audio dropbox
+    const [isAttachment, setIsAttachment] = useState(false);        // Will show attachment dropbox
+    const [image, setImage] = useState(null);                       // Optional image/gif/audio to include in post
 
     
     // Dropdown Menu (Mobile Screen)
@@ -56,8 +57,8 @@ const MyPostWidget = ({ picturePath }) => {
     const handleImage = () => {
 
         // Reset isGif
-        if (isGif || isAudio) {
-            setIsGif(false); setIsAudio(false);
+        if (isGif || isAttachment || isAudio) {
+            setIsGif(false); setIsAttachment(false); setIsAudio(false);
             setImage(null);
         }
         setIsImage(!isImage);
@@ -66,17 +67,27 @@ const MyPostWidget = ({ picturePath }) => {
     // Handle Gif Click
     const handleGif = () => {
         // Reset isImage
-        if (isImage || isAudio) {
-            setIsImage(false); setIsAudio(false);
+        if (isImage || isAttachment || isAudio) {
+            setIsImage(false);  setIsAttachment(false); setIsAudio(false);
             setImage(null);
         }
         setIsGif(!isGif);
     }
 
+    // Handle Attachment Click
+    const handleAttachment = () => {
+        // Reset isImage
+        if (isImage || isGif || isAudio) {
+            setIsImage(false); setIsGif(false); setIsAudio(false);
+            setImage(null);
+        }
+        setIsAttachment(!isAttachment);
+    }
+
     // Handle Audio Click
     const handleAudio = () => {
-        if (isImage || isGif) {
-            setIsGif(false); setIsImage(false);
+        if (isImage || isGif || isAttachment) {
+            setIsImage(false); setIsGif(false); setIsAttachment(false);
             setImage(null);
         }
         setIsAudio(!isAudio);
@@ -91,9 +102,15 @@ const MyPostWidget = ({ picturePath }) => {
         formData.append("description", post);
         formData.append("serverPath", "/posts");                // Multer Disk Storage (Path)
 
+        // Path for image/gif/attachment/audio
         if (image) {
             const ext = image.path.split('.').pop();
-            const postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
+            let postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
+
+            // Keep original file name for attachment
+            if (isAttachment) {
+                postImagePath = `post${uuidv4().replaceAll('-', '')}${image.path}`;
+            }
     
             formData.append("picturePath", postImagePath);      // Rename Post Image
             formData.append("picture", image);
@@ -143,11 +160,14 @@ const MyPostWidget = ({ picturePath }) => {
             </FlexBetween>
 
             {/* IMAGE DROPZONE */}
-            {(isImage || isGif) && (
+            {(isImage || isGif) && 
                 <ImageDropzone image={image} setImage={setImage} staticImagesOnly={!isGif} />
-            )}
+            }
             {isAudio &&
                 <AudioDropzone audio={image} setAudio={setImage} />
+            }
+            {isAttachment &&
+                <AttachementDropzone attachment={image} setAttachment={setImage} />
             }
 
             <Divider sx={{ margin: "1.25rem 0" }} />
@@ -177,14 +197,14 @@ const MyPostWidget = ({ picturePath }) => {
                         </FlexBetween>
 
                         {/* ATTACHMENT UPLOAD*/}
-                        <FlexBetween gap="0.25rem">
-                            <AttachFileOutlined sx={{ color: mediumMain }} />
+                        <FlexBetween gap="0.25rem" onClick={handleAttachment}>
+                            <AttachFileOutlined sx={{ color: isAttachment ? main : mediumMain }} />
                             <Typography color={mediumMain}>Attachment</Typography>
                         </FlexBetween>
 
                         {/* AUDIO UPLOAD*/}
                         <FlexBetween gap="0.25rem" onClick={handleAudio}>
-                            <MicOutlined sx={{ color: mediumMain }} />
+                            <MicOutlined sx={{ color: isAudio ? main : mediumMain }} />
                             <Typography color={mediumMain}>Audio</Typography>
                         </FlexBetween>
                     </>)

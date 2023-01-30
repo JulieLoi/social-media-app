@@ -4,12 +4,9 @@
 
 Things to do:
 -Redo Login/Register
--Clip, Attachment, Audio
 
 
-REACT DROPZONE LIBRARY (Image, Clip, Attachment, Audio)
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
--Used MIME Types for deciding which files are accepted!
+
 
 
 -----------------------------
@@ -33,6 +30,9 @@ FINISHED WORKING SEARCH BAR
 FINISHED CHANGING PROFILLE IMAGE IN USER ACCOUTN SETTINGS
 
 search bar, image dropzone made into separate components
+
+FINISHED CLIP/GIF AND AUDIO AND ATTACHMENT DROPZONE
+
 
 
 DONE:D++++++
@@ -80,6 +80,12 @@ search bar...
 -change profile picture
 
 
+REACT DROPZONE LIBRARY (Image, Clip, Attachment, Audio)
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+-Used MIME Types for deciding which files are accepted!
+
+
+
 ---------
 
 Edit account info...
@@ -106,8 +112,9 @@ https://www.youtube.com/watch?v=K8YELRmUb5o
 Generate Random UUID (for image naming) -in frontend (client)
 npm install uuid
 
-
-
+DOWNLOAD PDF ATTACHMENT
+https://github.com/axios/axios
+https://www.npmjs.com/package/js-file-download
 
 
 
@@ -140,7 +147,7 @@ nimasarram@gmail.com
 
 
 ethanhoover@gmail.com
-5Ad%BUK8M6GvLOrdi432X@
+5Ad%BUK8M6GvLOrdi432X@xx
 
 remyloz@gmail.com
 h&j2!h*^MOYB^Z@Ip$^%7J%1UC#qMP79q0U#2z
