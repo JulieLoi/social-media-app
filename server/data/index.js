@@ -581,6 +581,15 @@ export const posts = [
             },
         ],
     },
+    {
+        _id: new mongoose.Types.ObjectId(),
+        userId: userIds[14],
+        description:
+        "Nice Cricket Noises.",
+        picturePath: "postaea0b54bfeee471c942a7257bd15da4e.wav",
+        likes: getRandomLikes(userIds),
+        comments: [],
+    },
 ];
 
 export const advertisements = [

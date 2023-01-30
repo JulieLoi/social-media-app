@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";  
+import { useDispatch, useSelector } from "react-redux"; 
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 import { setPost, deletePost } from "state";
 
 import { 
@@ -41,6 +43,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     // Likes (Does not update)
     const isLiked = Boolean(likes[loggedInUser._id]);     // Logged In User Likes
     const likeCount = Object.keys(likes).length;        // Total Like Count
+
+    // Check Extension (jpg, jpeg, png, gif / ogg, wav, mp3)
+    const ext = picturePath.split('.').pop();
 
     // GET API Call (Get Post Owner)
     const getPostOwner = async () => {
@@ -108,6 +113,21 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
     // Post Widget
     return (
         <>
@@ -140,13 +160,19 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 {description}
             </Typography>
 
-            {/* Post Picture (if exists) */}
+            {/* Post Picture/Audio (if exists) */}
             {picturePath && (
+                (ext === "jpg" || ext === "jpeg" || ext === "png" || ext === "gif") ?
                 <img 
                     width="100%" height="auto" alt="post"
                     style={{ borderRadius: "0.75rem", marginBottom: "0.75rem" }}
                     src={`http://localhost:3001/assets/posts/${picturePath}`}
                 />
+                :
+                <AudioPlayer
+                    src={`http://localhost:3001/assets/posts/${picturePath}`}
+                />
+
             )}
 
             <Divider />

@@ -63,7 +63,7 @@ const Form = () => {
     const main = palette.primary.main;
 
     // Dropzone
-    const maxSize = 1048576*10; // 10MB
+    const maxSize = 1048576*2;      // 2MB
 
     // Page State (Login / Register)
     const [pageType, setPageType] = useState("login");
@@ -178,7 +178,7 @@ const Form = () => {
                                 border={`1px solid ${palette.neutral.medium}`}
                             >
                                 <Dropzone
-                                    acceptedFiles=".jpeg,.png" multiple={false}
+                                    acceptedFiles=".jpg, .jpeg,.png" multiple={false}
                                     onDrop={(acceptedFiles, rejectedFiles) => {
                                         //console.log("accepted files", acceptedFiles)
                                         //console.log("rejected files", rejectedFiles)

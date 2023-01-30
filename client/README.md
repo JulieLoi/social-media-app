@@ -7,6 +7,10 @@ Things to do:
 -Clip, Attachment, Audio
 
 
+REACT DROPZONE LIBRARY (Image, Clip, Attachment, Audio)
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+-Used MIME Types for deciding which files are accepted!
+
 
 -----------------------------
 Finished Login/Register (ignore the rest of the things i don't want)
@@ -93,7 +97,8 @@ UPDATE NAME/LOCATINO
 Location
 npm i country-state-city
 
-
+Audio Player
+https://www.npmjs.com/package/react-h5-audio-player
 
 
 https://www.youtube.com/watch?v=K8YELRmUb5o

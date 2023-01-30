@@ -5,7 +5,7 @@ import FlexBetween from "components/FlexBetween";
 
 /**
  * Image Dropzone Component
- * Drop image here
+ * Drop image/gif here
  */
 const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
 
@@ -15,13 +15,12 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
     const main = palette.primary.main;
 
     // Dropzone
-    const maxSize = 1048576*10; // 10MB
-
+    const maxSize = 1048576*2; // 2MB
 
     return (
         <>
         <Box borderRadius="5px" border={`1px solid ${medium}`} mt="1rem" p="1rem">
-            <Dropzone acceptedFiles=".jpeg,.png" multiple={false}
+            <Dropzone acceptedFiles=".jpg, jpeg, .png, .gif" multiple={false}
                 onDrop={ (acceptedFiles, rejectedFiles) => {
                     //console.log("accepted files", acceptedFiles)
                     //console.log("rejected files", rejectedFiles)
@@ -43,10 +42,10 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
                 >
                     <input {...getInputProps()} />
                     {!image ? 
-                        <div>{ staticImagesOnly ? 
-                            "Add Image Here - 10MB"
+                        <div>{staticImagesOnly ? 
+                            "Add Image Here - 2MB"
                             :
-                            "Add Gif Here - 10MB"
+                            "Add Gif Here - 2MB"
                         }
                         </div>
                         : 

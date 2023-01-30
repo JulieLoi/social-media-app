@@ -15,6 +15,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import FlexBetween from "components/FlexBetween";
 import UserImage from "components/UserImage";
 import ImageDropzone from "components/ImageDropzone";
+import AudioDropzone from "components/AudioDropzone";
 
 /**
  * MyPostWidget
@@ -36,12 +37,14 @@ const MyPostWidget = ({ picturePath }) => {
     const token = useSelector((state) => state.token);
     const posts = useSelector((state) => state.posts);
 
-
     // My Post Widget States
-    const [post, setPost] = useState("");           // Post Content
-    const [isImage, setIsImage] = useState(false);  // Will show image dropbox
-    const [isClip, setIsClip] = useState(false);    // Will show clip dropbox (same as image dropbox)
-    const [image, setImage] = useState(null);       // Optional image to include in post
+    const [post, setPost] = useState("");               // Post Content
+    const [isImage, setIsImage] = useState(false);      // Will show image dropbox
+    const [isGif, setIsGif] = useState(false);          // Will show clip dropbox (same as image dropbox)
+    const [isAudio, setIsAudio] = useState(false);
+
+    const [image, setImage] = useState(null);           // Optional image to include in post
+
     
     // Dropdown Menu (Mobile Screen)
     const [anchorEl, setAnchorEl] = useState(null);
@@ -52,9 +55,9 @@ const MyPostWidget = ({ picturePath }) => {
     // Handle Image Click
     const handleImage = () => {
 
-        // Reset isClip
-        if (isClip) {
-            setIsClip(false);
+        // Reset isGif
+        if (isGif || isAudio) {
+            setIsGif(false); setIsAudio(false);
             setImage(null);
         }
         setIsImage(!isImage);
@@ -63,11 +66,20 @@ const MyPostWidget = ({ picturePath }) => {
     // Handle Gif Click
     const handleGif = () => {
         // Reset isImage
-        if (isImage) {
-            setIsImage(false);
+        if (isImage || isAudio) {
+            setIsImage(false); setIsAudio(false);
             setImage(null);
         }
-        setIsClip(!isClip);
+        setIsGif(!isGif);
+    }
+
+    // Handle Audio Click
+    const handleAudio = () => {
+        if (isImage || isGif) {
+            setIsGif(false); setIsImage(false);
+            setImage(null);
+        }
+        setIsAudio(!isAudio);
     }
 
     // POST API Call (Create Post)
@@ -131,9 +143,12 @@ const MyPostWidget = ({ picturePath }) => {
             </FlexBetween>
 
             {/* IMAGE DROPZONE */}
-            {(isImage || isClip) && (
-                <ImageDropzone image={image} setImage={setImage} staticImagesOnly={!isClip} />
+            {(isImage || isGif) && (
+                <ImageDropzone image={image} setImage={setImage} staticImagesOnly={!isGif} />
             )}
+            {isAudio &&
+                <AudioDropzone audio={image} setAudio={setImage} />
+            }
 
             <Divider sx={{ margin: "1.25rem 0" }} />
 
@@ -155,7 +170,7 @@ const MyPostWidget = ({ picturePath }) => {
                         {/* GIF UPLOAD*/}
                         <FlexBetween gap="0.25rem" onClick={handleGif}
                         >
-                            <GifBoxOutlined sx={{ color: mediumMain }} />
+                            <GifBoxOutlined sx={{ color: isGif ? main : mediumMain }} />
                             <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
                                 Gif
                             </Typography>
@@ -168,7 +183,7 @@ const MyPostWidget = ({ picturePath }) => {
                         </FlexBetween>
 
                         {/* AUDIO UPLOAD*/}
-                        <FlexBetween gap="0.25rem">
+                        <FlexBetween gap="0.25rem" onClick={handleAudio}>
                             <MicOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Audio</Typography>
                         </FlexBetween>
