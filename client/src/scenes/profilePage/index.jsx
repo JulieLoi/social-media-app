@@ -30,11 +30,7 @@ const ProfilePage = () => {
 
     // Get User of the Profile Page
     const getUser = async () => {
-        await fetch(`http://localhost:3001/users/${userId}`, 
-            {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}` },
-            }
+        await fetch(`http://localhost:3001/users/${userId}`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();
@@ -85,7 +81,7 @@ const ProfilePage = () => {
                     flexBasis={isNonMobileScreens ? "42%" : undefined}
                     mt={isNonMobileScreens ? "0rem" : "2rem"}
                 >
-                    {userId === loggedInUser._id &&
+                    {(loggedInUser && userId === loggedInUser._id) &&
                         <>
                         <MyPostWidget picturePath={profileUser.picturePath} />
                         <Box m="2rem 0" />

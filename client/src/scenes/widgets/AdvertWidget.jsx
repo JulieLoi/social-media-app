@@ -32,10 +32,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 
     // GET API Call (Get Single Random Ad)
     const getAdvertisement = async () => {
-        await fetch(`http://localhost:3001/advertisements/`, 
-        {
-            method: "GET",
-        }
+        await fetch(`http://localhost:3001/advertisements/`, { method: "GET", }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();
@@ -89,7 +86,7 @@ import WidgetWrapper from "components/WidgetWrapper";
         formData.append("picturePath", adImagePath);                // Rename Advert Image
         formData.append("picture", image);
         
-        // Create Adver in MongoDB
+        // Create Advert in MongoDB
         await fetch(`http://localhost:3001/advertisements`, 
             {
                 method: "POST",

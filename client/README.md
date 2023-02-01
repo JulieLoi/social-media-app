@@ -5,6 +5,11 @@
 Things to do:
 -Redo Login/Register (done)
 
+MAKE A HOME PAGE WHERE YOU DON'T HAVE TO LOG IN TO ACCESS STUFF
+-REMOVE THE AND FRIENDS LIST WIDGET
+-EDIT THE NAVIGATION BAR TO SEND YOU TO THE LOGIN/REGISTER PAGE!
+
+
 
 
 
@@ -34,6 +39,7 @@ search bar, image dropzone made into separate components
 FINISHED CLIP/GIF AND AUDIO AND ATTACHMENT DROPZONE
 -Finished CSS FOR AUDIO CLIP
 
+FINISHED ADDING MORE RANDOM CREATION FAKE DATA
 
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
@@ -100,26 +106,6 @@ UPDATE NAME/LOCATINO
 
 
 
-Location
-npm i country-state-city
-
-Audio Player
-https://www.npmjs.com/package/react-h5-audio-player
-
-
-https://www.youtube.com/watch?v=K8YELRmUb5o
-
-Generate Random UUID (for image naming) -in frontend (client)
-npm install uuid
-
-DOWNLOAD PDF ATTACHMENT
-https://github.com/axios/axios
-https://www.npmjs.com/package/js-file-download
-
-
-RANDOM TEXT GENERATOR (More random posts and comments)
-https://www.npmjs.com/package/txtgen
-
 Favicon Icon
 <a href="https://www.flaticon.com/free-icons/share" title="share icons">Share icons created by Vectors Market - Flaticon</a>
 
@@ -153,6 +139,20 @@ ethanhoover@gmail.com
 
 remyloz@gmail.com
 h&j2!h*^MOYB^Z@Ip$^%7J%1UC#qMP79q0U#2z
+
+
+
+
+
+FRONTEND
+npm run start
+
+BACKEND
+nodemon index.js
+
+
+
+
 
 
 # Getting Started with Create React App

@@ -67,10 +67,7 @@ const SearchBar = () => {
 
     // GET API Call (Get All Users)
     const getAllUsers = async () => {
-        await fetch(`http://localhost:3001/users/`,
-            {
-                method: "GET",
-            }
+        await fetch(`http://localhost:3001/users/`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();

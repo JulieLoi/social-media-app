@@ -21,7 +21,7 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
     const profileUser = useSelector((state) => state.profileUser);
 
     // Check Friend Status (Logged in user and otherUserId)
-    const checkFriendship = loggedInUser.friends.find((f) => f._id === otherUserId) ? true : false;
+    const checkFriendship = loggedInUser ? (loggedInUser.friends.find((f) => f._id === otherUserId) ? true : false) : false;
 
     // PATCH API Call (Add/Remove Friend)
     const patchFriend = async () => {
@@ -59,23 +59,25 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
 
     return (
         <>
-        <FlexBetween>
-        {loggedInUser._id !== otherUserId && 
-            <IconButton onClick={patchFriend}
-                sx={{ 
-                    p: "0.6rem", mr: marginAmount,
-                    backgroundColor: palette.primary.light, 
-                    border: `1px solid ${primaryDark}`
-                }}
-            >
-                {checkFriendship ? 
-                    <PersonRemoveOutlined sx={{ color: primaryDark }} /> 
-                    : 
-                    <PersonAddOutlined sx={{ color: primaryDark }} />
-                }
-            </IconButton>
+        {token !== null &&
+            <FlexBetween>
+            {loggedInUser._id !== otherUserId && 
+                <IconButton onClick={patchFriend}
+                    sx={{ 
+                        p: "0.6rem", mr: marginAmount,
+                        backgroundColor: palette.primary.light, 
+                        border: `1px solid ${primaryDark}`
+                    }}
+                >
+                    {checkFriendship ? 
+                        <PersonRemoveOutlined sx={{ color: primaryDark }} /> 
+                        : 
+                        <PersonAddOutlined sx={{ color: primaryDark }} />
+                    }
+                </IconButton>
+            }
+            </FlexBetween>
         }
-        </FlexBetween>
         </>
     )
 }

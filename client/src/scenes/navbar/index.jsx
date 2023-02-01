@@ -5,7 +5,7 @@ import { setMode, setLogout } from "state";
 
 import { 
     Box, IconButton, InputBase, Typography, Select, MenuItem,
-    FormControl, useTheme, useMediaQuery,
+    FormControl, useTheme, useMediaQuery, Button
 } from "@mui/material";
 import {
     Message, DarkMode, LightMode,
@@ -35,10 +35,13 @@ const Navbar = () => {
     const alt = palette.background.alt;
     const primary = palette.primary.main;
 
+    // Token
+    const token = useSelector((state) => state.token);
+
     // Current User (Logged In)
     const user = useSelector((state) => state.user);
-    const combinedName = `${user.firstName} ${user.lastName}`;
-    const fullName = combinedName.length > 20 ? `${combinedName.substring(0, 20)}...` : combinedName;
+    const combinedName = user ? `${user.firstName} ${user.lastName}` : "";
+    const fullName = user ? (combinedName.length > 20 ? `${combinedName.substring(0, 20)}...` : combinedName) : "";
 
     /**
      * Desktop View: Shows everything
@@ -87,8 +90,9 @@ const Navbar = () => {
                     <IconButton> <Notifications sx={{ fontSize:"25px" }} /> </IconButton>
                     <IconButton> <Help sx={{ fontSize:"25px" }} /> </IconButton>
                     
-                    {/* DROPDOWN BOX */}
+                    {/* User, Log out / Sign up, Log in */}
                     <FormControl variable="standard" value={fullName}>
+                    {token !== null ?
                         <Select
                             value={fullName}
                             sx={{ 
@@ -106,7 +110,14 @@ const Navbar = () => {
                                 Log Out
                             </MenuItem>
                         </Select>
+                        :
+                        <Button>
+                            Sign Up / Login
+                        </Button>
+                        }
                     </FormControl>
+                    
+                    
                 </FlexBetween>) 
                 : 
                 (<IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>

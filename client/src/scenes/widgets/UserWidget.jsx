@@ -37,15 +37,8 @@ const UserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
 
     // User Account Information Dialog Box
-    const initialUserValues = {
-        firstName: loggedInUser.firstName,
-        lastName: loggedInUser.lastName,
-        location: loggedInUser.location,
-        occupation: loggedInUser.occupation,
-        twitterHandle: loggedInUser.twitterHandle,
-        linkedInHandle: loggedInUser.linkedInHandle,
-    };    
-    const [editUserInformation, setEditUserInformation] = useState(initialUserValues);
+    
+    const [editUserInformation, setEditUserInformation] = useState(loggedInUser);
     const [dialogBox, setDialogBox] = useState(false);
     const handleDialogClose = () => {
         updateUserInformation();
@@ -56,7 +49,7 @@ const UserWidget = ({ userId, picturePath }) => {
     const [image, setImage] = useState(null);       // Optional image to include in post
 
     // Location
-    const [newLocation, setNewLocation] = useState(loggedInUser.location)
+    const [newLocation, setNewLocation] = useState(loggedInUser ? loggedInUser.location : "");
 
     // Palette Theme
     const { palette } = useTheme();
@@ -66,11 +59,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
     // GET API Call (Get User)
     const getUser = async () => {
-        await fetch(`http://localhost:3001/users/${userId}`,
-            {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`}
-            }
+        await fetch(`http://localhost:3001/users/${userId}`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();
@@ -187,7 +176,7 @@ const UserWidget = ({ userId, picturePath }) => {
                     </Box>
                     
                 </FlexBetween>
-                {userId === loggedInUser._id ?
+                {(loggedInUser && userId === loggedInUser._id) ?
                     <ManageAccountsOutlined 
                         sx={{ color: main, "&:hover": { cursor: "pointer", color: primary } }} 
                         onClick={() => setDialogBox(true)}

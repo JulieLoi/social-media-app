@@ -35,14 +35,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 
-const app = express();
-app.use(express.json());
-app.use(helmet());
+const app = express();                                          
+app.use(express.json());                                                    // Backend Framework
+app.use(helmet());                                                          // HTTP Header Security
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-app.use(morgan("common")); 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
+app.use(morgan("common"));                                                  // Logs HTTP Requests and Errors (Standard Apache common log output)
+app.use(bodyParser.json({ limit: "30mb", extended: true }));                // application/json parser
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));          // application/x-www-form-urlencoded parser
+app.use(cors());                                                            // Enable All CORS Requests
 app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
 /**
@@ -67,7 +67,7 @@ const upload = multer({ storage });
  * Routes that needs to upload an image to the server for storage
  */
 app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.post("/posts", verifyToken, upload.single("attachment"), createPost);
 app.post("/advertisements", verifyToken, upload.single("picture"), createAd);
 app.post("/users/:id", verifyToken, upload.single("picture"), updateProfileImage);
 
@@ -90,10 +90,10 @@ mongoose.connect(process.env.MONGO_URL, {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
     // ADD FAKE DATA (Once)
-    console.log("Load Fake Data")
-    User.insertMany(users);
-    Post.insertMany(posts);
-    Advertisement.insertMany(advertisements);
+    //console.log("Load Fake Data")
+    //User.insertMany(users);
+    //Post.insertMany(posts);
+    //Advertisement.insertMany(advertisements);
 
 
 }).catch((error) => console.error(`${error} did not connect`));

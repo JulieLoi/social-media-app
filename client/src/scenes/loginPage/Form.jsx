@@ -47,8 +47,14 @@ const initialValuesLogin = {
     password: ""
 };
 
+// Login / Register Enum
+const PageState = {
+    Login: 'LOGIN',
+    Register: 'REGISTER',
+};
+
 // Form
-const Form = () => {
+const Form = ({ registerPage=false }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -62,9 +68,9 @@ const Form = () => {
     const maxSize = 1048576*2;      // 2MB
 
     // Page State (Login / Register)
-    const [pageType, setPageType] = useState("login");
-    const isLogin = (pageType === "login");
-    const isRegister = (pageType === "register");
+    const [pageType, setPageType] = useState(registerPage ? PageState.Login : PageState.Register);
+    const isLogin = (pageType === PageState.Login);
+    const isRegister = (pageType === PageState.Register);
     
     // Location (Optional)
     const [location, setLocation] = useState("");
@@ -100,7 +106,7 @@ const Form = () => {
             // Register Successful (Go to Login)
             if (response.status === 201) {
                 onSubmitProps.resetForm();     // Reset Form
-                setPageType("login");
+                setPageType(PageState.Login);
             }
             else { setError(jsonObject.message); }
         });
@@ -283,14 +289,14 @@ const Form = () => {
                         }}
                     >
                         <Typography fontWeight="700" variant="h5">
-                            {isLogin ? "LOGIN" : "REGISTER"}
+                            {isLogin ? PageState.Login : PageState.Register}
                         </Typography>
                     </Button>
 
                     {/* CHANGE BETWEEN LOGIN / REGISTER */}
                     <Typography
                         onClick={() => {
-                            setPageType(isLogin ? "register" : "login");
+                            setPageType(isLogin ? PageState.Register : PageState.Login);
                             resetForm();
                         }}
                         sx={{

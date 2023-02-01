@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileUser } from "state";
 
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Navbar from "scenes/navbar";
 import NavigateTop from "components/NavigateTop";
 import UserWidget from "scenes/widgets/UserWidget";
@@ -11,6 +10,7 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
+import WidgetWrapper from "components/WidgetWrapper";
 
 /**
  * Home Page
@@ -19,23 +19,22 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
 const HomePage = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");    // Mobile/PC
 
     // User, Token (Frontend)
     const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 
-    // Update Profile User (Go to Login/Register if no token)
+    // Update Profile User (Given a logged in user)
     useEffect(() => {
-        if (token !== null) { navigate(`/home`) }
-        dispatch(setProfileUser(user)); 
+        if (token !== null) {
+            dispatch(setProfileUser(user));
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <>
-        {user != null &&
         <Box>
             <Navbar />
             
@@ -47,7 +46,13 @@ const HomePage = () => {
             >
                 {/* USER WIDGET */}
                 <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-                    <UserWidget userId={user._id} picturePath={user.picturePath} />
+                    {token !== null ?
+                        <UserWidget userId={user._id} picturePath={user.picturePath} />
+                        :
+                        <WidgetWrapper>
+                            <Typography>No User</Typography>
+                        </WidgetWrapper>
+                    }
                 </Box>
 
                 {/* POST WIDGET */}
@@ -55,8 +60,14 @@ const HomePage = () => {
                     flexBasis={isNonMobileScreens ? "42%" : undefined}
                     mt={isNonMobileScreens ? undefined : "2rem"}
                 >
-                    <MyPostWidget picturePath={user.picturePath} />
-                    <PostsWidget userId={user._id} />
+                    {token !== null ?
+                        <>
+                            <MyPostWidget picturePath={user.picturePath} />
+                            <PostsWidget userId={user._id} />
+                        </>
+                        :
+                        <PostsWidget />
+                    }
                 </Box>
 
                 {/* ADVERT && FRIENDS LIST (DESKTOP ONLY) */}
@@ -64,13 +75,14 @@ const HomePage = () => {
                     <Box flexBasis={isNonMobileScreens ? "26%" : undefined}
                     >
                         <AdvertWidget />
-                        <FriendListWidget userId={user._id} />
+                        {token !== null &&
+                            <FriendListWidget userId={user._id} />
+                        }
                     </Box>
                 )}
             </Box>
             <NavigateTop />
         </Box>
-        }
         </>
     )
 }

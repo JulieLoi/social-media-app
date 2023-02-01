@@ -8,18 +8,13 @@ import UserImage from "./UserImage"
 const Comment = ({comment, palette}) => {
 
     const navigate = useNavigate();
-    const token = useSelector((state) => state.token);      // Token
 
     // Commenter Information
     const [commenter, setCommenter] = useState(null);
 
     // GET API Call (Get User)
     const getUser = async () => {
-        await fetch(`http://localhost:3001/users/${comment.userId}`,
-            {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`}
-            }
+        await fetch(`http://localhost:3001/users/${comment.userId}`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();

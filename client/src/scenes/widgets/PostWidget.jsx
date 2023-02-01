@@ -48,19 +48,15 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const [postOwner, setPostOwner] = useState("");
 
     // Likes (Does not update)
-    const isLiked = Boolean(likes[loggedInUser._id]);     // Logged In User Likes
-    const likeCount = Object.keys(likes).length;        // Total Like Count
+    const isLiked = token ? Boolean(likes[loggedInUser._id]) : false;   // Logged In User Likes
+    const likeCount = token ? Object.keys(likes).length : 0;            // Total Like Count
 
     // Check Extension (jpg, jpeg, png, gif / ogg, wav, mp3)
     const ext = picturePath.split('.').pop();
 
     // GET API Call (Get Post Owner)
     const getPostOwner = async () => {
-        await fetch(`http://localhost:3001/users/${postUserId}`,
-            {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`}
-            }
+        await fetch(`http://localhost:3001/users/${postUserId}`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();
@@ -133,10 +129,10 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     // Post Widget
     return (
         <>
-        {loggedInUser !== null && postOwner !== null &&
+        {postOwner !== null &&
         <WidgetWrapper mb="2rem">
 
-            {postOwner._id === loggedInUser._id ?
+            {(loggedInUser && postOwner._id === loggedInUser._id) ?
                 <Friend 
                     id={postUserId}
                     name={`${loggedInUser.firstName} ${loggedInUser.lastName}`}
@@ -246,7 +242,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
                 {/* Delete, Share Button */}
                 <FlexBetween>
-                    {postUserId === loggedInUser._id &&  (
+                    {(loggedInUser && postUserId === loggedInUser._id) &&  (
                         <IconButton onClick={() => deleteUserPost()}>
                             <DeleteIcon sx={{ "&:hover": { color: primary } }} />
                         </IconButton>

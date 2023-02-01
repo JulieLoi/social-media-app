@@ -14,3 +14,6 @@ Authentication:
 
 
 
+
+RANDOM TEXT GENERATOR (More random posts and comments)
+https://www.npmjs.com/package/txtgen

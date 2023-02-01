@@ -44,7 +44,7 @@ const MyPostWidget = ({ picturePath }) => {
     const [isGif, setIsGif] = useState(false);                      // Will show gif dropbox (same as image dropbox)
     const [isAudio, setIsAudio] = useState(false);                  // Will show audio dropbox
     const [isAttachment, setIsAttachment] = useState(false);        // Will show attachment dropbox
-    const [image, setImage] = useState(null);                       // Optional image/gif/audio to include in post
+    const [file, setFile] = useState(null);                       // Optional image/gif/attachment/audio to include in post
 
     
     // Dropdown Menu (Mobile Screen)
@@ -59,7 +59,7 @@ const MyPostWidget = ({ picturePath }) => {
         // Reset isGif
         if (isGif || isAttachment || isAudio) {
             setIsGif(false); setIsAttachment(false); setIsAudio(false);
-            setImage(null);
+            setFile(null);
         }
         setIsImage(!isImage);
     }
@@ -69,7 +69,7 @@ const MyPostWidget = ({ picturePath }) => {
         // Reset isImage
         if (isImage || isAttachment || isAudio) {
             setIsImage(false);  setIsAttachment(false); setIsAudio(false);
-            setImage(null);
+            setFile(null);
         }
         setIsGif(!isGif);
     }
@@ -79,7 +79,7 @@ const MyPostWidget = ({ picturePath }) => {
         // Reset isImage
         if (isImage || isGif || isAudio) {
             setIsImage(false); setIsGif(false); setIsAudio(false);
-            setImage(null);
+            setFile(null);
         }
         setIsAttachment(!isAttachment);
     }
@@ -88,7 +88,7 @@ const MyPostWidget = ({ picturePath }) => {
     const handleAudio = () => {
         if (isImage || isGif || isAttachment) {
             setIsImage(false); setIsGif(false); setIsAttachment(false);
-            setImage(null);
+            setFile(null);
         }
         setIsAudio(!isAudio);
     }
@@ -103,17 +103,17 @@ const MyPostWidget = ({ picturePath }) => {
         formData.append("serverPath", "/posts");                // Multer Disk Storage (Path)
 
         // Path for image/gif/attachment/audio
-        if (image) {
-            const ext = image.path.split('.').pop();
+        if (file) {
+            const ext = file.path.split('.').pop();
             let postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
 
             // Keep original file name for attachment/audio
             if (isAttachment || isAudio) {
-                postImagePath = `post${uuidv4().replaceAll('-', '')}${image.path}`;
+                postImagePath = `post${uuidv4().replaceAll('-', '')}${file.path}`;
             }
     
             formData.append("picturePath", postImagePath);      // Rename Post Image
-            formData.append("picture", image);
+            formData.append("attachment", file);
         }
 
         // Create Post in MongoDB
@@ -131,7 +131,7 @@ const MyPostWidget = ({ picturePath }) => {
                 dispatch(setPosts({ posts: [...posts, jsonObject] }));          //  Updates Frontend State
 
                 // Reset MyPostWidget
-                setImage(null);
+                setFile(null);
                 setIsImage(false);
                 setPost("");
             }
@@ -161,13 +161,13 @@ const MyPostWidget = ({ picturePath }) => {
 
             {/* IMAGE DROPZONE */}
             {(isImage || isGif) && 
-                <ImageDropzone image={image} setImage={setImage} staticImagesOnly={!isGif} />
+                <ImageDropzone image={file} setImage={setFile} staticImagesOnly={!isGif} />
             }
             {isAudio &&
-                <AudioDropzone audio={image} setAudio={setImage} />
+                <AudioDropzone audio={file} setAudio={setFile} />
             }
             {isAttachment &&
-                <AttachementDropzone attachment={image} setAttachment={setImage} />
+                <AttachementDropzone attachment={file} setAttachment={setFile} />
             }
 
             <Divider sx={{ margin: "1.25rem 0" }} />

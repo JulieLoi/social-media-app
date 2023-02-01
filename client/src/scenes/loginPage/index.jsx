@@ -22,9 +22,7 @@ const LoginPage = () => {
 
     // Go to Home Page (Token exists)
     useEffect(() => {
-        if (token !== null) {
-            navigate(`/home`)
-        }
+        if (token !== null) { navigate(`/home`) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

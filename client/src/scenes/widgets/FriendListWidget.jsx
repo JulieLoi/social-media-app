@@ -19,7 +19,6 @@ const FriendListWidget = ({ userId }) => {
 
     // Logged In User, Token
     const loggedInUser = useSelector((state) => state.user);
-    const token = useSelector((state) => state.token)
 
     // Profile User (Frontend State)
     const { userId: profileId } = useParams();     // Profile User ID (from params)
@@ -27,11 +26,7 @@ const FriendListWidget = ({ userId }) => {
 
     // GET API Call (Get All User Friends)
     const getFriends = async (updateUser) => {
-        await fetch(`http://localhost:3001/users/${userId}/friends`,
-            {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`},
-            }
+        await fetch(`http://localhost:3001/users/${userId}/friends`, { method: "GET", }
         ).then(async (response) => {
             // Response JSON Object
             const jsonObject = await response.json();
