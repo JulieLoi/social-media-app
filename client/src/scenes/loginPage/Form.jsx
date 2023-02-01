@@ -68,7 +68,7 @@ const Form = ({ registerPage=false }) => {
     const maxSize = 1048576*2;      // 2MB
 
     // Page State (Login / Register)
-    const [pageType, setPageType] = useState(registerPage ? PageState.Login : PageState.Register);
+    const [pageType, setPageType] = useState(registerPage ? PageState.Register : PageState.Login);
     const isLogin = (pageType === PageState.Login);
     const isRegister = (pageType === PageState.Register);
     

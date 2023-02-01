@@ -9,17 +9,17 @@ import { setPost, deletePost } from "state";
 
 import { 
     ChatBubbleOutlineOutlined, FavoriteBorderOutlined,
-    FavoriteOutlined, ShareOutlined, FileDownload, PictureAsPdf,
+    FavoriteOutlined, FileDownload, PictureAsPdf,
     PlayCircleFilled, PauseCircleFilled,
-    FastForward, FastRewind, Repeat, VolumeUp, VolumeMute,
+    FastForward, FastRewind, Repeat, VolumeUp, VolumeMute, Delete
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
 import WidgetWrapper from "components/WidgetWrapper";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import Comment from "components/Comment";
 import AddComment from "components/AddComment";
+import SharePost from "components/SharePost";
 
 /**
  * Post Widget
@@ -31,7 +31,6 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     // Post Widget State
     const [isComments, setIsComments] = useState(false);        // Show Post Comments
-    const [share, setShare] = useState(false);                  // Share Button
 
     // Theme Colors
     const { palette } = useTheme();
@@ -52,7 +51,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const likeCount = token ? Object.keys(likes).length : 0;            // Total Like Count
 
     // Check Extension (jpg, jpeg, png, gif / ogg, wav, mp3)
-    const ext = picturePath.split('.').pop();
+    const ext = picturePath ? picturePath.split('.').pop() : "";
 
     // GET API Call (Get Post Owner)
     const getPostOwner = async () => {
@@ -211,13 +210,15 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
             <Divider />
 
-            {/* Like and Comment */}
+            {/* Like, Comment, Share, Delete */}
             <FlexBetween mt="0.25rem">
-                <FlexBetween gap="1rem">
+
+                {/* Like, Comment, Share */}
+                <FlexBetween gap="0.5rem">
 
                     {/* Like Button and Like Counter */}
                     <FlexBetween gap="0.3rem">
-                        <IconButton onClick={patchLike}>
+                        <IconButton onClick={patchLike} disabled={loggedInUser === null}>
                             {isLiked ? 
                                 <FavoriteOutlined sx={{ color: primary }} />
                                 : 
@@ -238,23 +239,18 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                         </IconButton>
                         <Typography>{comments.length}</Typography>
                     </FlexBetween>
+
+                    {/* Share Post */}
+                    <SharePost description={description} />
                 </FlexBetween>
 
-                {/* Delete, Share Button */}
+                {/* Delete */}
                 <FlexBetween>
                     {(loggedInUser && postUserId === loggedInUser._id) &&  (
                         <IconButton onClick={() => deleteUserPost()}>
-                            <DeleteIcon sx={{ "&:hover": { color: primary } }} />
+                            <Delete sx={{ "&:hover": { color: primary } }} />
                         </IconButton>
                     )}
-                    
-                    <IconButton onClick={() => setShare(!share)}>
-                        {share ?
-                            <ShareOutlined sx={{ color: primary }} />
-                            :
-                            <ShareOutlined />
-                        }
-                    </IconButton>
                 </FlexBetween>
             </FlexBetween>
 
@@ -265,12 +261,14 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                     {comments.map((c) => (
                         <Comment 
                             key={`${c.userId}-${postId}-${Math.random()}`}
-                            comment={c} postId={postId} palette={palette} 
+                            comment={c} postId={postId} 
                         />
                     ))}
                 </Box>
                 <Divider />
-                <AddComment postId={postId} palette={palette}/>
+                {loggedInUser &&
+                    <AddComment postId={postId} />
+                }
             </Box>)
             }
         </WidgetWrapper>

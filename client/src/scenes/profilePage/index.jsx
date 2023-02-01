@@ -21,7 +21,6 @@ const ProfilePage = () => {
 
     // Logged In User
     const loggedInUser = useSelector((state) => state.user);
-    const token = useSelector((state) => state.token);
 
     // Profile User
     const { userId } = useParams();                                 // Gets the User ID of the Profile Page
@@ -87,7 +86,7 @@ const ProfilePage = () => {
                         <Box m="2rem 0" />
                         </>
                     }
-                    <PostsWidget userId={userId} isProfile={true} />
+                    <PostsWidget userId={userId} />
                 </Box>
             </Box>
             <NavigateTop />

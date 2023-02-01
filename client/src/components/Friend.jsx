@@ -16,6 +16,8 @@ const Friend = ({ id, name, location=null, occupation=null, picturePath, marginA
     const navigate = useNavigate();
     const { palette } = useTheme();
 
+    const isProfile = window.location.pathname === `/profile/${id}`;
+
     return (
         <>
         <FlexBetween>
@@ -26,10 +28,14 @@ const Friend = ({ id, name, location=null, occupation=null, picturePath, marginA
                 <Box>
                     <Typography
                         color={palette.primary.dark} variant="h5" fontWeight="500"
-                        sx={{ "&:hover": { color: palette.primary.main, cursor: "pointer", } }}
+                        sx={{ "&:hover": { cursor: isProfile ? "default" : "pointer", 
+                            color: (isProfile ? palette.primary.dark : palette.primary.main), 
+                        }}}
                         onClick={() => {
-                            navigate(`/profile/${id}`);
-                            navigate(0);                        // Refresh
+                            if (!isProfile) {
+                                navigate(`/profile/${id}`);
+                                navigate(0);                        // Refresh
+                            }
                         }}
                     >
                         {name.length > 20 ? `${name.substring(0, 20)}...` : name}

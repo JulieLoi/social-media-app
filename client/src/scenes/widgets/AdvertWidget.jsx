@@ -72,6 +72,7 @@ import WidgetWrapper from "components/WidgetWrapper";
         else { setError(true); }
     }
 
+    // POST API Call (Create Advert)
     const handleAd = async () => {
 
         const ext = image.path.split('.').pop();

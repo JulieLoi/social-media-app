@@ -10,7 +10,7 @@ import PostWidget from "./PostWidget";
  * Posts Widget
  * Displays all posts in the database (most recent at the top)
  */
-const PostsWidget = ({ userId=null, isProfile = false }) => {
+const PostsWidget = ({ userId=null }) => {
 
     const dispatch = useDispatch();
 
@@ -49,9 +49,9 @@ const PostsWidget = ({ userId=null, isProfile = false }) => {
         });
     }
     
-    // Loads "all posts" or "user posts" based on isProfile
+    // Loads "all posts" or "user posts" 
     useEffect(() => {
-        if (isProfile && userId !== null) { getUserPosts(); }
+        if (userId !== null) { getUserPosts(); }
         else { getPosts(); }        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

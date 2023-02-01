@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 
-import { InputBase, Box, Typography } from "@mui/material";
+import { InputBase, Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
@@ -10,9 +10,10 @@ import UserImage from "./UserImage";
  * AddComment
  * Component for adding a comment
  */
-const AddComment = ({ palette, postId }) => {
+const AddComment = ({ postId }) => {
 
     const dispatch = useDispatch();
+    const { palette } = useTheme();
 
     // Token, Logged In User (Frontend State)
     const token = useSelector((state) => state.token);

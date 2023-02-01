@@ -111,7 +111,7 @@ const Navbar = () => {
                             </MenuItem>
                         </Select>
                         :
-                        <Button>
+                        <Button onClick={() => navigate('/')} sx={{ fontSize: "1rem" }}>
                             Sign Up / Login
                         </Button>
                         }

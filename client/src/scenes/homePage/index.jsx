@@ -34,7 +34,6 @@ const HomePage = () => {
     }, []);
 
     return (
-        <>
         <Box>
             <Navbar />
             
@@ -50,7 +49,12 @@ const HomePage = () => {
                         <UserWidget userId={user._id} picturePath={user.picturePath} />
                         :
                         <WidgetWrapper>
-                            <Typography>No User</Typography>
+                            <Typography variant="h5" sx={{ mb: "0.75rem", 
+                                whiteSpace: "pre-wrap", wordBreak: "break-word", 
+                                fontWeight: "700" }}
+                            >
+                                No Logged In User
+                            </Typography>
                         </WidgetWrapper>
                     }
                 </Box>
@@ -60,14 +64,10 @@ const HomePage = () => {
                     flexBasis={isNonMobileScreens ? "42%" : undefined}
                     mt={isNonMobileScreens ? undefined : "2rem"}
                 >
-                    {token !== null ?
-                        <>
-                            <MyPostWidget picturePath={user.picturePath} />
-                            <PostsWidget userId={user._id} />
-                        </>
-                        :
-                        <PostsWidget />
+                    {token !== null &&
+                        <MyPostWidget picturePath={user.picturePath} />
                     }
+                    <PostsWidget />
                 </Box>
 
                 {/* ADVERT && FRIENDS LIST (DESKTOP ONLY) */}
@@ -83,7 +83,6 @@ const HomePage = () => {
             </Box>
             <NavigateTop />
         </Box>
-        </>
     )
 }
 

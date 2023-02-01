@@ -33,11 +33,11 @@ const UserWidget = ({ userId, picturePath }) => {
     const loggedInUser = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
 
-    // User Widget - User Shown
+    // User, isProfile
     const [user, setUser] = useState(null);
+    const isProfile = window.location.pathname === `/profile/${userId}`;
 
     // User Account Information Dialog Box
-    
     const [editUserInformation, setEditUserInformation] = useState(loggedInUser);
     const [dialogBox, setDialogBox] = useState(false);
     const handleDialogClose = () => {
@@ -165,8 +165,11 @@ const UserWidget = ({ userId, picturePath }) => {
                     <Box>
                         <Typography
                             variant="h4" color={palette.neutral.dark} fontWeight="500"
-                            sx={{ "&:hover": { color: primary, cursor: "pointer" } }}
-                            onClick={() => navigate(`/profile/${userId}`)}
+                            sx={{ "&:hover": { 
+                                color: isProfile ? palette.neutral.dark : primary, 
+                                cursor: isProfile ? "default": "pointer",
+                            }}}
+                            onClick={() => { if (!isProfile) { navigate(`/profile/${userId}`) } }}
                         >
                             {fullName.length > 20 ? `${fullName.substring(0, 20)}...` : fullName}
                         </Typography>

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";  
 
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, useTheme } from "@mui/material";
 import UserImage from "./UserImage"
 
-const Comment = ({comment, palette}) => {
+const Comment = ({ comment }) => {
 
     const navigate = useNavigate();
+    const { palette } = useTheme();
 
     // Commenter Information
     const [commenter, setCommenter] = useState(null);
