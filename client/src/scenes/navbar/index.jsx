@@ -7,7 +7,8 @@ import { setMode, setLogout } from "state";
 
 import { 
     Box, IconButton, InputBase, Typography, Select, MenuItem,
-    FormControl, useTheme, useMediaQuery, Button
+    FormControl, useTheme, useMediaQuery, Button,
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@mui/material";
 import {
     Message, DarkMode, LightMode,
@@ -37,13 +38,17 @@ const Navbar = () => {
     const primary = palette.primary.main;
     const primaryDark = palette.primary.dark;
 
-    // Token
-    const token = useSelector((state) => state.token);
-
     // Current User (Logged In)
     const user = useSelector((state) => state.user);
     const combinedName = user ? `${user.firstName} ${user.lastName}` : "";
     const fullName = user ? (combinedName.length > 20 ? `${combinedName.substring(0, 20)}...` : combinedName) : "";
+
+    // Help Dialog Box
+    const [dialogBox, setDialogBox] = useState(false);
+    const handleDialogClose = () => {
+        downloadPDF();
+        setDialogBox(false);
+    }
 
     // Download 'UserAccounts' PDF
     const downloadPDF = async () => {
@@ -59,6 +64,7 @@ const Navbar = () => {
      * Mobile View: Shows logo only, everything else is in a dropdown icon
      */
     return (
+        <>
         <Box position="sticky" top="0" zIndex="10"
             backgroundColor={alt} padding="1rem 6%" 
         >
@@ -102,13 +108,13 @@ const Navbar = () => {
                     <IconButton> 
                         <Notifications sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
                     </IconButton>
-                    <IconButton onClick={downloadPDF}> 
+                    <IconButton onClick={() => setDialogBox(true)}> 
                         <Help sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
                     </IconButton>
                     
                     {/* User, Log out / Sign up, Log in */}
                     <FormControl variable="standard" value={fullName}>
-                    {token !== null ?
+                    {user !== null ?
                         <Select
                             value={fullName}
                             sx={{ 
@@ -177,7 +183,7 @@ const Navbar = () => {
                         <IconButton> 
                             <Notifications sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
                         </IconButton>
-                        <IconButton onClick={downloadPDF}> 
+                        <IconButton onClick={() => setDialogBox(true)}> 
                             <Help sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
                         </IconButton>
 
@@ -213,7 +219,26 @@ const Navbar = () => {
             </>
         }
         </Box>
-    )
+
+        {/* EDIT USER INFORMATION */}
+        <Dialog open={dialogBox} onClose={() => setDialogBox(false)} fullWidth>
+            <DialogTitle fontSize="1rem" sx={{ textDecoration: "underline" }}>
+                Sociology Help
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Download a PDF file that contains some user accounts (email/password).
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleDialogClose} sx={{ fontSize: "1rem"}}>Download</Button>
+                <Button onClick={() => setDialogBox(false)} sx={{ fontSize: "1rem"}}>Close</Button>
+            </DialogActions>
+        </Dialog>
+        </>
+    );
+
+
 }
 
 export default Navbar;
