@@ -48,7 +48,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     // Likes (Does not update)
     const isLiked = token ? Boolean(likes[loggedInUser._id]) : false;   // Logged In User Likes
-    const likeCount = token ? Object.keys(likes).length : 0;            // Total Like Count
+    const likeCount = Object.keys(likes).length;                        // Total Like Count
 
     // Check Extension (jpg, jpeg, png, gif / ogg, wav, mp3)
     const ext = picturePath ? picturePath.split('.').pop() : "";
