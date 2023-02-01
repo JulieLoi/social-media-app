@@ -92,14 +92,15 @@ const SearchBar = () => {
         >
         <FlexBetween 
             backgroundColor={neutralLight} 
+            border={`2px solid ${background}`}
             borderRadius="9px" gap="3rem" 
             padding="0.1rem 1.5rem"
-            position={"relative"}
+            position="relative"
         >
             {/* Search Input Bar */}
             <InputBase placeholder="Search..." 
                 onClick={() => setIsSearching(true)}
-                value={editSearch}
+                value={editSearch} 
                 onChange={(e) => setEditSearch(e.target.value)}
             />
 
@@ -109,8 +110,7 @@ const SearchBar = () => {
 
             {/* Search Popup */}
             {isSearching &&
-            <WidgetWrapper position={"absolute"} top={"40px"} left={0}
-                border={`1px solid ${background}`} width={"100%"} 
+            <WidgetWrapper position={"absolute"} top={"40px"} left={0} width={"100%"} 
                 sx={{ maxHeight: "30vh", overflowY: "auto", paddingTop: "0px", paddingBottom: "0px" }}
             > 
                 {searchUsers.length === 0 &&

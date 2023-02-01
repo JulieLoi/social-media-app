@@ -10,6 +10,20 @@ MAKE A HOME PAGE WHERE YOU DON'T HAVE TO LOG IN TO ACCESS STUFF
 -EDIT THE NAVIGATION BAR TO SEND YOU TO THE LOGIN/REGISTER PAGE!
 
 FUNCTIONAL SHARE POST BUTTON (DONE)
+FUNCTIONAL HELP BUTTON (NAVBAR)
+
+
+
+
+PLANs ----- NAVBAR ICONS
+Make it like the search bar (no users found...)
+----Message (no messages...)
+----Notifications (no notifications...)
+No need for functionality yet.!!
+
+Make create friend requests?
+
+
 
 
 

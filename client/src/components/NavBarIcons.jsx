@@ -7,19 +7,59 @@ import { setMode, setLogout } from "state";
 
 import { 
     IconButton, InputBase, Typography, Select, MenuItem, FormControl, Button,
-    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, useTheme,
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, 
+    useTheme, useMediaQuery
 } from "@mui/material";
 import { DarkMode, LightMode, Message, Notifications, Help } from "@mui/icons-material";
+import FlexBetween from "./FlexBetween";
+import WidgetWrapper from "./WidgetWrapper";
 
 const NavBarIcons = ({ loggedIn, fullName="" }) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
+    // Theme
     const { palette } = useTheme();
     const neutralLight = palette.neutral.light;
     const dark = palette.neutral.dark;
     const primary = palette.primary.main;
+    const background = palette.background.default;
+
+    // Mode, Message, Notifications
+    const [isMessage, setIsMessage] = useState(false);
+    const [isNoti, setIsNoti] = useState(false);
+
+    // Icons Enum
+    const IconsState = {
+        Mode: 'MODE',
+        Message: 'MESSAGE',
+        Notification: 'NOTIFICATION',
+        Help: 'HELP',
+    };
+
+    // Handle Icon Clicks
+    const handleIconClick = ( icon ) => {
+        if (icon === IconsState.Mode) {
+            dispatch(setMode());
+            setIsMessage(false);
+            setIsNoti(false);
+        }
+        else if (icon === IconsState.Message && isNonMobileScreens) {
+            setIsMessage(!isMessage);
+            setIsNoti(false);
+        }
+        else if (icon === IconsState.Notification && isNonMobileScreens) {
+            setIsMessage(false);
+            setIsNoti(!isNoti);
+        }
+        else if (icon === IconsState.Help) {
+            setDialogBox(true);
+            setIsMessage(false);
+            setIsNoti(false);
+        }
+    }
 
     // Help Dialog Box
     const [dialogBox, setDialogBox] = useState(false);
@@ -42,7 +82,7 @@ const NavBarIcons = ({ loggedIn, fullName="" }) => {
             {/* NAVBAR ICONS */}
             <>
                 {/* LIGHT/DARK MODE */}
-                <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize:"25px" }}>
+                <IconButton onClick={() => handleIconClick(IconsState.Mode)} sx={{ fontSize:"25px" }}>
                     {palette.mode === "dark" ? 
                         (<DarkMode sx={{ fontSize:"25px", "&:hover": { color: primary } }} />) 
                         : 
@@ -50,15 +90,47 @@ const NavBarIcons = ({ loggedIn, fullName="" }) => {
                     }
                 </IconButton>
 
-                    {/* OTHER ICONS*/}
-                    <IconButton> 
-                        <Message sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                {/* MESSAGE ICON */}
+                <FlexBetween position="relative">
+                    <IconButton onClick={() => handleIconClick(IconsState.Message)}> 
+                        <Message sx={{ fontSize:"25px", 
+                            color: isMessage ? primary : "", 
+                            "&:hover": { color: primary } }} 
+                        /> 
                     </IconButton>
-                    <IconButton> 
-                        <Notifications sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                    {isMessage &&
+                        <WidgetWrapper position={"absolute"} top={"40px"} left={0} border={`1px solid ${background}`}
+                            sx={{ paddingTop: "0px", paddingBottom: "0px" }}
+                        >
+                            <Typography variant="h5" fontWeight="700" sx={{ fontStyle: "italic", padding: "20px 0px" }}>
+                                No Messages...
+                            </Typography>
+                        </WidgetWrapper>
+                    }
+                </FlexBetween>
+                    
+                {/* NOTIFICATIONS ICON */}
+                <FlexBetween position="relative">
+                    <IconButton onClick={() => handleIconClick(IconsState.Notification)}> 
+                        <Notifications sx={{ fontSize:"25px", 
+                            color: isNoti ? primary : "", 
+                            "&:hover": { color: primary } }} 
+                        /> 
                     </IconButton>
-                    <IconButton onClick={() => setDialogBox(true)}> 
-                        <Help sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                    {isNoti &&
+                        <WidgetWrapper position={"absolute"} top={"40px"} left={0} border={`1px solid ${background}`}
+                            sx={{ paddingTop: "0px", paddingBottom: "0px" }}
+                        >
+                            <Typography variant="h5" fontWeight="700" sx={{ fontStyle: "italic", padding: "20px 0px" }}>
+                                No Notifications...
+                            </Typography>
+                        </WidgetWrapper>
+                    }
+                </FlexBetween>
+
+                {/* HELP ICON */}
+                <IconButton onClick={() => handleIconClick(IconsState.Help)}> 
+                    <Help sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
                 </IconButton>
 
                 {/* User, Log out / Sign up, Log in */}

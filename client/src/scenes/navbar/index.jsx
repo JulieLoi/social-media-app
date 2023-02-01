@@ -15,6 +15,7 @@ import NavBarIcons from "components/NavBarIcons";
 const Navbar = () => {
 
     const navigate = useNavigate();
+    const isHome = window.location.pathname === `/home`;        // Check Home Page
 
     // Mobile/PC
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -49,8 +50,11 @@ const Navbar = () => {
                 {/* LOGO TEXT */}
                 <Typography
                     fontWeight="bold" fontSize="clamp(1rem, 2rem, 2.25rem)" color="primary"
-                    sx={{ "&:hover": { color: primaryDark, cursor: "pointer" } }}
-                    onClick={() => navigate("/home")}
+                    sx={{ 
+                        "&:hover": { color: isHome ? primary : primaryDark, 
+                        cursor: isHome ? "default" : "pointer" } 
+                    }}
+                    onClick={() => { if (!isHome) navigate("/home") } }
                 >
                     Sociopedia
                 </Typography>
