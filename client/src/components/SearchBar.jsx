@@ -5,7 +5,7 @@ import { setAllUsers } from "state";
 
 import { 
     Box, IconButton, InputBase,
-    Typography, Divider, useTheme
+    Typography, Divider, useTheme, useMediaQuery
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
@@ -20,6 +20,7 @@ const SearchBar = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
     // Color Theme
     const { palette } = useTheme();
@@ -86,22 +87,17 @@ const SearchBar = () => {
 
     return (
         <>
-        <Box
-            onFocus={onFocusHandler}
-            onBlur={onBlurHandler}
-        >
-        <FlexBetween 
-            backgroundColor={neutralLight} 
-            border={`2px solid ${background}`}
-            borderRadius="9px" gap="3rem" 
-            padding="0.1rem 1.5rem"
-            position="relative"
+        <Box onFocus={onFocusHandler} onBlur={onBlurHandler}>
+        <FlexBetween backgroundColor={neutralLight} position="relative"
+            border={`2px solid ${background}`} borderRadius="9px"
+            padding="0.1rem 0rem" paddingLeft="1rem"
+            width="150%" maxWidth={isNonMobileScreens ? "20vw" : "90vw"}
         >
             {/* Search Input Bar */}
-            <InputBase placeholder="Search..." 
-                onClick={() => setIsSearching(true)}
-                value={editSearch} 
+            <InputBase placeholder="Search..." fullWidth
+                onClick={() => setIsSearching(true)} 
                 onChange={(e) => setEditSearch(e.target.value)}
+                value={editSearch} 
             />
 
             <IconButton>

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setProfileUser } from "state";
 
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Navbar from "scenes/navbar";
 import NavigateTop from "components/NavigateTop";
 import UserWidget from "scenes/widgets/UserWidget";
@@ -18,8 +19,12 @@ import WidgetWrapper from "components/WidgetWrapper";
  */
 const HomePage = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");    // Mobile/PC
+
+    // Theme
+    const { palette } = useTheme();
 
     // User, Token (Frontend)
     const user = useSelector((state) => state.user);
@@ -50,10 +55,12 @@ const HomePage = () => {
                         :
                         <WidgetWrapper>
                             <Typography variant="h5" sx={{ mb: "0.75rem", 
-                                whiteSpace: "pre-wrap", wordBreak: "break-word", 
-                                fontWeight: "700" }}
+                                    whiteSpace: "pre-wrap", wordBreak: "break-word", 
+                                    fontWeight: "700", "&:hover": { color: palette.primary.main }
+                                }}
+                                onClick={() => navigate('/')}
                             >
-                                No Logged In User
+                                Not Logged In...
                             </Typography>
                         </WidgetWrapper>
                     }

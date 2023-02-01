@@ -5,21 +5,6 @@
 Things to do:
 -Redo Login/Register (done)
 
-MAKE A HOME PAGE WHERE YOU DON'T HAVE TO LOG IN TO ACCESS STUFF
--REMOVE THE AND FRIENDS LIST WIDGET
--EDIT THE NAVIGATION BAR TO SEND YOU TO THE LOGIN/REGISTER PAGE!
-
-FUNCTIONAL SHARE POST BUTTON (DONE)
-FUNCTIONAL HELP BUTTON (NAVBAR)
-
-
-
-
-PLANs ----- NAVBAR ICONS
-Make it like the search bar (no users found...)
-----Message (no messages...)
-----Notifications (no notifications...)
-No need for functionality yet.!!
 
 Make create friend requests?
 
@@ -54,6 +39,14 @@ FINISHED CLIP/GIF AND AUDIO AND ATTACHMENT DROPZONE
 -Finished CSS FOR AUDIO CLIP
 
 FINISHED ADDING MORE RANDOM CREATION FAKE DATA
+
+
+FUNCTIONAL SHARE POST BUTTON (DONE)
+FUNCTIONAL HELP BUTTON (NAVBAR)
+SOME FUNCTION IN MESSAGE / NOTIFICATION (NAVBAR)
+
+finished making it so you don't need an account to access the website!
+
 
 DONE:D++++++
 -UPDATE Dialog Box (update account information)
