@@ -154,7 +154,9 @@ const NavBarIcons = ({ loggedIn, fullName="" }) => {
                         </MenuItem>
                     </Select>
                     :
-                    <Button onClick={() => navigate('/')} sx={{ fontSize: "1rem" }}>
+                    <Button variant="outlined" sx={{ fontSize: "1rem" }}
+                        onClick={() => navigate('/')}
+                    >
                         Sign Up / Login
                     </Button>
                     }

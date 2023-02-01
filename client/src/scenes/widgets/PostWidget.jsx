@@ -25,7 +25,7 @@ import SharePost from "components/SharePost";
  * Post Widget
  * A widget of a single post published
  */
-const PostWidget = ({ postId, postUserId, description, picturePath, likes, comments }) => {
+const PostWidget = ({ postId, postUserId, description, picturePath, likes, comments, createdAt }) => {
 
     const dispatch = useDispatch();
 
@@ -37,6 +37,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const main = palette.neutral.main;
     const primary = palette.primary.main;
     const primaryMainLight = palette.primary.mainLight;
+    const medium = palette.neutral.medium;
 
     // Token, Logged In User, Light/Dark Mode (Frontend State)
     const token = useSelector((state) => state.token);
@@ -50,8 +51,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const isLiked = token ? Boolean(likes[loggedInUser._id]) : false;   // Logged In User Likes
     const likeCount = Object.keys(likes).length;                        // Total Like Count
 
-    // Check Extension (jpg, jpeg, png, gif / ogg, wav, mp3)
+    // Check Extension, Timestamp (Post Date)
     const ext = picturePath ? picturePath.split('.').pop() : "";
+    const postDate = new Date(createdAt).toDateString().split(' ').slice(1).join(' ')
 
     // GET API Call (Get Post Owner)
     const getPostOwner = async () => {
@@ -158,7 +160,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 {description}
             </Typography>
 
-            {/* Post Picture/Audio (if exists) */}
+            {/* POST ATTACHMENT (if exists) */}
             {picturePath && (
                 (ext === "jpg" || ext === "jpeg" || ext === "png" || ext === "gif") ?
                 <img src={`http://localhost:3001/assets/posts/${picturePath}`}
@@ -207,6 +209,13 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                     </Box>
                 )
             )}
+
+            {/* POST DATE */}
+            <Typography display="flex" justifyContent="right"
+                sx={{ color: medium }}
+            >
+                {postDate}
+            </Typography>
 
             <Divider />
 

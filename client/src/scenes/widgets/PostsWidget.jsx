@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 
-import { Typography, useTheme } from "@mui/material";
+import { Box, Typography, Button, useTheme } from "@mui/material";
 import WidgetWrapper from "components/WidgetWrapper";
 import PostWidget from "./PostWidget";
 
@@ -14,13 +14,20 @@ const PostsWidget = ({ userId=null }) => {
 
     const dispatch = useDispatch();
 
-    // Posts (Frontend State)
-    const posts = useSelector((state) => [...state.posts].reverse());
-    
     // Theme Colors
     const { palette } = useTheme();
     const mediumMain = palette.neutral.mediumMain;
 
+    // Posts (Frontend State)
+    const posts = useSelector((state) => [...state.posts].reverse());
+
+    // Loading Posts
+    const postsLoaded = 10;
+    const [next, setNext] = useState(postsLoaded);
+    const handleMorePosts = () => {
+        setNext(next + postsLoaded);
+    };
+    
     // GET API Call (Get All Posts)
     const getPosts = async () => {
         await fetch(`http://localhost:3001/posts`, { method: "GET" }
@@ -59,7 +66,7 @@ const PostsWidget = ({ userId=null }) => {
     // Posts Widget
     return (
         <>
-            {posts.map(
+            {posts.slice(0, next).map(
                 ({
                     _id,
                     userId,
@@ -67,6 +74,7 @@ const PostsWidget = ({ userId=null }) => {
                     picturePath,
                     likes,
                     comments,
+                    createdAt,
                 }) => (
                     <PostWidget
                         key={_id}
@@ -76,9 +84,24 @@ const PostsWidget = ({ userId=null }) => {
                         picturePath={picturePath}
                         likes={likes}
                         comments={comments}
+                        createdAt={createdAt}
                     />
                 ))
             }
+            {next < posts.length && (
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button onClick={handleMorePosts}
+                    sx={{ padding: "1rem" }}
+                    variant="outlined"
+                >
+                    <Typography variant="h5" fontWeight="700"
+                        sx={{ letterSpacing: "2px" }}
+                    >
+                        Load more
+                    </Typography>
+                </Button>
+                </Box>
+            )}
             {posts.length === 0 &&
                 <WidgetWrapper>
                     <Typography color={mediumMain} mb="1rem">

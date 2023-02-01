@@ -2,10 +2,14 @@
 
 This project is based on a complete fullstack (MERN) project tutorial on [Youtube by EdRoh](https://www.youtube.com/watch?v=K8YELRmUb5o), which creates a basic social media application with the following features:
 
- - A register page with complete validation (along with functionality of uploading a user profile image) 
- - A functional login page that can be used to sign in to a home page.
- - A home page
-
+ * A register page with complete validation (along with functionality of uploading a user profile image) 
+ * A functional login page that can be used to sign in to a home page.
+ * A home page that contains four widgets:
+    - "User Widget": Information about the user 
+    - "Posts Widget": All posts that has been made
+    - "Advert Widget": An advertisment
+    - "Friends List Widget": The user's friends list
+ * A profile page that contains information about the profile user (any existing user), reusing the "User Widget", "Posts Widget" (all posts made by the profile user only), and "Friends List Widget".
 
 
 
