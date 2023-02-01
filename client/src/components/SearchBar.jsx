@@ -111,12 +111,21 @@ const SearchBar = () => {
             {isSearching &&
             <WidgetWrapper position={"absolute"} top={"40px"} left={0}
                 border={`1px solid ${background}`} width={"100%"} 
-                sx={{ maxHeight: "30vh", overflowY: "auto" }}
+                sx={{ maxHeight: "30vh", overflowY: "auto", paddingTop: "0px", paddingBottom: "0px" }}
             > 
-                {searchUsers.map((u) => (
+                {searchUsers.length === 0 &&
+                    <Typography variant="h5" fontWeight="700"
+                        sx={{ fontStyle: "italic", padding: "20px 0px" }}
+                    >
+                        No Users Found...
+                    </Typography>
+                }
+                {searchUsers.map((u, index) => (
                     
                     <Box key={u._id}>
-                    <Divider />
+                    {index !== 0 &&
+                        <Divider />
+                    }
                     <Box margin="1rem 0rem" 
                         display={"flex"} alignItems={"center"}
                         onClick={() => {

@@ -59,17 +59,18 @@ const Navbar = () => {
      * Mobile View: Shows logo only, everything else is in a dropdown icon
      */
     return (
-        <FlexBetween position="sticky" top="0" zIndex="10"
+        <Box position="sticky" top="0" zIndex="10"
             backgroundColor={alt} padding="1rem 6%" 
         >
+        <FlexBetween>
 
             {/* LOGO / SEARCH */}
             <FlexBetween gap="1.75rem">
 
-                {/* Logo Text*/}
+                {/* LOGO TEXT */}
                 <Typography
                     fontWeight="bold" fontSize="clamp(1rem, 2rem, 2.25rem)" color="primary"
-                    sx={{ "&:hover": { color: primaryDark, cursor: "pointer", } }}
+                    sx={{ "&:hover": { color: primaryDark, cursor: "pointer" } }}
                     onClick={() => navigate("/home")}
                 >
                     Sociopedia
@@ -85,7 +86,7 @@ const Navbar = () => {
             {/* ICONS / LOG OUT */}
             {isNonMobileScreens ? 
                 (<FlexBetween gap="2rem">
-                    {/* Light/Dark Mode */}
+                    {/* LIGHT/DARK MODE */}
                     <IconButton onClick={() => dispatch(setMode())}>
                         {palette.mode === "dark" ? 
                             (<DarkMode sx={{ fontSize:"25px", "&:hover": { color: primary } }} />) 
@@ -93,10 +94,17 @@ const Navbar = () => {
                             (<LightMode sx={{ color: dark, fontSize:"25px", "&:hover": { color: primary } }} />) 
                         }
                     </IconButton>
-                    {/* Other Menu Icons */}
-                    <IconButton> <Message sx={{ fontSize:"25px" }} /> </IconButton>
-                    <IconButton> <Notifications sx={{ fontSize:"25px" }} /> </IconButton>
-                    <IconButton onClick={downloadPDF}> <Help sx={{ fontSize:"25px" }} /> </IconButton>
+
+                    {/* OTHER MENU ITEMS */}
+                    <IconButton> 
+                        <Message sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                    </IconButton>
+                    <IconButton> 
+                        <Notifications sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                    </IconButton>
+                    <IconButton onClick={downloadPDF}> 
+                        <Help sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                    </IconButton>
                     
                     {/* User, Log out / Sign up, Log in */}
                     <FormControl variable="standard" value={fullName}>
@@ -144,7 +152,7 @@ const Navbar = () => {
                     {/* CLOSE ICON */}
                     <Box display="flex" justifyContent="flex-end" p="1rem">
                         <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
-                            <Close sx={{ "&:hover": { color: primary }, "&:focus": { color: primary }, }} />
+                            <Close sx={{ "&:hover": { color: primary }, "&:focus": { color: primary } }} />
                         </IconButton>
                     </Box>
 
@@ -153,7 +161,7 @@ const Navbar = () => {
                         display="flex" flexDirection="column" 
                         justifyContent="center" gap="3rem"
                     >
-                        {/* Light/Dark Mode */}
+                        {/* LIGHT/DARK MODE */}
                         <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize:"25px" }}>
                             {palette.mode === "dark" ? 
                                 (<DarkMode sx={{ fontSize:"25px", "&:hover": { color: primary } }} />) 
@@ -161,9 +169,19 @@ const Navbar = () => {
                                 (<LightMode sx={{ color: dark, fontSize:"25px", "&:hover": { color: primary } }} />) 
                             }
                         </IconButton>
-                        <IconButton> <Message sx={{ fontSize:"25px" }} /> </IconButton>
-                        <IconButton> <Notifications sx={{ fontSize:"25px" }} /> </IconButton>
-                        <IconButton onClick={downloadPDF}> <Help sx={{ fontSize:"25px" }} /> </IconButton>
+
+                        {/* OTHER ICONS*/}
+                        <IconButton> 
+                            <Message sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                        </IconButton>
+                        <IconButton> 
+                            <Notifications sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                        </IconButton>
+                        <IconButton onClick={downloadPDF}> 
+                            <Help sx={{ fontSize:"25px", "&:hover": { color: primary } }} /> 
+                        </IconButton>
+
+                        {/* NAME, LOG OUT */}
                         <FormControl variable="standard" value={fullName}>
                             <Select value={fullName}
                                 sx={{
@@ -180,10 +198,21 @@ const Navbar = () => {
                                 <MenuItem onClick={() => dispatch(setLogout())}> Log Out </MenuItem>
                             </Select>
                         </FormControl>
+
                     </FlexBetween>
                 </Box>
             )}
+            
         </FlexBetween>
+
+        {/* SEARCH BAR (MOBILE) */}
+        {!isNonMobileScreens && 
+            <>
+                <Box marginTop="5px" />
+                <SearchBar />
+            </>
+        }
+        </Box>
     )
 }
 
