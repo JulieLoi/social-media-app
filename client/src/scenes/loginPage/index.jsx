@@ -15,6 +15,7 @@ const LoginPage = () => {
     // Theme Colors
     const { palette } = useTheme();
     const alt = palette.background.alt;
+    const primaryDark = palette.primary.dark;
     const token = useSelector((state) => state.token);
 
     // Mobile/PC
@@ -32,7 +33,10 @@ const LoginPage = () => {
             <Box width="100%" backgroundColor={alt} 
                 p="1rem 6%" textAlign="center"
             >
-                <Typography fontWeight="bold" fontSize="32px" color="primary">
+                <Typography fontWeight="bold" fontSize="32px" color="primary"
+                    sx={{ "&:hover": { color: primaryDark, cursor: "pointer", } }}
+                    onClick={() => navigate("/home")}
+                >
                     Sociopedia
                 </Typography>
             </Box>

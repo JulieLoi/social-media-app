@@ -63,6 +63,7 @@ const Form = ({ registerPage=false }) => {
     // Theme Colors
     const { palette } = useTheme();
     const main = palette.primary.main;
+    const primaryDark = palette.primary.dark;
 
     // Dropzone
     const maxSize = 1048576*2;      // 2MB
@@ -304,7 +305,7 @@ const Form = ({ registerPage=false }) => {
                             color: main,
                             "&:hover": {
                                 cursor: "pointer",
-                                color: palette.primary.light,
+                                color: primaryDark,
                             },
                         }}
                     >

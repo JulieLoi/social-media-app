@@ -31,9 +31,9 @@ const Navbar = () => {
     const neutralLight = palette.neutral.light;
     const dark = palette.neutral.dark;
     const background = palette.background.default;
-    const primaryLight = palette.primary.light;
     const alt = palette.background.alt;
     const primary = palette.primary.main;
+    const primaryDark = palette.primary.dark;
 
     // Token
     const token = useSelector((state) => state.token);
@@ -48,11 +48,8 @@ const Navbar = () => {
      * Mobile View: Shows logo only, everything else is in a dropdown icon
      */
     return (
-        <FlexBetween 
-            padding="1rem 6%" 
-            backgroundColor={alt} 
-            position="sticky" top="0"
-            zIndex="10"
+        <FlexBetween position="sticky" top="0" zIndex="10"
+            backgroundColor={alt} padding="1rem 6%" 
         >
 
             {/* LOGO / SEARCH */}
@@ -61,7 +58,7 @@ const Navbar = () => {
                 {/* Logo Text*/}
                 <Typography
                     fontWeight="bold" fontSize="clamp(1rem, 2rem, 2.25rem)" color="primary"
-                    sx={{ "&:hover": { color: primaryLight, cursor: "pointer", }, }}
+                    sx={{ "&:hover": { color: primaryDark, cursor: "pointer", } }}
                     onClick={() => navigate("/home")}
                 >
                     Sociopedia
