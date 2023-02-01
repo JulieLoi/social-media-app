@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+import fileDownload from 'js-file-download';
 import { setMode, setLogout } from "state";
 
 import { 
@@ -42,6 +44,15 @@ const Navbar = () => {
     const user = useSelector((state) => state.user);
     const combinedName = user ? `${user.firstName} ${user.lastName}` : "";
     const fullName = user ? (combinedName.length > 20 ? `${combinedName.substring(0, 20)}...` : combinedName) : "";
+
+    // Download 'UserAccounts' PDF
+    const downloadPDF = async () => {
+        Axios.get(`http://localhost:3001/assets/UserAccounts.pdf`, {
+            responseType: 'blob',
+        }).then(res => {
+            fileDownload(res.data, "UserAccounts.pdf");
+        })
+    }
 
     /**
      * Desktop View: Shows everything
@@ -85,7 +96,7 @@ const Navbar = () => {
                     {/* Other Menu Icons */}
                     <IconButton> <Message sx={{ fontSize:"25px" }} /> </IconButton>
                     <IconButton> <Notifications sx={{ fontSize:"25px" }} /> </IconButton>
-                    <IconButton> <Help sx={{ fontSize:"25px" }} /> </IconButton>
+                    <IconButton onClick={downloadPDF}> <Help sx={{ fontSize:"25px" }} /> </IconButton>
                     
                     {/* User, Log out / Sign up, Log in */}
                     <FormControl variable="standard" value={fullName}>
@@ -152,7 +163,7 @@ const Navbar = () => {
                         </IconButton>
                         <IconButton> <Message sx={{ fontSize:"25px" }} /> </IconButton>
                         <IconButton> <Notifications sx={{ fontSize:"25px" }} /> </IconButton>
-                        <IconButton> <Help sx={{ fontSize:"25px" }} /> </IconButton>
+                        <IconButton onClick={downloadPDF}> <Help sx={{ fontSize:"25px" }} /> </IconButton>
                         <FormControl variable="standard" value={fullName}>
                             <Select value={fullName}
                                 sx={{
