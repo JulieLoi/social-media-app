@@ -1,6 +1,6 @@
 # Sociology - Social Media App (MERN Stack)
 
-This project is based on a complete fullstack (MERN) project tutorial on [Youtube by EdRoh](https://www.youtube.com/watch?v=K8YELRmUb5o), which creates a basic social media application with the following features:
+This project is based on a complete fullstack (MERN) project tutorial on [Youtube by EdRoh](https://www.youtube.com/watch?v=K8YELRmUb5o), which creates a basic social media application with the following pages:
 
  * A register page with complete validation (along with functionality of uploading a user profile image) 
  * A functional login page that can be used to sign in to a home page.
@@ -11,6 +11,86 @@ This project is based on a complete fullstack (MERN) project tutorial on [Youtub
     - "Friends List Widget": The user's friends list
  * A profile page that contains information about the profile user (any existing user), reusing the "User Widget", "Posts Widget" (all posts made by the profile user only), and "Friends List Widget".
 
+The tutorial created a basic skeleton of the "Sociology" fullstack with working functionality for the following:
+ * Registering an account
+ * Logging into the website
+ * Creating a post (with an image attachment)
+ * Like/Dislike a post
+ * Adding/Removing a friend
+ * Dark/Light mode toggle
+
+# Sociology Pages
+## Register / Login Page
+The register / login page is the first page that guests are welcomed to. Here, guest users can either create a new account or log in with an existing account.
+
+Following the tutorial, this page is build mostly as a form using [Formik](https://formik.org/) and [Yup](https://github.com/jquense/yup) for both the register and login page. These two "pages" share the same Form component, using a different validation schema (Yup) depending on if the guest user wants to register an account or login.
+
+### Improvements
+
+- Talk about how it was built and how I improved it...
+
+
+
+
+# Navigation Bar
+-Home page, Profile Page
+
+-Other icons work (message, notifications, help)
+-SEARCH BAR WORKS (add search bar in mobile)
+
+## Search Bar
+- Alphabetical order
+- click, go to profile page of the user
+- SHOWN IN MOBILE SCREEN
+
+#### Navigation ICons
+
+
+
+
+## Home Page
+- Talk about what it consists of.
+- I didn;t do much to the page itself, but did update the widgets...
+
+## User Widget
+ - Social Media Profiles (linked to twitter / linkedin)
+ - Edit Accoutn Settings (can change user information (profile pic too))
+
+## Advert
+ - Ability to create an ad
+ -Random ad displays (fake data for more)
+
+
+# My Post Widget
+ - Ability to attach gif, audio, pdf file
+
+# POSTS WIDGET
+-load more feature
+-most recent at the top
+
+## Post
+- added the ability to add comments
+- added ability to delete a post you made
+- added ability to share (simply shares the youtube tutorial link on four platforms)
+- Comment section is limited and can be scrolled
+
+## Friends List
+- Friends List section is limited and can be scrolled
+
+
+## Profile Page
+
+
+# Widgets / Components
+
+# STUFF IN GENERAL
+-FAKE DATA ADDED
+-DATA MODEL UXF (Made it)
+-MAKE OTHER STUFF FOR THE PROJECT (BASED ON OLD CLASS STUFF)
+-NAV TOP (REACT)
+
+ - Fixed ADDING REMOVING FRIENDS (did not work properly other than on home page)
+- LOCATION COMPONENT (uses a library for selecting a location in register and edit user settings)
 
 
 

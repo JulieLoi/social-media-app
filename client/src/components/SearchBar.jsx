@@ -74,7 +74,8 @@ const SearchBar = () => {
             const jsonObject = await response.json();
 
             if (response.status === 200) { 
-                dispatch(setAllUsers(jsonObject)); 
+                const sortedUsers = jsonObject.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+                dispatch(setAllUsers(sortedUsers)); 
             }
             else { console.error(jsonObject.message); }
         });

@@ -23,7 +23,6 @@ const registerSchema = yup.object().shape({
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
-    occupation: yup.string().required("Occupation Required"),
     picture: yup.string().required("Picture Required"),
 });
 
@@ -71,9 +70,8 @@ const Form = ({ registerPage=false }) => {
     // Page State (Login / Register)
     const [pageType, setPageType] = useState(registerPage ? PageState.Register : PageState.Login);
     const isLogin = (pageType === PageState.Login);
-    const isRegister = (pageType === PageState.Register);
     
-    // Location (Optional)
+    // Location (Optional), 
     const [location, setLocation] = useState("");
 
     // Wrong Email or Password
@@ -145,7 +143,7 @@ const Form = ({ registerPage=false }) => {
     // Handle Form Submit
     const handleFormSubmit = async(values, onSubmitProps) => {
         if (isLogin) await login(values);
-        if (isRegister) await register(values, onSubmitProps);
+        if (!isLogin) await register(values, onSubmitProps);
     };
 
     /**
@@ -177,7 +175,7 @@ const Form = ({ registerPage=false }) => {
                     sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}
                 >
                     {/* REGISTER FORM*/}
-                    {isRegister && 
+                    {!isLogin && 
                         (<>
                             <Box
                                 gridColumn="span 4" borderRadius="5px" p="1rem"
@@ -219,8 +217,8 @@ const Form = ({ registerPage=false }) => {
                                 onBlur={handleBlur} onChange={handleChange}
                                 value={values.firstName}
                                 inputProps={{ maxLength: 50 }}
-                                error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                                helperText={touched.firstName && errors.firstName}
+                                error={Boolean(errors.firstName)}
+                                helperText={errors.firstName}
                                 sx={{ gridColumn: "span 2" }}
                             />
                             
@@ -229,28 +227,27 @@ const Form = ({ registerPage=false }) => {
                                 onBlur={handleBlur} onChange={handleChange}
                                 value={values.lastName}
                                 inputProps={{ maxLength: 50 }}
-                                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                helperText={touched.lastName && errors.lastName}
+                                error={Boolean(errors.lastName)}
+                                helperText={errors.lastName}
                                 sx={{ gridColumn: "span 2" }}
                             />
 
-                            <TextField 
-                                label="Occupation" name="occupation"
-                                onBlur={handleBlur} onChange={handleChange}
-                                value={values.occupation}
-                                inputProps={{ maxLength: 50 }}
-                                error={Boolean(touched.occupation) && Boolean(errors.occupation)}
-                                helperText={touched.occupation && errors.occupation}
-                                sx={{ gridColumn: "span 4" }}
-                            />
+                            
 
                             <Divider sx={{ gridColumn: "span 4" }} />
                             <Location setLocation={setLocation}  />
+                            <TextField 
+                                label="Occupation (Optional)" name="occupation"
+                                onBlur={handleBlur} onChange={handleChange}
+                                value={values.occupation}
+                                inputProps={{ maxLength: 50 }}
+                                sx={{ gridColumn: "span 2" }}
+                            />
                             <TextField disabled
                                 label="Location (Optional)" name="location" 
                                 onBlur={handleBlur} 
                                 value={location}
-                                sx={{ gridColumn: "span 4" }}
+                                sx={{ gridColumn: "span 2" }}
                             />
                             <Divider sx={{ gridColumn: "span 4" }} />
                             

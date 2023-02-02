@@ -46,6 +46,7 @@ FUNCTIONAL HELP BUTTON (NAVBAR)
 SOME FUNCTION IN MESSAGE / NOTIFICATION (NAVBAR)
 
 finished making it so you don't need an account to access the website!
+finished adding a "load more" function for the posts, timestamp for a post
 
 
 DONE:D++++++
