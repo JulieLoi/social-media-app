@@ -32,12 +32,9 @@ const PostsWidget = ({ userId=null }) => {
     const getPosts = async () => {
         await fetch(`http://localhost:3001/posts`, { method: "GET" }
         ).then(async (response) => {
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
-            }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { dispatch(setPosts({ posts: responseJSON.posts })); }
+            else { console.error(responseJSON.message); }
         });
     }
 
@@ -45,13 +42,9 @@ const PostsWidget = ({ userId=null }) => {
     const getUserPosts = async () => {
         await fetch(`http://localhost:3001/posts/${userId}/posts`, { method: "GET" }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                dispatch(setPosts({ posts: jsonObject }));    // Updates Frontend State
-            }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { dispatch(setPosts({ posts: responseJSON.posts })); }
+            else { console.error(responseJSON.message); }
         });
     }
     

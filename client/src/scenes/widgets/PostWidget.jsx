@@ -59,9 +59,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const getPostOwner = async () => {
         await fetch(`http://localhost:3001/users/${postUserId}`, { method: "GET" }
         ).then(async (response) => {
-            const jsonObject = await response.json();
-            if (response.status === 200) { setPostOwner(jsonObject.user); }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { setPostOwner(responseJSON.user); }
+            else { console.error(responseJSON.message); }
         });
     }
 
@@ -77,13 +77,9 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
                 body: JSON.stringify({ userId: loggedInUser._id })
             }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                dispatch(setPost({ post: jsonObject }));       // Update Frontend State
-            }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { dispatch(setPost({ post: responseJSON.post })); }
+            else { console.error(responseJSON.message); }
         });
     }
 
@@ -99,12 +95,12 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
             }
         ).then(async (response) => {
             // Response JSON Object
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
             if (response.status === 202) {
-                dispatch(deletePost({ post: jsonObject }));       // Update Frontend State
+                dispatch(deletePost({ post: responseJSON.deletedPost }));       // Update Frontend State
             }
-            else { console.error(jsonObject.message); }
+            else { console.error(responseJSON.message); }
         });
     };
 

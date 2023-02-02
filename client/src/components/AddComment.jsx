@@ -38,14 +38,12 @@ const AddComment = ({ postId }) => {
                 }),
             }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
+            const responseJSON = await response.json();
             if (response.status === 200) {
-                dispatch(setPost({ post: jsonObject }));       // Update Frontend State
-                setUserComment("");                             // Resets User Comment
+                dispatch(setPost({ post: responseJSON.post })); 
+                setUserComment("");                             
             }
-            else { console.error(jsonObject.message); }
+            else { console.error(responseJSON.message); }
         });
     }
 

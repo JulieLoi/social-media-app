@@ -30,11 +30,8 @@ const FriendListWidget = ({ userId }) => {
         ).then(async (response) => {
             const responseJSON = await response.json();
 
-            console.log("GET FRIENDS FRIENDS LIST")
-
             // Updates Friends List (Profile User, Logged In User)
             if (response.status === 200) {
-                console.log("RESPONE FRIENDS", responseJSON)
                 dispatch(setProfileUser({ ...profileUser, friends: responseJSON.friends }));     
                 if (updateUser) {
                     dispatch(setFriends({ friends: responseJSON.friends }));  

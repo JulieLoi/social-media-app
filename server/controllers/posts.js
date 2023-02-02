@@ -13,7 +13,7 @@ export const createPost = async (req, res) => {
 
         // Returns newly created post
         const post = await newPost.save();
-        res.status(201).json(post);
+        res.status(201).json({ post: post });
 
     } catch (err) {
         res.status(409).json({ message: err.message });
@@ -24,7 +24,7 @@ export const createPost = async (req, res) => {
 export const getFeedPosts = async (req, res) => {
     try {
         const posts = await Post.find();
-        res.status(200).json(posts);
+        res.status(200).json({posts: posts});
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
@@ -34,7 +34,7 @@ export const getUserPosts = async (req, res) => {
     try {
         const { userId } = req.params;
         const userPosts = await Post.find({ userId });
-        res.status(200).json(userPosts);
+        res.status(200).json({posts: userPosts});
     } catch (err) {
         console.log(err.message)
         res.status(404).json({ message: err.message });
@@ -61,7 +61,7 @@ export const likePost = async (req, res) => {
         );
 
         // Returns Updated Post (Single)
-        res.status(200).json(updatedPost);
+        res.status(200).json({ post: updatedPost });
 
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -90,7 +90,7 @@ export const commentPost = async (req, res) => {
         );
 
         // Returns Updated Post
-        res.status(200).json(updatedPost);
+        res.status(200).json({ post: updatedPost });
         
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -104,7 +104,7 @@ export const deletePost = async (req, res) => {
         const post = await Post.findByIdAndDelete(id);  // Deleted Post
 
         // Returns Deleted Post
-        res.status(202).json(post);
+        res.status(202).json({ deletedPost: post });
 
     } catch (err) {
         res.status(404).json({ message: err.message });

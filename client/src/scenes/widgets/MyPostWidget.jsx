@@ -98,17 +98,17 @@ const MyPostWidget = ({ picturePath }) => {
             }
         ).then(async (response) => {
             // Response JSON Object (Newly Created Post)
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
             if (response.status === 201) {
-                dispatch(setPosts({ posts: [...posts, jsonObject] }));          //  Updates Frontend State
+                dispatch(setPosts({ posts: [...posts, responseJSON.post] }));          //  Updates Frontend State
 
                 // Reset MyPostWidget
                 setFile(null);
                 setIsFileType(false);
                 setPost("");
             }
-            else { console.error(jsonObject.message); }
+            else { console.error(responseJSON.message); }
         });
     }
     
