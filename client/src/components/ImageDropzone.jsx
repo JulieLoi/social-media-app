@@ -15,7 +15,7 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
     const main = palette.primary.main;
 
     // Dropzone
-    const maxSize = 1048576*2; // 2MB
+    const maxSize = 1048576*3;      // 3MB
 
     return (
         <>
@@ -43,9 +43,9 @@ const ImageDropzone = ({ image, setImage, staticImagesOnly=true }) => {
                     <input {...getInputProps()} />
                     {!image ? 
                         <div>{staticImagesOnly ? 
-                            "Add Image Here (jpg, jpeg, png) - 2MB"
+                            "Add Image Here (jpg, jpeg, png) - 3MB"
                             :
-                            "Add Gif Here (gif) - 2MB"
+                            "Add Gif Here (gif) - 3MB"
                         }
                         </div>
                         : 

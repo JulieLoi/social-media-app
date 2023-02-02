@@ -42,7 +42,6 @@ export const authSlice = createSlice({
             state.user = null;
             state.profileUser = null;
             state.token = null;
-            state.advertisement = null;
         },
 
         // Set All Users (for search bar)

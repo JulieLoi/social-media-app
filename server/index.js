@@ -69,7 +69,7 @@ const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("attachment"), createPost);
 app.post("/advertisements", verifyToken, upload.single("picture"), createAd);
-app.post("/users/:id", verifyToken, upload.single("picture"), updateProfileImage);
+app.patch("/users/:id", verifyToken, upload.single("picture"), updateProfileImage);
 
 /**
  * Routes

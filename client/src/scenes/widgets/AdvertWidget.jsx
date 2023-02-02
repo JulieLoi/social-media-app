@@ -32,16 +32,16 @@ import WidgetWrapper from "components/WidgetWrapper";
 
     // GET API Call (Get Single Random Ad)
     const getAdvertisement = async () => {
-        await fetch(`http://localhost:3001/advertisements/`, { method: "GET", }
+        await fetch(`http://localhost:3001/advertisements/`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
             if (response.status === 200) {
-                let randomIndex = Math.floor(Math.random() * jsonObject.length);
-                dispatch(setAd(jsonObject[randomIndex]));
+                let randomIndex = Math.floor(Math.random() * responseJSON.ads.length);
+                dispatch(setAd(responseJSON.ads[randomIndex]));
             }
-            else { console.error(jsonObject.message); }
+            else { console.error(responseJSON.message); }
         })
     };
 
@@ -96,14 +96,14 @@ import WidgetWrapper from "components/WidgetWrapper";
             }
         ).then(async (response) => {
             // Response JSON Object (Error Message)
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
             // No need to return newly created advert (reset values)
             if (response.status === 201) {
                 setImage(null);
                 setEditNewAd({ name: "", website: "", description: "", });
             }
-            else { console.error(jsonObject.message); }
+            else { console.error(responseJSON.message); }
         });
     }
 

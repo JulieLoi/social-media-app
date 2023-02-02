@@ -9,6 +9,8 @@ Things to do:
 Make create friend requests?
 
 
+HANDLE DUPLICATE EMAIL IN THE SYSTEM (CANNOT USE THE SAME EMAIL AGAIN!)
+
 
 
 
@@ -150,6 +152,9 @@ h&j2!h*^MOYB^Z@Ip$^%7J%1UC#qMP79q0U#2z
 
 
 
+ADD TO USER ACCOUNT LIST
+jenniejohnston@gmail.com
+h5o!5t@1W6#223o%DKkky
 
 
 FRONTEND

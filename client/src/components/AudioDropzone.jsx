@@ -38,7 +38,7 @@ const AudioDropzone = ({ audio, setAudio }) => {
                 >
                     <input {...getInputProps()} />
                     {!audio ? 
-                        <div>Add Audio Clip Here - 5MB
+                        <div>Add Audio Clip Here (ogg, wav, mp3) - 5MB
                         </div>
                         : 
                         <FlexBetween>

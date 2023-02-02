@@ -8,7 +8,7 @@ export const register = async(req, res) => {
         // Destructures Request Parameters
         const {
             firstName, lastName, email, password,
-            picturePath, friends, location, occupation,
+            picturePath, location, occupation,
         } = req.body;
 
         // Password Hash with Salt
@@ -17,21 +17,25 @@ export const register = async(req, res) => {
 
         // Create New  User
         const newUser = new User({
-            firstName, lastName,
-            email, password: passwordHash,
-            picturePath, friends,
-            location, occupation,
+            firstName, lastName, email, 
+            password: passwordHash, friends: [],
+            picturePath, location, occupation,
             viewedProfile: Math.floor(Math.random() * 1000),
             impressions: Math.floor(Math.random() * 1000),
             twitterHandle: "", linkedInHandle: "",
         })
 
-        // Sends back 201 response code and newly created user
-        const savedUser = await newUser.save();
-        res.status(201).json(savedUser);
+        // Sends back 201 response code
+        await newUser.save();
+        res.status(201);
 
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        if (err.code === 11000) {
+            res.status(409).json({ message: "This email is already in use!" })
+        }
+        else {
+            res.status(500).json({ message: err.message });
+        }
     }
 }
 
@@ -55,7 +59,7 @@ export const login = async (req, res) => {
         // Creates a token and sends the token and user (minus password) back
         const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET);
         delete user.password;
-        res.status(200).json({ token, user });
+        res.status(200).json({ token: token, user: user });
         
     } catch(err) {
         res.status(500).json({ message: err.message });

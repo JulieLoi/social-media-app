@@ -1,12 +1,35 @@
 import User from "../models/User.js";
 
 /* READ */
+export const getAllUsers = async (req, res) => {
+    try {
+        const allUsers = await User.find();
+
+        const formattedUsers = allUsers.map(
+            ({ _id, firstName, lastName, picturePath }) => {
+                return { 
+                    _id: _id,
+                    name: `${firstName} ${lastName}`,
+                    picturePath: picturePath,
+                };
+            }
+        )
+        
+        // Returns All Users Object
+        res.status(200).json(formattedUsers);
+
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+}
+
 export const getUser = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
         
         // Returns User Object
+        delete user.password;
         res.status(200).json(user);
 
     } catch (err) {
@@ -29,28 +52,6 @@ export const getUserFriends = async (req, res) => {
             }
         )
         res.status(200).json(formattedFriends);
-
-    } catch (err) {
-        res.status(404).json({ message: err.message });
-    }
-}
-
-export const getAllUsers = async (req, res) => {
-    try {
-        const allUsers = await User.find();
-
-        const formattedUsers = allUsers.map(
-            ({ _id, firstName, lastName, picturePath }) => {
-                return { 
-                    _id: _id,
-                    name: `${firstName} ${lastName}`,
-                    picturePath: picturePath,
-                };
-            }
-        )
-        
-        // Returns All Users Object
-        res.status(200).json(formattedUsers);
 
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -97,7 +98,7 @@ export const addRemoveFriend = async (req, res) => {
             otherUser.friends.map((id) => User.findById(id))
         );
   
-        // Formet both Friends List
+        // Format both Friends List
         const formatUserFriends = userFriends.map(
             ({ _id, firstName, lastName, occupation, location, picturePath }) => {
               return { _id, firstName, lastName, occupation, location, picturePath };
@@ -141,7 +142,7 @@ export const updateUserInformation = async (req, res) => {
             },
             { new: true } // returns the new document
         );
-
+        delete updatedUser.password;
         res.status(200).json(updatedUser);
         
     } catch (err) {
@@ -163,6 +164,7 @@ export const updateProfileImage = async (req, res) => {
             { new: true } // returns the new document
         );
 
+        delete updatedUser.password;
         res.status(200).json(updatedUser);
     } catch (err) {
         res.status(404).json({ message: err.message });

@@ -8,9 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { setLogin } from "state";
 
 import { Box, Button, TextField, useMediaQuery, Typography, Divider, useTheme } from "@mui/material";
-import EditOutlined from "@mui/icons-material/EditOutlined";
-import FlexBetween from "components/FlexBetween";
 import Location from "components/Location";
+import { useEffect } from "react";
 
 // Register Schema and Initial Values
 const registerSchema = yup.object().shape({
@@ -65,7 +64,7 @@ const Form = ({ registerPage=false }) => {
     const primaryDark = palette.primary.dark;
 
     // Dropzone
-    const maxSize = 1048576*2;      // 2MB
+    const maxSize = 1048576*3;      // 3MB
 
     // Page State (Login / Register)
     const [pageType, setPageType] = useState(registerPage ? PageState.Register : PageState.Login);
@@ -99,15 +98,17 @@ const Form = ({ registerPage=false }) => {
                 body: formData,
             }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
 
             // Register Successful (Go to Login)
             if (response.status === 201) {
                 onSubmitProps.resetForm();     // Reset Form
                 setPageType(PageState.Login);
             }
-            else { setError(jsonObject.message); }
+            // Error (409, 500)
+            else { 
+                const responseJSON = await response.json();
+                setError(responseJSON.message)
+            }
         });
     }
 
@@ -124,19 +125,16 @@ const Form = ({ registerPage=false }) => {
             }
         ).then(async (response) =>  {
             // Response JSON Object
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
             // Authentication Successful (Login, Go to Home Page)
             if (response.status === 200) {
-                dispatch(
-                    setLogin({
-                        user: jsonObject.user,
-                        token: jsonObject.token,
-                    })
-                );
+                dispatch(setLogin({ user: responseJSON.user, token: responseJSON.token }));
                 navigate("/home");
             }
-            else { setError(jsonObject.message); }
+            else { 
+                setError(responseJSON.message); 
+            }
         });
     }
 
@@ -155,6 +153,11 @@ const Form = ({ registerPage=false }) => {
             keyEvent.preventDefault();
         }
     }
+
+    // Reset Error Message
+    useEffect(() => {
+        setError("");
+    }, [isLogin])
 
     // Form Frontend
     return (
@@ -184,8 +187,8 @@ const Form = ({ registerPage=false }) => {
                                 <Dropzone
                                     acceptedFiles=".jpg, .jpeg,.png" multiple={false}
                                     onDrop={(acceptedFiles, rejectedFiles) => {
-                                        //console.log("accepted files", acceptedFiles)
-                                        //console.log("rejected files", rejectedFiles)
+                                        console.log("accepted files", acceptedFiles)
+                                        console.log("rejected files", rejectedFiles)
                                         setFieldValue("picture", acceptedFiles[0])
                                     }}
                                     accept={{ 'image/jpeg': ['.jpeg', '.jpg'], 'image/png': ['.png'] }}
@@ -200,12 +203,9 @@ const Form = ({ registerPage=false }) => {
                                     >
                                         <input {...getInputProps()} />
                                         {!values.picture ? (
-                                            <div>Add Image Here (.jpg, .jpeg, .png) - 10MB</div>
+                                            <div>Add Image Here (.jpg, .jpeg, .png) - 3MB</div>
                                         ) : (
-                                            <FlexBetween>
-                                                <Typography>{values.picture.name}</Typography>
-                                                <EditOutlined sx={{ "&:hover": { color: main, cursor: "pointer" } }} />
-                                            </FlexBetween>
+                                            <Typography>{values.picture.name}</Typography>
                                         )}
                                     </Box>
                                     )}
@@ -216,6 +216,7 @@ const Form = ({ registerPage=false }) => {
                                 label="First Name" name="firstName"
                                 onBlur={handleBlur} onChange={handleChange}
                                 value={values.firstName}
+                                autoComplete='off'
                                 inputProps={{ maxLength: 50 }}
                                 error={Boolean(errors.firstName)}
                                 helperText={errors.firstName}
@@ -226,13 +227,12 @@ const Form = ({ registerPage=false }) => {
                                 label="Last Name" name="lastName"
                                 onBlur={handleBlur} onChange={handleChange}
                                 value={values.lastName}
+                                autoComplete='off'
                                 inputProps={{ maxLength: 50 }}
                                 error={Boolean(errors.lastName)}
                                 helperText={errors.lastName}
                                 sx={{ gridColumn: "span 2" }}
                             />
-
-                            
 
                             <Divider sx={{ gridColumn: "span 4" }} />
                             <Location setLocation={setLocation}  />
@@ -240,6 +240,7 @@ const Form = ({ registerPage=false }) => {
                                 label="Occupation (Optional)" name="occupation"
                                 onBlur={handleBlur} onChange={handleChange}
                                 value={values.occupation}
+                                autoComplete='off'
                                 inputProps={{ maxLength: 50 }}
                                 sx={{ gridColumn: "span 2" }}
                             />
@@ -259,19 +260,20 @@ const Form = ({ registerPage=false }) => {
                         label="Email" name="email"
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.email}
+                        autoComplete='off'
                         inputProps={{ maxLength: 254 }}
                         error={ (Boolean(touched.email) && Boolean(errors.email)) || (error !== "") }
-                        helperText={(touched.email && errors.email)}
+                        helperText={errors.email ? (errors.email) : error}
                         sx={{ gridColumn: "span 4" }}
                     />
                     <TextField 
-                        label="Password" name="password"
-                        type="password" 
+                        label="Password" name="password" type="password" 
                         onBlur={handleBlur} onChange={handleChange}
                         value={values.password}
+                        autoComplete='off'
                         inputProps={{ maxLength: 128 }}
-                        error={ (Boolean(touched.password) && Boolean(errors.password)) || (error !== "") }
-                        helperText={error === "" ? (errors.password) : error}
+                        error={ (Boolean(touched.password) && Boolean(errors.password)) || (error !== "" && isLogin) }
+                        helperText={error === "" ? (errors.password) : (isLogin && error)}
                         sx={{ gridColumn: "span 4" }}
                     />
                 </Box>
