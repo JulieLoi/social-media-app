@@ -23,13 +23,15 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
     // Check Friend Status (Logged in user and otherUserId)
     const checkFriendship = loggedInUser ? (loggedInUser.friends.find((f) => f._id === otherUserId) ? true : false) : false;
 
-    // PATCH API Call (Add/Remove Friend)
+    // Add/Remove Friend (/users PATCH API CALL)
     const patchFriend = async () => {
         await fetch(`http://localhost:3001/users/${loggedInUser._id}/${otherUserId}`,
             {
                 method: "PATCH",
-                headers: { Authorization: `Bearer ${token}`},
-                "Content-Type": "application/json"
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
             }
         ).then(async (response) => {
             // Response JSON Object
@@ -57,6 +59,7 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
         });
     }
 
+    // Add/Remove Friend Button Component
     return (
         <>
         {token !== null &&

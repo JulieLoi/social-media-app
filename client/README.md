@@ -10,7 +10,7 @@ Make create friend requests?
 
 
 HANDLE DUPLICATE EMAIL IN THE SYSTEM (CANNOT USE THE SAME EMAIL AGAIN!)
-
+-DONE
 
 
 

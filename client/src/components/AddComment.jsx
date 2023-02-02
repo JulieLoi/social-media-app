@@ -23,7 +23,7 @@ const AddComment = ({ postId }) => {
     const [userComment, setUserComment] = useState("");
     const [remainChar, setRemainChar] = useState(100);
 
-    // PATCH API Call (Add Comment)
+    // Add Comment to Post (postId) (/posts PATCH API CALL)
     const addComment = async () => {
         await fetch(`http://localhost:3001/posts/${postId}/comment`,
             {
@@ -49,6 +49,7 @@ const AddComment = ({ postId }) => {
         });
     }
 
+    // Component to add a comment to a post
     return (
         <>
         <FlexBetween mt="1rem">

@@ -28,11 +28,10 @@ const PostsWidget = ({ userId=null }) => {
         setNext(next + postsLoaded);
     };
     
-    // GET API Call (Get All Posts)
+    // Gets all posts (/posts GET API CALL)
     const getPosts = async () => {
         await fetch(`http://localhost:3001/posts`, { method: "GET" }
         ).then(async (response) => {
-            // Response JSON Object
             const jsonObject = await response.json();
 
             if (response.status === 200) {
@@ -42,7 +41,7 @@ const PostsWidget = ({ userId=null }) => {
         });
     }
 
-    // GET API Call (Get All User Posts)
+    // Gets all of a particular user's (userId) posts (/posts GET API CALL)
     const getUserPosts = async () => {
         await fetch(`http://localhost:3001/posts/${userId}/posts`, { method: "GET" }
         ).then(async (response) => {

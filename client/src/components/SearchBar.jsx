@@ -66,18 +66,21 @@ const SearchBar = () => {
     }, [editSearch]);
 
 
-    // GET API Call (Get All Users)
+    // Gets all users in the database (/users GET API CALL)
     const getAllUsers = async () => {
         await fetch(`http://localhost:3001/users/`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
+            // Gets all users (sorted alphabetically) for search bar usage
             if (response.status === 200) { 
-                const sortedUsers = jsonObject.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+                const sortedUsers = responseJSON.allUsers.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
                 dispatch(setAllUsers(sortedUsers)); 
             }
-            else { console.error(jsonObject.message); }
+
+            // Error Message (Console)
+            else { console.error(responseJSON.message); }
         });
     }
 

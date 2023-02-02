@@ -55,21 +55,17 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
     const ext = picturePath ? picturePath.split('.').pop() : "";
     const postDate = new Date(createdAt).toDateString().split(' ').slice(1).join(' ')
 
-    // GET API Call (Get Post Owner)
+    // Gets Post Owner (/posts GET API CALL)
     const getPostOwner = async () => {
         await fetch(`http://localhost:3001/users/${postUserId}`, { method: "GET" }
         ).then(async (response) => {
-            // Response JSON Object
             const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                setPostOwner(jsonObject);
-            }
+            if (response.status === 200) { setPostOwner(jsonObject.user); }
             else { console.error(jsonObject.message); }
         });
     }
 
-    // PATCH API Call (Like/Dislike Post)
+    // Like/Dislike a post (/posts PATCH API CALL)
     const patchLike = async () => {
         await fetch(`http://localhost:3001/posts/${postId}/like`,
             {
@@ -91,7 +87,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
         });
     }
 
-    // DELETE API Call (Delete Post)
+    // Delete logged in user's post (/posts DELETE API CALL)
     const deleteUserPost = async () => {
         await fetch(`http://localhost:3001/posts/${postId}/delete`,
             {

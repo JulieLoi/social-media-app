@@ -25,32 +25,26 @@ const ProfilePage = () => {
     // Profile User
     const { userId } = useParams();                                 // Gets the User ID of the Profile Page
     const profileUser = useSelector((state) => state.profileUser);
-    const [userExists, setUserExists] = useState(null);           // Check Profile User Exists
 
-    // Get User of the Profile Page
-    const getUser = async () => {
+    // Get the Profile Page's User (/users GET API CALL)
+    const getProfileUser = async () => {
         await fetch(`http://localhost:3001/users/${userId}`, { method: "GET" }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) {
-                dispatch(setProfileUser(jsonObject));   // Update Frontend State (Profile User)
-                setUserExists(true);                    // Updates Profile Page State (User)
-            }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { dispatch(setProfileUser(responseJSON.user)); }
+            else { console.error(responseJSON.message); }
         })
 
     }
 
     // Get User Data for Profile Page
     useEffect(() => {
-        getUser();
+        getProfileUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // User Does Not Exist
-    if (!userExists) { return null; }
+    if (!profileUser) { return null; }
 
     // Profile Page
     return (

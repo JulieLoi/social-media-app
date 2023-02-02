@@ -16,7 +16,7 @@ export const getAllUsers = async (req, res) => {
         )
         
         // Returns All Users Object
-        res.status(200).json(formattedUsers);
+        res.status(200).json({ allUsers: formattedUsers });
 
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -30,7 +30,7 @@ export const getUser = async (req, res) => {
         
         // Returns User Object
         delete user.password;
-        res.status(200).json(user);
+        res.status(200).json({ user: user });
 
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -51,7 +51,7 @@ export const getUserFriends = async (req, res) => {
                 return { _id, firstName, lastName, occupation, location, picturePath };
             }
         )
-        res.status(200).json(formattedFriends);
+        res.status(200).json({ friends: formattedFriends });
 
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -143,7 +143,7 @@ export const updateUserInformation = async (req, res) => {
             { new: true } // returns the new document
         );
         delete updatedUser.password;
-        res.status(200).json(updatedUser);
+        res.status(200).json({ updatedUser: updatedUser });
         
     } catch (err) {
         res.status(404).json({ message: err.message });
@@ -165,7 +165,7 @@ export const updateProfileImage = async (req, res) => {
         );
 
         delete updatedUser.password;
-        res.status(200).json(updatedUser);
+        res.status(200).json({ updatedUser: updatedUser });
     } catch (err) {
         res.status(404).json({ message: err.message });
     }

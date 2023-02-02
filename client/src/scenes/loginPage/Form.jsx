@@ -45,14 +45,8 @@ const initialValuesLogin = {
     password: ""
 };
 
-// Login / Register Enum
-const PageState = {
-    Login: 'LOGIN',
-    Register: 'REGISTER',
-};
-
 // Form
-const Form = ({ registerPage=false }) => {
+const Form = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -63,20 +57,17 @@ const Form = ({ registerPage=false }) => {
     const main = palette.primary.main;
     const primaryDark = palette.primary.dark;
 
-    // Dropzone
-    const maxSize = 1048576*3;      // 3MB
-
     // Page State (Login / Register)
-    const [pageType, setPageType] = useState(registerPage ? PageState.Register : PageState.Login);
-    const isLogin = (pageType === PageState.Login);
-    
-    // Location (Optional), 
-    const [location, setLocation] = useState("");
+    const [isLogin, setIsLogin] = useState(true);
 
-    // Wrong Email or Password
-    const [error, setError] = useState("");
+    // ---
+    const maxSize = 1048576*3;                      // Dropzone - 3MB
+    const [location, setLocation] = useState("");   // Location (Optional)
+    const [error, setError] = useState("");         // Error - Wrong Email or Password
 
-    // Register Function
+ 
+
+    // Registers a new user (/auth POST API CALL)
     const register = async (values, onSubmitProps) => {
 
         const ext = values.picture.name.split('.').pop();
@@ -98,33 +89,27 @@ const Form = ({ registerPage=false }) => {
                 body: formData,
             }
         ).then(async (response) => {
+            const responseJSON = await response.json();
 
             // Register Successful (Go to Login)
             if (response.status === 201) {
+                setIsLogin(true);
                 onSubmitProps.resetForm();     // Reset Form
-                setPageType(PageState.Login);
             }
-            // Error (409, 500)
-            else { 
-                const responseJSON = await response.json();
-                setError(responseJSON.message)
-            }
+            // Error Message (409, 500)
+            else { setError(responseJSON.message); }
         });
     }
 
-    // Login Function
+    // Logs in a user (/auth POST API CALL)
     const login = async (values) => {
-
-        // POST API call (sends login data)
-        await fetch(
-            "http://localhost:3001/auth/login", 
+        await fetch("http://localhost:3001/auth/login", 
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values),
             }
         ).then(async (response) =>  {
-            // Response JSON Object
             const responseJSON = await response.json();
 
             // Authentication Successful (Login, Go to Home Page)
@@ -133,6 +118,7 @@ const Form = ({ registerPage=false }) => {
                 navigate("/home");
             }
             else { 
+                // Error Message (400, 500)
                 setError(responseJSON.message); 
             }
         });
@@ -140,8 +126,8 @@ const Form = ({ registerPage=false }) => {
 
     // Handle Form Submit
     const handleFormSubmit = async(values, onSubmitProps) => {
-        if (isLogin) await login(values);
-        if (!isLogin) await register(values, onSubmitProps);
+        if (isLogin) { await login(values); }
+        else { await register(values, onSubmitProps); }
     };
 
     /**
@@ -157,6 +143,7 @@ const Form = ({ registerPage=false }) => {
     // Reset Error Message
     useEffect(() => {
         setError("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLogin])
 
     // Form Frontend
@@ -178,7 +165,7 @@ const Form = ({ registerPage=false }) => {
                     sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}
                 >
                     {/* REGISTER FORM*/}
-                    {!isLogin && 
+                    {!(isLogin) && 
                         (<>
                             <Box
                                 gridColumn="span 4" borderRadius="5px" p="1rem"
@@ -272,8 +259,8 @@ const Form = ({ registerPage=false }) => {
                         value={values.password}
                         autoComplete='off'
                         inputProps={{ maxLength: 128 }}
-                        error={ (Boolean(touched.password) && Boolean(errors.password)) || (error !== "" && isLogin) }
-                        helperText={error === "" ? (errors.password) : (isLogin && error)}
+                        error={ (Boolean(touched.password) && Boolean(errors.password)) || (error !== "" && (isLogin)) }
+                        helperText={error === "" ? (errors.password) : ((isLogin) && error)}
                         sx={{ gridColumn: "span 4" }}
                     />
                 </Box>
@@ -289,14 +276,14 @@ const Form = ({ registerPage=false }) => {
                         }}
                     >
                         <Typography fontWeight="700" variant="h5">
-                            {isLogin ? PageState.Login : PageState.Register}
+                            {isLogin ? 'REGISTER' : 'LOGIN'}
                         </Typography>
                     </Button>
 
                     {/* CHANGE BETWEEN LOGIN / REGISTER */}
                     <Typography
                         onClick={() => {
-                            setPageType(isLogin ? PageState.Register : PageState.Login);
+                            setIsLogin(!isLogin);
                             resetForm();
                         }}
                         sx={{

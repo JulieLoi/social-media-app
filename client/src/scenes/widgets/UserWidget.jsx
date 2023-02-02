@@ -57,19 +57,17 @@ const UserWidget = ({ userId, picturePath }) => {
     const main = palette.neutral.main;
     const primary = palette.primary.main;
 
-    // GET API Call (Get User)
+    // Gets User (userId) for Widget (/users GET API CALL)
     const getUser = async () => {
         await fetch(`http://localhost:3001/users/${userId}`, { method: "GET" }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) { setUser(jsonObject); }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { setUser(responseJSON.user); }
+            else { console.error(responseJSON.message); }
         });
     }
 
-    // PATCH API CALL (Edit User - Twitter/LinkedIn Handle)
+    // Updates User (userId) Information (/users PATCH API CALL)
     const updateUserInformation = async () => {
 
         // Update User Profile Image
@@ -80,31 +78,30 @@ const UserWidget = ({ userId, picturePath }) => {
             // Form Data (to upload image)
             const formData = new FormData();
             formData.append("serverPath", "/users");            // Multer Disk Storage (Path)
-            formData.append("picturePath", userImagePath);                // Rename Advert Image
+            formData.append("picturePath", userImagePath);      // Rename Advert Image
             formData.append("picture", image);
 
             await fetch(`http://localhost:3001/users/${loggedInUser._id}`, 
                 {
-                    method: "POST",
+                    method: "PATCH",
                     headers: { Authorization: `Bearer ${token}` },
                     body: formData,
                 },
             ).then(async (response) => {
                 // Response JSON Object
-                const jsonObject = await response.json();
+                const responseJSON = await response.json();
 
+                // Updates Logged In User Profile Picture
                 if (response.status === 200) {
-                    setUser(jsonObject);
-                    dispatch(setUserProfileImage(jsonObject));
+                    setUser(responseJSON.updatedUser);
+                    dispatch(setUserProfileImage(responseJSON.updatedUser));
                     setImage(null);
                 }
-                else {
-                    console.log(jsonObject.message)
-                }
+                else { console.log(responseJSON.message); }
             })
         }
 
-        // Update User Information
+        // Update Logged In User Information
         await fetch(`http://localhost:3001/users/${loggedInUser._id}`,
             {
                 method: "PATCH",
@@ -115,15 +112,15 @@ const UserWidget = ({ userId, picturePath }) => {
                 body: JSON.stringify(editUserInformation),
             }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
+            // Updates Logged In User Information
             if (response.status === 200) {
-                setUser(jsonObject);
-                dispatch(setUserInformation(jsonObject));
+                setUser(responseJSON.updatedUser);
+                dispatch(setUserInformation(responseJSON.updatedUser));
             }
             else {
-                console.log(jsonObject.message)
+                console.log(responseJSON.message)
             }
         });
     }

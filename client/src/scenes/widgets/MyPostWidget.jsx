@@ -18,6 +18,14 @@ import ImageDropzone from "components/ImageDropzone";
 import AudioDropzone from "components/AudioDropzone";
 import AttachementDropzone from "components/AttachmentDropzone";
 
+// File Enum
+const FileType = {
+    Image: 'IMAGE',
+    Gif: 'GIF',
+    Attachment: 'ATTACHMENT',
+    Audio: 'AUDIO',
+}
+
 /**
  * MyPostWidget
  * The widget that the user uses to create a post
@@ -39,76 +47,41 @@ const MyPostWidget = ({ picturePath }) => {
     const posts = useSelector((state) => state.posts);
 
     // My Post Widget States
-    const [post, setPost] = useState("");                           // Post Content
-    const [isImage, setIsImage] = useState(false);                  // Will show image dropbox
-    const [isGif, setIsGif] = useState(false);                      // Will show gif dropbox (same as image dropbox)
-    const [isAudio, setIsAudio] = useState(false);                  // Will show audio dropbox
-    const [isAttachment, setIsAttachment] = useState(false);        // Will show attachment dropbox
-    const [file, setFile] = useState(null);                       // Optional image/gif/attachment/audio to include in post
+    const [post, setPost] = useState("");                   // Post Content
+    const [isFileType, setIsFileType] = useState(null);     // Will show a certain dropzone
+    const [file, setFile] = useState(null);                 // Optional image/gif/attachment/audio to include in post
 
-    
     // Dropdown Menu (Mobile Screen)
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => { setAnchorEl(event.currentTarget); };
     const handleClose = () => { setAnchorEl(null); };
 
-    // Handle Image Click
-    const handleImage = () => {
-
-        // Reset isGif
-        if (isGif || isAttachment || isAudio) {
-            setIsGif(false); setIsAttachment(false); setIsAudio(false);
+    // Handle File Dropzone Selection
+    const handleFileType = (fileType) => {
+        if (isFileType !== fileType) {
+            setIsFileType(fileType);
             setFile(null);
         }
-        setIsImage(!isImage);
+        else { setIsFileType(null); }
     }
 
-    // Handle Gif Click
-    const handleGif = () => {
-        // Reset isImage
-        if (isImage || isAttachment || isAudio) {
-            setIsImage(false);  setIsAttachment(false); setIsAudio(false);
-            setFile(null);
-        }
-        setIsGif(!isGif);
-    }
-
-    // Handle Attachment Click
-    const handleAttachment = () => {
-        // Reset isImage
-        if (isImage || isGif || isAudio) {
-            setIsImage(false); setIsGif(false); setIsAudio(false);
-            setFile(null);
-        }
-        setIsAttachment(!isAttachment);
-    }
-
-    // Handle Audio Click
-    const handleAudio = () => {
-        if (isImage || isGif || isAttachment) {
-            setIsImage(false); setIsGif(false); setIsAttachment(false);
-            setFile(null);
-        }
-        setIsAudio(!isAudio);
-    }
-
-    // POST API Call (Create Post)
+    // Creates a post (/posts POST API CALL)
     const handlePost = async () => {
 
-        // Form Data: [userId, description, post image, post image path] (image is optional)
+        // Form Data: [userId, description, post file, post file path] (file is optional)
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
-        formData.append("serverPath", "/posts");                // Multer Disk Storage (Path)
+        formData.append("serverPath", "/posts");    // Multer Disk Storage (Path)
 
-        // Path for image/gif/attachment/audio
+        // Path for file (image/gif/attachment/audio)
         if (file) {
             const ext = file.path.split('.').pop();
             let postImagePath = `post${uuidv4().replaceAll('-', '')}.${ext}`;
 
             // Keep original file name for attachment/audio
-            if (isAttachment || isAudio) {
+            if (isFileType === FileType.Attachment || isFileType === FileType.Audio) {
                 postImagePath = `post${uuidv4().replaceAll('-', '')}${file.path}`;
             }
     
@@ -132,7 +105,7 @@ const MyPostWidget = ({ picturePath }) => {
 
                 // Reset MyPostWidget
                 setFile(null);
-                setIsImage(false);
+                setIsFileType(false);
                 setPost("");
             }
             else { console.error(jsonObject.message); }
@@ -159,15 +132,16 @@ const MyPostWidget = ({ picturePath }) => {
                 />
             </FlexBetween>
 
-            {/* IMAGE DROPZONE */}
-            {(isImage || isGif) && 
-                <ImageDropzone image={file} setImage={setFile} staticImagesOnly={!isGif} />
+            {/* FILE DROPZONES */}
+            {(isFileType === FileType.Image || isFileType === FileType.Gif) && 
+                <ImageDropzone image={file} setImage={setFile} staticImagesOnly={isFileType === FileType.Image} />
             }
-            {isAudio &&
-                <AudioDropzone audio={file} setAudio={setFile} />
-            }
-            {isAttachment &&
+            
+            {isFileType === FileType.Attachment &&
                 <AttachementDropzone attachment={file} setAttachment={setFile} />
+            }
+            {isFileType === FileType.Audio &&
+                <AudioDropzone audio={file} setAudio={setFile} />
             }
 
             <Divider sx={{ margin: "1.25rem 0" }} />
@@ -179,32 +153,32 @@ const MyPostWidget = ({ picturePath }) => {
                 {isNonMobileScreens ? 
                     (<>
                         {/* IMAGE UPLOAD*/}
-                        <FlexBetween gap="0.25rem" onClick={handleImage}
+                        <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Image)}
                         >
-                            <ImageOutlined sx={{ color: isImage ? main : mediumMain }} />
+                            <ImageOutlined sx={{ color: (isFileType === FileType.Image) ? main : mediumMain }} />
                             <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
                                 Image
                             </Typography>
                         </FlexBetween>
 
                         {/* GIF UPLOAD*/}
-                        <FlexBetween gap="0.25rem" onClick={handleGif}
+                        <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Gif)}
                         >
-                            <GifBoxOutlined sx={{ color: isGif ? main : mediumMain }} />
+                            <GifBoxOutlined sx={{ color: (isFileType === FileType.Gif) ? main : mediumMain }} />
                             <Typography color={mediumMain} sx={{ "&:hover": { cursor: "pointer", color: medium } }}>
                                 Gif
                             </Typography>
                         </FlexBetween>
 
                         {/* ATTACHMENT UPLOAD*/}
-                        <FlexBetween gap="0.25rem" onClick={handleAttachment}>
-                            <AttachFileOutlined sx={{ color: isAttachment ? main : mediumMain }} />
+                        <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Attachment)}>
+                            <AttachFileOutlined sx={{ color: (isFileType === FileType.Attachment) ? main : mediumMain }} />
                             <Typography color={mediumMain}>Attachment</Typography>
                         </FlexBetween>
 
                         {/* AUDIO UPLOAD*/}
-                        <FlexBetween gap="0.25rem" onClick={handleAudio}>
-                            <MicOutlined sx={{ color: isAudio ? main : mediumMain }} />
+                        <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Audio)}>
+                            <MicOutlined sx={{ color: (isFileType === FileType.Audio) ? main : mediumMain }} />
                             <Typography color={mediumMain}>Audio</Typography>
                         </FlexBetween>
                     </>)
@@ -245,25 +219,25 @@ const MyPostWidget = ({ picturePath }) => {
             MenuListProps={{ 'aria-labelledby': 'expand-mobile-menu-button', }}
         >
             <MenuItem onClick={handleClose}>
-                <FlexBetween gap="0.25rem" onClick={handleImage}>
+                <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Image)}>
                     <ImageOutlined sx={{ color: mediumMain }} />
                     <Typography color={mediumMain}>Image</Typography>
                 </FlexBetween>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-                <FlexBetween gap="0.25rem" onClick={handleGif}>
+                <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Gif)}>
                     <GifBoxOutlined sx={{ color: mediumMain }} />
                     <Typography color={mediumMain}>Gif</Typography>
                 </FlexBetween>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-                <FlexBetween gap="0.25rem" onClick={handleAttachment}>
+                <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Attachment)}>
                     <AttachFileOutlined sx={{ color: mediumMain }} />
                     <Typography color={mediumMain}>Attachment</Typography>
                 </FlexBetween>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-                <FlexBetween gap="0.25rem" onClick={handleAudio}>
+                <FlexBetween gap="0.25rem" onClick={() => handleFileType(FileType.Audio)}>
                     <MicOutlined sx={{ color: mediumMain }} />
                     <Typography color={mediumMain}>Audio</Typography>
                 </FlexBetween>

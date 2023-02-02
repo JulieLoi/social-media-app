@@ -12,20 +12,18 @@ const Comment = ({ comment }) => {
     // Commenter Information
     const [commenter, setCommenter] = useState(null);
 
-    // GET API Call (Get User)
-    const getUser = async () => {
+    // Gets Owner of Comment (/users GET API CALL)
+    const getCommenter = async () => {
         await fetch(`http://localhost:3001/users/${comment.userId}`, { method: "GET" }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
-
-            if (response.status === 200) { setCommenter(jsonObject); }
-            else { console.error(jsonObject.message); }
+            const responseJSON = await response.json();
+            if (response.status === 200) { setCommenter(responseJSON.user); }
+            else { console.error(responseJSON.message); }
         });
     }
 
     useEffect(() => {
-        getUser();
+        getCommenter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

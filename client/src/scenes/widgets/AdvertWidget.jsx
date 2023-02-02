@@ -30,25 +30,23 @@ import WidgetWrapper from "components/WidgetWrapper";
     const token = useSelector((state) => state.token);
     const ad = useSelector((state) => state.advertisement);
 
-    // GET API Call (Get Single Random Ad)
+    // Gets a single advert to present (/advertisements GET API CALL)
     const getAdvertisement = async () => {
         await fetch(`http://localhost:3001/advertisements/`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const responseJSON = await response.json();
 
+            // Set one random ad
             if (response.status === 200) {
                 let randomIndex = Math.floor(Math.random() * responseJSON.ads.length);
                 dispatch(setAd(responseJSON.ads[randomIndex]));
             }
+            
+            // Error Message (Console)
             else { console.error(responseJSON.message); }
         })
     };
-
-    useEffect(() => {
-        getAdvertisement();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     // Create New Advertisement
     const [image, setImage] = useState(null);       // Optional image to include in post
@@ -72,7 +70,7 @@ import WidgetWrapper from "components/WidgetWrapper";
         else { setError(true); }
     }
 
-    // POST API Call (Create Advert)
+    // Create Advert (/advertisements POST API CALL)
     const handleAd = async () => {
 
         const ext = image.path.split('.').pop();
@@ -95,17 +93,25 @@ import WidgetWrapper from "components/WidgetWrapper";
                 body: formData,
             }
         ).then(async (response) => {
-            // Response JSON Object (Error Message)
-            const responseJSON = await response.json();
-
-            // No need to return newly created advert (reset values)
+            // Reset "Create New Ad" values
             if (response.status === 201) {
                 setImage(null);
                 setEditNewAd({ name: "", website: "", description: "", });
             }
-            else { console.error(responseJSON.message); }
+
+            // Error Message (console)
+            else { 
+                const responseJSON = await response.json();
+                console.error(responseJSON.message); 
+            }
         });
     }
+
+    // Gets an advert
+    useEffect(() => {
+        getAdvertisement();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     // Advert Widget
     return (

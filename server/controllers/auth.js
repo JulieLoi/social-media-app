@@ -27,7 +27,7 @@ export const register = async(req, res) => {
 
         // Sends back 201 response code
         await newUser.save();
-        res.status(201);
+        res.status(201).json({ message: "Successfully registered user!" });
 
     } catch (err) {
         if (err.code === 11000) {

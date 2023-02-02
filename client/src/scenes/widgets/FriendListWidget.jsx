@@ -24,23 +24,23 @@ const FriendListWidget = ({ userId }) => {
     const { userId: profileId } = useParams();     // Profile User ID (from params)
     const profileUser = useSelector((state) => state.profileUser);
 
-    // GET API Call (Get All User Friends)
-    const getFriends = async (updateUser) => {
+    // Gets all friends of user (userId) (/users GET API CALL)
+    const getFriends = async (updateUser=false) => {
         await fetch(`http://localhost:3001/users/${userId}/friends`, { method: "GET", }
         ).then(async (response) => {
-            // Response JSON Object
-            const jsonObject = await response.json();
+            const responseJSON = await response.json();
 
+            console.log("GET FRIENDS FRIENDS LIST")
+
+            // Updates Friends List (Profile User, Logged In User)
             if (response.status === 200) {
-                // Update Frontend State  
-                dispatch(setProfileUser({ ...profileUser, friends: jsonObject }));     
-                
-                // Updates User Object Friends
+                console.log("RESPONE FRIENDS", responseJSON)
+                dispatch(setProfileUser({ ...profileUser, friends: responseJSON.friends }));     
                 if (updateUser) {
-                    dispatch(setFriends({ friends: jsonObject }));  
+                    dispatch(setFriends({ friends: responseJSON.friends }));  
                 }
             }
-            else { console.error(jsonObject.message); }
+            else { console.error(responseJSON.message); }
         });
     }
 
