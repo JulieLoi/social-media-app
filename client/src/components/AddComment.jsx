@@ -25,7 +25,7 @@ const AddComment = ({ postId }) => {
 
     // Add Comment to Post (postId) (/posts PATCH API CALL)
     const addComment = async () => {
-        await fetch(`http://localhost:3001/posts/${postId}/comment`,
+        await fetch(`${process.env.REACT_APP_POSTS_BACKEND_URL}/${postId}/comment`,
             {
                 method: "PATCH",
                 headers: { 

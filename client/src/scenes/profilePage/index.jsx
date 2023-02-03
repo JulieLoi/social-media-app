@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { setProfileUser } from "state";
@@ -28,7 +28,7 @@ const ProfilePage = () => {
 
     // Get the Profile Page's User (/users GET API CALL)
     const getProfileUser = async () => {
-        await fetch(`http://localhost:3001/users/${userId}`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${userId}`, { method: "GET" }
         ).then(async (response) => {
             const responseJSON = await response.json();
             if (response.status === 200) { dispatch(setProfileUser(responseJSON.user)); }

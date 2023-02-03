@@ -59,7 +59,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
     // Gets User (userId) for Widget (/users GET API CALL)
     const getUser = async () => {
-        await fetch(`http://localhost:3001/users/${userId}`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${userId}`, { method: "GET" }
         ).then(async (response) => {
             const responseJSON = await response.json();
             if (response.status === 200) { setUser(responseJSON.user); }
@@ -81,7 +81,7 @@ const UserWidget = ({ userId, picturePath }) => {
             formData.append("picturePath", userImagePath);      // Rename Advert Image
             formData.append("picture", image);
 
-            await fetch(`http://localhost:3001/users/${loggedInUser._id}`, 
+            await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${loggedInUser._id}`, 
                 {
                     method: "PATCH",
                     headers: { Authorization: `Bearer ${token}` },
@@ -102,7 +102,7 @@ const UserWidget = ({ userId, picturePath }) => {
         }
 
         // Update Logged In User Information
-        await fetch(`http://localhost:3001/users/${loggedInUser._id}`,
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${loggedInUser._id}`,
             {
                 method: "PATCH",
                 headers: { 

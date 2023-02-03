@@ -90,7 +90,7 @@ const MyPostWidget = ({ picturePath }) => {
         }
 
         // Create Post in MongoDB
-        await fetch(`http://localhost:3001/posts`, 
+        await fetch(`${process.env.REACT_APP_POSTS_BACKEND_URL}`, 
             {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },

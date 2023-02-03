@@ -14,7 +14,7 @@ const Comment = ({ comment }) => {
 
     // Gets Owner of Comment (/users GET API CALL)
     const getCommenter = async () => {
-        await fetch(`http://localhost:3001/users/${comment.userId}`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${comment.userId}`, { method: "GET" }
         ).then(async (response) => {
             const responseJSON = await response.json();
             if (response.status === 200) { setCommenter(responseJSON.user); }

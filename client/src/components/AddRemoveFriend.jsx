@@ -25,7 +25,7 @@ const AddRemoveFriend = ({ otherUserId, marginAmount="0" }) => {
 
     // Add/Remove Friend (/users PATCH API CALL)
     const patchFriend = async () => {
-        await fetch(`http://localhost:3001/users/${loggedInUser._id}/${otherUserId}`,
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${loggedInUser._id}/${otherUserId}`,
             {
                 method: "PATCH",
                 headers: { 

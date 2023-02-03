@@ -26,7 +26,7 @@ const FriendListWidget = ({ userId }) => {
 
     // Gets all friends of user (userId) (/users GET API CALL)
     const getFriends = async (updateUser=false) => {
-        await fetch(`http://localhost:3001/users/${userId}/friends`, { method: "GET", }
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${userId}/friends`, { method: "GET", }
         ).then(async (response) => {
             const responseJSON = await response.json();
 

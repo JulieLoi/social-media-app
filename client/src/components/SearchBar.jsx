@@ -68,7 +68,7 @@ const SearchBar = () => {
 
     // Gets all users in the database (/users GET API CALL)
     const getAllUsers = async () => {
-        await fetch(`http://localhost:3001/users/`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const responseJSON = await response.json();

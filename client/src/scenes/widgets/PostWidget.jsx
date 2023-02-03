@@ -57,7 +57,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     // Gets Post Owner (/posts GET API CALL)
     const getPostOwner = async () => {
-        await fetch(`http://localhost:3001/users/${postUserId}`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_USERS_BACKEND_URL}/${postUserId}`, { method: "GET" }
         ).then(async (response) => {
             const responseJSON = await response.json();
             if (response.status === 200) { setPostOwner(responseJSON.user); }
@@ -67,7 +67,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     // Like/Dislike a post (/posts PATCH API CALL)
     const patchLike = async () => {
-        await fetch(`http://localhost:3001/posts/${postId}/like`,
+        await fetch(`${process.env.REACT_APP_POSTS_BACKEND_URL}/${postId}/like`,
             {
                 method: "PATCH",
                 headers: { 
@@ -85,7 +85,7 @@ const PostWidget = ({ postId, postUserId, description, picturePath, likes, comme
 
     // Delete logged in user's post (/posts DELETE API CALL)
     const deleteUserPost = async () => {
-        await fetch(`http://localhost:3001/posts/${postId}/delete`,
+        await fetch(`${process.env.REACT_APP_POSTS_BACKEND_URL}/${postId}/delete`,
             {
                 method: "DELETE",
                 headers: {

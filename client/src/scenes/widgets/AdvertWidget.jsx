@@ -32,7 +32,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 
     // Gets a single advert to present (/advertisements GET API CALL)
     const getAdvertisement = async () => {
-        await fetch(`http://localhost:3001/advertisements/`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_ADVERTS_BACKEND_URL}/`, { method: "GET" }
         ).then(async (response) => {
             // Response JSON Object
             const responseJSON = await response.json();
@@ -86,7 +86,7 @@ import WidgetWrapper from "components/WidgetWrapper";
         formData.append("picture", image);
         
         // Create Advert in MongoDB
-        await fetch(`http://localhost:3001/advertisements`, 
+        await fetch(`${process.env.REACT_APP_ADVERTS_BACKEND_URL}`, 
             {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },

@@ -30,7 +30,7 @@ const PostsWidget = ({ userId=null }) => {
     
     // Gets all posts (/posts GET API CALL)
     const getPosts = async () => {
-        await fetch(`http://localhost:3001/posts`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_POSTS_BACKEND_URL}`, { method: "GET" }
         ).then(async (response) => {
             const responseJSON = await response.json();
             if (response.status === 200) { dispatch(setPosts({ posts: responseJSON.posts })); }
@@ -40,7 +40,7 @@ const PostsWidget = ({ userId=null }) => {
 
     // Gets all of a particular user's (userId) posts (/posts GET API CALL)
     const getUserPosts = async () => {
-        await fetch(`http://localhost:3001/posts/${userId}/posts`, { method: "GET" }
+        await fetch(`${process.env.REACT_APP_POSTS_BACKEND_URL}/${userId}/posts`, { method: "GET" }
         ).then(async (response) => {
             const responseJSON = await response.json();
             if (response.status === 200) { dispatch(setPosts({ posts: responseJSON.posts })); }
