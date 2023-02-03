@@ -2,6 +2,18 @@
 
 # Possible Features to add
 
+
+TEST REACT 
+TEST SERVER!
+
+In server testing, .env has two mongourls (has database name I want for both)
+
+ADD .ENV (USE GIT IGNORE) IN CLIENT
+https://stackoverflow.com/questions/49579028/adding-an-env-file-to-a-react-project
+https://stackoverflow.com/questions/48378337/create-react-app-not-picking-up-env-files
+
+
+
 Things to do:
 -Redo Login/Register (done)
 

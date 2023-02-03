@@ -89,15 +89,17 @@ const Form = () => {
                 body: formData,
             }
         ).then(async (response) => {
-            const responseJSON = await response.json();
-
+            
             // Register Successful (Go to Login)
             if (response.status === 201) {
                 setIsLogin(true);
                 onSubmitProps.resetForm();     // Reset Form
             }
             // Error Message (409, 500)
-            else { setError(responseJSON.message); }
+            else { 
+                const responseJSON = await response.json();
+                setError(responseJSON.message); 
+            }
         });
     }
 

@@ -1,4 +1,4 @@
-# Sociology - Social Media App (MERN Stack)
+# Sociopedia - Social Media App (MERN Stack)
 
 This project is based on a complete fullstack (MERN) project tutorial on [Youtube by EdRoh](https://www.youtube.com/watch?v=K8YELRmUb5o), which creates a basic social media application with the following pages:
 
@@ -12,7 +12,7 @@ This project is based on a complete fullstack (MERN) project tutorial on [Youtub
     - "Friends List Widget": The user's friends list
  * A profile page that contains information about the profile user (any existing user), reusing the "User Widget", "Posts Widget" (all posts made by the profile user only), and "Friends List Widget".
 
-The tutorial created a basic skeleton of the "Sociology" fullstack with working functionality for the following:
+The tutorial created a basic skeleton of the "Sociopedia" fullstack with working functionality for the following:
  * Registering an account
  * Logging into the website
  * Creating a post (with an image attachment)
@@ -23,6 +23,16 @@ The tutorial created a basic skeleton of the "Sociology" fullstack with working 
 ## MERN Stack
 
 ![User-MERN-Flow-Chart-1110x406](https://user-images.githubusercontent.com/113395605/216235558-130fe575-2106-482d-bde2-db2d9920383e.png)
+
+
+DO SOME GIT IGNORES
+
+
+
+
+
+
+
 
 
 # Sociology Pages

@@ -172,7 +172,7 @@ const NavBarIcons = ({ loggedIn, fullName="" }) => {
             {/* DOWNLOAD 'UserAccounts.pdf */}
             <Dialog open={dialogBox} onClose={() => setDialogBox(false)} fullWidth>
                 <DialogTitle fontSize="1rem" sx={{ textDecoration: "underline" }}>
-                    Sociology Help
+                    Sociopedia Help
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
