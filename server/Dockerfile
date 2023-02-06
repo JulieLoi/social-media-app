@@ -20,6 +20,6 @@ COPY . .
 # Layer 6: Telling Docker that the container will listen on port 3001.
 EXPOSE 3001
 
-# Use script specified in package,json
+# Layer 7: Telling Docker to run the `npm run dev` command when the container is started.
 CMD ["npm", "run", "dev"]
 

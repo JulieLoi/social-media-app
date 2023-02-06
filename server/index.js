@@ -23,10 +23,10 @@ import { createAd } from "./controllers/advertisements.js";
 import { updateProfileImage } from "./controllers/users.js";
 
 // Fake Data Imports
-import User from "./models/User.js";
-import Post from "./models/Post.js";
-import Advertisement from "./models/Advertisement.js";
-import { users, posts, advertisements } from "./data/index.js";
+//import User from "./models/User.js";
+//import Post from "./models/Post.js";
+//import Advertisement from "./models/Advertisement.js";
+//import { users, posts, advertisements } from "./data/index.js";
 
 /*
  * Configurations
