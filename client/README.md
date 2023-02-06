@@ -14,7 +14,7 @@ docker run --name sociopedia_server_c -p 3001:3001 -v C:\Users\19163\Documents\G
 
 
 To run docker compose: `docker compose up`
-
+To close docker: `docker compose down --volumes`
 
 TEST REACT 
 TEST SERVER!
