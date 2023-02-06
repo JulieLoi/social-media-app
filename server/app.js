@@ -1,8 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -22,18 +20,11 @@ import { createPost } from "./controllers/posts.js";
 import { createAd } from "./controllers/advertisements.js";
 import { updateProfileImage } from "./controllers/users.js";
 
-// Fake Data Imports
-//import User from "./models/User.js";
-//import Post from "./models/Post.js";
-//import Advertisement from "./models/Advertisement.js";
-//import { users, posts, advertisements } from "./data/index.js";
-
 /*
  * Configurations
  */
 const __filename = fileURLToPath(import.meta.url); 
 const __dirname = path.dirname(__filename);
-dotenv.config();
 
 const app = express();                                          
 app.use(express.json());                                                    // Backend Framework
@@ -71,37 +62,30 @@ app.post("/posts", verifyToken, upload.single("attachment"), createPost);
 app.post("/advertisements", verifyToken, upload.single("picture"), createAd);
 app.patch("/users/:id", verifyToken, upload.single("picture"), updateProfileImage);
 
-/**
- * Routes
- */
+// Routes (no file upload)
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/advertisements", advertisementRoutes);
+// Show text for server running
+app.get("/", (req, res) => {
+    res.send("Server Test!");
+});
 
-/**
- * Mongoose Setup
- */
-const PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+export default app;
 
-    // ADD FAKE DATA (Once)
-    //console.log("Load Fake Data")
-    //User.insertMany(users);
-    //Post.insertMany(posts);
-    //Advertisement.insertMany(advertisements);
+/*
+const express = require("express");
+const cors = require("cors");
 
 
-}).catch((error) => console.error(`${error} did not connect`));
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
+app.use("/api", ActivityRouter);
 
+app.use("/api/auth", AuthRouter);
 
-
-
-
-
-
+module.exports = app;
+*/

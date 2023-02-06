@@ -25,6 +25,9 @@ To test the backend server: `npm run test`
  * [txtgen](https://github.com/ndaidong/txtgen): A lightweight JS utility library for generating random sentences.
  * [Dotenv](https://github.com/motdotla/dotenv#readme): A JS library that simply loads environment variables from a .env file into process.env.
  * [Mongoose](https://mongoosejs.com/): A Node-based object data modeling (ODB) library for MongoDB designed to work in an asynchronous environment.
+ * [Jest](https://jestjs.io/): A JS testing solution library
+ * [SuperTest](https://github.com/ladjs/supertest#readme): A JS module that provides a high-level abstraction for testing HTTP and allows the lower-level API provided by superagent.
+ * [cross-env](https://github.com/kentcdodds/cross-env#readme): A JS library that allows you to run tests in the backend server as a single command without worrying about setting or using the environment variable properly for the platform.
 
 # Parts of the Server
 ## Fake Data
