@@ -290,4 +290,19 @@ The mobile version of the desktop web application adjusts the components to appe
 
 The only major change is the inclusion of the search bar and the implementation of the navigation bar icons. Eveything else remains the same bar the improvements and upgrades made to the widgets.
 
-
+<table>
+   <tr>
+      <th>Part 1</th>
+      <th>Part 2</th>
+      <th>Part 3</th>
+      <th>Part 4</th>
+      <th>Part 5</th>
+   </tr>
+   <tr>
+      <td><img src="https://user-images.githubusercontent.com/113395605/217070409-649b1a0b-8533-41df-bc49-0d2574a346b3.png" /></td>
+      <td><img src="https://user-images.githubusercontent.com/113395605/217070417-47a8962b-60db-4826-94c9-d0375ef95fd2.png" /></td>
+      <td><img src="https://user-images.githubusercontent.com/113395605/217070418-1526a45a-a680-43f4-b01f-f60ce66d7df4.png" /></td>
+      <td><img src="https://user-images.githubusercontent.com/113395605/217070421-6757eef2-4313-43f5-bb9f-d3cea6dd5f46.png" /></td>
+      <td><img src="https://user-images.githubusercontent.com/113395605/217070426-2054b9b4-f659-4e86-9b85-afa9abe465db.png" /></td>
+   </tr>
+</table>

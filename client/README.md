@@ -2,6 +2,19 @@
 
 # Possible Features to add
 
+# Docker
+docker build -t clientapp . 
+
+VOLUMES:
+docker run --name sociopedia_client_c -p 3000:3000 -v C:\Users\19163\Documents\GitHub\social-media-app\client:/app -v /app/node_modules sociopedia_client
+
+
+docker build -t serverapp .
+docker run --name sociopedia_server_c -p 3001:3001 -v C:\Users\19163\Documents\GitHub\social-media-app\server:/app -v /app/node_modules sociopedia_server
+
+
+To run docker compose: `docker compose up`
+
 
 TEST REACT 
 TEST SERVER!
