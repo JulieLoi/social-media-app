@@ -26,7 +26,12 @@ The tutorial created a basic skeleton of the "Sociopedia" fullstack with working
 
 
 DO SOME GIT IGNORES
+DO STUFF FOR A USER GUIDE, etc.
 
+DOCKER
+Deploy on site (render.com)
+
+TESTING
 
 
 
