@@ -66,6 +66,7 @@ In order to build a Docker image for the server only, run the following in the "
 Furthermore, the Docker images are uploaded to the Docker Hub for [download](https://hub.docker.com/repository/docker/julieloileaf/sociopedia-demo/general).
 
 # Testing
-
+Client Folder: `npm run test`
+Server Folder: `npm run test`
 
 

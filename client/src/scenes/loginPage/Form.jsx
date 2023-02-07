@@ -22,6 +22,7 @@ const registerSchema = yup.object().shape({
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
+    occupation: yup.string(),
     picture: yup.string().required("Picture Required"),
 });
 
@@ -64,8 +65,6 @@ const Form = () => {
     const maxSize = 1048576*3;                      // Dropzone - 3MB
     const [location, setLocation] = useState("");   // Location (Optional)
     const [error, setError] = useState("");         // Error - Wrong Email or Password
-
- 
 
     // Registers a new user (/auth POST API CALL)
     const register = async (values, onSubmitProps) => {

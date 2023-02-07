@@ -18,5 +18,4 @@ router.patch("/:id/comment", verifyToken, commentPost);
 /* DELETE */
 router.delete("/:id/delete", verifyToken, deletePost);
 
-
 export default router;
