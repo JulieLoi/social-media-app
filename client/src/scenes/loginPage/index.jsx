@@ -36,6 +36,7 @@ const LoginPage = () => {
                 <Typography fontWeight="bold" fontSize="32px" color="primary"
                     sx={{ "&:hover": { color: primaryDark, cursor: "pointer", } }}
                     onClick={() => navigate("/home")}
+                    data-testid="text-header"
                 >
                     Sociopedia
                 </Typography>

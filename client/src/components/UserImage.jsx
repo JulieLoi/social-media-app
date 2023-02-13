@@ -30,6 +30,7 @@ const UserImage = ({ userId, image, size="60px", allowLink=true }) => {
                 transition: "1s",
                 cursor: "pointer"
             }} 
+            
         >
             <img 
                 style={{ objectFit: "cover", borderRadius: "50%" }}
