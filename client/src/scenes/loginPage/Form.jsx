@@ -277,7 +277,7 @@ const Form = () => {
                         }}
                     >
                         <Typography fontWeight="700" variant="h5">
-                            {isLogin ? 'REGISTER' : 'LOGIN'}
+                            {isLogin ? 'LOGIN' : 'REGISTER'}
                         </Typography>
                     </Button>
 

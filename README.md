@@ -1,11 +1,12 @@
 
+TODO LIST:
+- Build Automation Report
+- User Guide
+- Deploy (Render)
+- Docker Images (not working...)
 
-
-DO STUFF FOR A USER GUIDE, etc.
-
-Deploy on site (render.com)
-
-TESTING
+- Fix the learning react project
+- Create my github page...
 
 
 
