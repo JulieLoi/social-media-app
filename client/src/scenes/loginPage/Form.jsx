@@ -251,7 +251,7 @@ const Form = () => {
                         autoComplete='off'
                         inputProps={{ maxLength: 254 }}
                         error={ (Boolean(touched.email) && Boolean(errors.email)) || (error !== "") }
-                        helperText={errors.email ? (errors.email) : error}
+                        helperText={(errors.email) ? (errors.email) : (error === "Invalid Credentials - Wrong Email or Password" ? "" : error)}
                         sx={{ gridColumn: "span 4" }}
                     />
                     <TextField 

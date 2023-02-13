@@ -32,6 +32,47 @@ The tutorial created a basic skeleton of the "Sociopedia" fullstack with working
  * Adding/Removing a friend
  * Dark/Light mode toggle
 
+ ## Example Accounts
+ <table>
+   <tr>
+      <th>EMAIL</th>
+      <th>PASSWORD</th>
+   </tr>
+   <tr>
+      <td>elijahpilchard@gmail.com</td>
+      <td>1B4O3ds164N*</td>
+   </tr>
+   <tr>
+      <td>martinbaron@gmail.com</td>
+      <td>qe$9D764D1*J0@1iH</td>
+   </tr>
+   <tr>
+      <td>markdoyle@hotmail.com</td>
+      <td>qksgTi%v3616%pml1</td>
+   </tr>
+   <tr>
+      <td>alirezarostami@gmail.com</td>
+      <td>g!H9pDLvYSKXP8M2&i&ygJ00RptTQ$</td>
+   </tr>
+   <tr>
+      <td>marlamaldonado@gmail.com </td>
+      <td>G6B^!k50N9p@ADNSC3F#$9P</td>
+   </tr>
+   <tr>
+      <td>nimasarram@gmail.com</td>
+      <td>5e6I8AGu'W&1D8k7</td>
+   </tr>
+   <tr>
+      <td>ethanhoover@gmail.com</td>
+      <td>5Ad%BUK8M6GvLOrdi432X@xx</td>
+   </tr>
+   <tr>
+      <td>remyloz@gmail.com </td>
+      <td>h&j2!h*^MOYB^Z@Ip$^%7J%1UC#qMP79q0U#2z</td>
+   </tr>
+ </table>
+
+
 # MERN Stack Design
 The designs of the project is all located in the "design" folder.
 
